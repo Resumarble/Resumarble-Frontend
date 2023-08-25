@@ -7,6 +7,9 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Resumarble",
   description: "Resumarble",
+  icons: {
+    icon: "./favicon.ico",
+  },
 };
 
 export default function RootLayout({

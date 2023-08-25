@@ -1,0 +1,72 @@
+.move {
+  animation: showAndMove 1s alternate;
+  animation-fill-mode: both;
+  -webkit-animation-fill-mode: both;
+}
+
+.show {
+  animation: show 1s linear;
+  animation-fill-mode: both;
+  -webkit-animation-fill-mode: both;
+}
+
+.lazy-show {
+  animation: show 1s 0.5s linear;
+  animation-fill-mode: both;
+  -webkit-animation-fill-mode: both;
+}
+
+.scaleUp {
+  animation: scaleUp 0.3s linear;
+  animation-fill-mode: both;
+  -webkit-animation-fill-mode: both;
+}
+
+.marquee {
+  display: inline-block;
+  animation: marquee 30s linear both infinite;
+}
+
+@keyframes showAndMove {
+  0% {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes show {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes scaleUp {
+  0% {
+    opacity: 0;
+    scale: 2;
+  }
+
+  100% {
+    scale: 1;
+    opacity: 1;
+  }
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(100vw);
+  }
+
+  100% {
+    transform: translateX(-100vw);
+  }
+}
