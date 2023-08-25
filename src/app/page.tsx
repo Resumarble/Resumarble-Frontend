@@ -1,13 +1,13 @@
 "use client";
-import Image from "next/image";
 import React from "react";
-import bg from "public/bg.png";
 import styles from "./page.module.css";
+import Link from "next/link";
+import Background from "@/components/bg/Background";
 
 export default function Home() {
   return (
     <div className={`${styles.container}`}>
-      <Image className={styles.bg} quality={100} alt="bg" src={bg}></Image>
+      <Background />
       <div className={styles.content}>
         <div className={styles.topContent}>
           <h1 className={styles.title}>Resumarble</h1>
@@ -16,7 +16,13 @@ export default function Home() {
 
         <div className={`${styles.joinWrapper} ${styles.bottomContent}}`}>
           {/* 회원가입 기능 추가 시 로그인 버튼으로 변경하기 */}
-          <button className={`${styles.btn} ${styles.login}`}>시작하기</button>
+
+          <Link href={"/resume"}>
+            <button className={`${styles.btn} ${styles.login}`}>
+              시작하기
+            </button>
+          </Link>
+
           <button
             onClick={() => {
               window.alert("준비중");
