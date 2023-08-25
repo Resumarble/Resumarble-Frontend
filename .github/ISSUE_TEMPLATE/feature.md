@@ -7,10 +7,7 @@ assignees: ReturnReason
 
 ---
 
-<br/>
-## 구현 사항
-- [ ]
+## 구현 사항 목록 정의
+- [ ] title
 
--- --
-<br/>
 ## 기타
