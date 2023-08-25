@@ -23,11 +23,15 @@
   text-transform: uppercase;
   font-size: 2.8rem;
   letter-spacing: -1px;
+
+  opacity: 0;
 }
 
 .desc {
   font-size: 1.35rem;
   letter-spacing: -1px;
+
+  opacity: 0;
 }
 
 .joinWrapper {
@@ -44,6 +48,8 @@
   transform: translateX(-50%);
 
   height: 100vh;
+
+  opacity: 0;
 }
 
 .topContent {
