@@ -1,8 +1,11 @@
 import "./globals.css";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { IBM_Plex_Sans_KR } from "next/font/google";
 
-const inter = Inter({ subsets: ["latin"] });
+const ibmKr = IBM_Plex_Sans_KR({
+  subsets: ["latin"],
+  weight: ["300", "400", "600"],
+});
 
 export const metadata: Metadata = {
   title: "Resumarble",
@@ -19,7 +22,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ko">
-      <body className={inter.className}>{children}</body>
+      <body className={ibmKr.className}>{children}</body>
     </html>
   );
 }
