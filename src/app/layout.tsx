@@ -1,3 +1,4 @@
+import ClientProvider from "@/components/client/ClientProvider";
 import "./globals.css";
 import type { Metadata } from "next";
 import { IBM_Plex_Sans_KR } from "next/font/google";
@@ -22,7 +23,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ko">
-      <body className={ibmKr.className}>{children}</body>
+      <body className={ibmKr.className}>
+        <ClientProvider>{children}</ClientProvider>
+      </body>
     </html>
   );
 }
