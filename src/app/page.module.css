@@ -59,6 +59,14 @@
   transform: translate(-50%);
 }
 
+.topContent h1 {
+  color: #fff;
+}
+
+.topContent p {
+  color: #fff;
+}
+
 .bottomContent {
 }
 
