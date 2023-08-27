@@ -68,8 +68,7 @@
 .btn {
   width: 100%;
   padding: 5px 15px;
-  border: 2px solid #91be9e;
-  background: transparent;
+  background: #313131;
   border-radius: 8px;
 
   cursor: pointer;
@@ -77,5 +76,5 @@
   font-size: 1.1rem;
   font-weight: 400;
 
-  color: #91be9e;
+  color: #fff;
 }
