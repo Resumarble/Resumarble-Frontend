@@ -1,6 +1,13 @@
+import { Job } from "@/service/getJobs";
 import styles from "./form.module.css";
 
-export const Form = () => {
+type FormProps = {
+  options: { jobs: Job[] };
+};
+
+export const Form = (options: FormProps) => {
+  const jobList = options.options.jobs;
+
   return (
     <>
       <div className={styles.box}>
@@ -13,11 +20,15 @@ export const Form = () => {
               <label htmlFor="select-job">
                 <b>직업을 선택하세요.</b>
               </label>
-              <select required id="select-job">
-                <option value="select" disabled selected>
-                  선택
+              <select defaultValue="default" required id="select-job">
+                <option value="default" disabled>
+                  --- 선택 ---
                 </option>
-                <option value="job">직업1</option>
+                {jobList.map((job, idx) => {
+                  return (
+                    <option key={`${job} ${idx}`}>{job.jobTitleKr}</option>
+                  );
+                })}
               </select>
             </div>
 
@@ -25,9 +36,9 @@ export const Form = () => {
               <label htmlFor="select-career">
                 <b>경력을 선택하세요.</b>
               </label>
-              <select required id="select-career">
-                <option value="select" disabled selected>
-                  선택
+              <select defaultValue="default" required id="select-career">
+                <option value="default" disabled>
+                  --- 선택 ---
                 </option>
                 <option value="job">신입</option>
               </select>
@@ -37,9 +48,9 @@ export const Form = () => {
               <label htmlFor="select-question">
                 <b>예상 질문으로 받고 싶은 항목을 선택하세요.</b>
               </label>
-              <select required id="select-question">
-                <option value="select" disabled selected>
-                  선택
+              <select defaultValue="default" required id="select-question">
+                <option value="default" disabled>
+                  --- 선택 ---
                 </option>
                 <option value="introduce">자기소개</option>
               </select>
