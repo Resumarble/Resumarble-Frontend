@@ -4,8 +4,20 @@
   -webkit-animation-fill-mode: both;
 }
 
+.move-to-left-and-show {
+  animation: moveToLeftAndShow 1s alternate;
+  animation-fill-mode: both;
+  -webkit-animation-fill-mode: both;
+}
+
 .show {
   animation: show 1s linear;
+  animation-fill-mode: both;
+  -webkit-animation-fill-mode: both;
+}
+
+.fast-show {
+  animation: show 0.5s linear;
   animation-fill-mode: both;
   -webkit-animation-fill-mode: both;
 }
@@ -68,5 +80,17 @@
 
   100% {
     transform: translateX(-100vw);
+  }
+}
+
+@keyframes moveToLeftAndShow {
+  0% {
+    opacity: 0;
+    transform: translateX(-200px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(0);
   }
 }
