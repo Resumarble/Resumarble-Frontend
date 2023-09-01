@@ -1,0 +1,22 @@
+[
+  {
+    "id": 0,
+    "titleEn": "introduction",
+    "titleKr": "자기 소개"
+  },
+  {
+    "id": 1,
+    "titleEn": "technology stack",
+    "titleKr": "기술 스택"
+  },
+  {
+    "id": 2,
+    "titleEn": "career history",
+    "titleKr": "경력 사항"
+  },
+  {
+    "id": 3,
+    "titleEn": "project experience",
+    "titleKr": "프로젝트 경험"
+  }
+]
