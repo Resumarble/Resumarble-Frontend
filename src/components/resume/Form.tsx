@@ -7,6 +7,8 @@ import type { SelectKey } from "./types/selectKey";
 import { Job } from "@/service/getJobs";
 import { Career } from "@/service/getCareer";
 import { Question } from "@/service/getQuestion";
+import { useMutation } from "@tanstack/react-query";
+import { PostResume, postResume } from "@/service/postResume";
 
 type FormProps = {
   options: [jobs: Job[], careers: Career[], questions: Question[]];
@@ -22,6 +24,7 @@ export const Form = ({ options }: FormProps) => {
     contents: "",
   });
   const [isDoneForm, setIsDoneForm] = useState(false);
+  const [showLoading, setShowLoading] = useState(false);
 
   const handleSelectJob = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const targetIndex = e.target.options[e.target.selectedIndex];
@@ -53,6 +56,33 @@ export const Form = ({ options }: FormProps) => {
     setInputForm((prev) => ({ ...prev, [selectedType]: selectedQuestion }));
   };
 
+  const mutation = useMutation(postResume, {
+    onMutate: () => {
+      setShowLoading(true);
+    },
+    onSuccess: () => {
+      setShowLoading(false);
+    },
+    onError: () => {
+      //  TODO 에러 페이지로 라우트
+    },
+  });
+
+  const handleSubmit = (e: React.FormEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+
+    const postResum: PostResume = {
+      job: inputForm.job!,
+      career: inputForm.career!,
+      resumeInfo: {
+        category: inputForm.question!,
+        content: inputForm.contents,
+      },
+    };
+
+    mutation.mutate(postResum);
+  };
+
   useEffect(() => {
     const isDone = Object.entries(inputForm)
       .map(([_, value]) => {
@@ -69,6 +99,16 @@ export const Form = ({ options }: FormProps) => {
 
   return (
     <>
+      {showLoading && (
+        // TODO 임시 로딩 (컴포넌트로 변경하기)
+        <div className={styles.loading}>
+          <h3>
+            질문을 생성하고 있어요.
+            <br />
+            잠시만 기다려주세요.
+          </h3>
+        </div>
+      )}
       <div className={styles.box}>
         <h2 className={styles.title}>면접 질문 생성기</h2>
         <p>작성한 내용을 기반으로 AI가 면접 예상 질문 목록을 생성해요.</p>
@@ -173,9 +213,7 @@ export const Form = ({ options }: FormProps) => {
             </div>
             <button
               type="submit"
-              onSubmit={(e) => {
-                e.preventDefault();
-              }}
+              onClick={handleSubmit}
               disabled={!isDoneForm}
               className={styles.btn}
             >
