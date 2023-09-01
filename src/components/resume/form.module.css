@@ -69,6 +69,7 @@
   width: 100%;
   padding: 5px 15px;
   background: #313131;
+  border: none;
   border-radius: 8px;
 
   cursor: pointer;
@@ -77,4 +78,10 @@
   font-weight: 400;
 
   color: #fff;
+
+  transition: all 0.3s;
+}
+
+.btn:disabled {
+  background: #dcdcdc;
 }
