@@ -85,3 +85,37 @@
 .btn:disabled {
   background: #dcdcdc;
 }
+
+.loading {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-color: #00000085;
+
+  z-index: 999;
+}
+
+/* 임시 로딩 스타일 */
+.loading h3 {
+  color: #fff;
+  font-size: 1.4rem;
+  animation: loading 2s infinite linear;
+  text-align: center;
+}
+
+@keyframes loading {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(10px);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
+}
