@@ -1,31 +1,50 @@
 "use client";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styles from "./resume.module.css";
 import Background from "@/components/bg/Background";
 import { Form } from "@/components/resume/Form";
-import { useQuery } from "@tanstack/react-query";
-import { getJobs } from "@/service/getJobs";
+import { useQueries, useQuery } from "@tanstack/react-query";
+import { Job, getJobs } from "@/service/getJobs";
+import { fetchCareers } from "./api/fetchCareers";
+import { Career } from "@/service/getCareer";
+import { fetchQuestions } from "./api/fetchQuestions";
+import { Question } from "@/service/getQuestion";
 
 export default function ResumePage() {
   const ref = useRef<HTMLDivElement>(null);
-  const {
-    data: jobs,
-    isLoading,
-    isError,
-  } = useQuery({
-    queryKey: ["getJobs"],
-    queryFn: getJobs,
+
+  const datas = useQueries({
+    queries: [
+      {
+        queryKey: ["getJobs"],
+        queryFn: getJobs,
+      },
+      {
+        queryKey: ["getCareers"],
+        queryFn: fetchCareers,
+      },
+      {
+        queryKey: ["getQuestions"],
+        queryFn: fetchQuestions,
+      },
+    ],
   });
+
+  const options: [jobs: Job[], careers: Career[], questions: Question[]] = [
+    datas[0].data,
+    datas[1].data,
+    datas[2].data,
+  ];
 
   useEffect(() => {
     ref.current?.classList.add("move-to-left-and-show");
   }, []);
 
-  if (isLoading) {
+  if (datas.every((data) => data.isLoading)) {
     return <div>데이터를 불러오고 있어요.</div>;
   }
 
-  if (isError) {
+  if (datas.every((data) => data.isError)) {
     return <div>잠시 후 다시 시도해주세요.</div>;
   }
 
@@ -33,7 +52,7 @@ export default function ResumePage() {
     <>
       <Background />
       <div ref={ref} className={styles.container}>
-        <Form options={jobs} />
+        <Form options={options} />
       </div>
     </>
   );
