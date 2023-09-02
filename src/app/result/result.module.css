@@ -1,0 +1,41 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  height: 100vh;
+
+  position: relative;
+}
+
+.retryBtn {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  right: 50%;
+  transform: translateX(-50%);
+  margin-bottom: 2.3rem;
+
+  width: 200px;
+  padding: 8px 10px;
+  border: none;
+  border-radius: 100px;
+
+  font-size: 1.05rem;
+
+  background: #313131;
+
+  cursor: pointer;
+
+  box-shadow: 5px 5px 8px #6868684f;
+}
+
+.retryBtn:hover {
+  background-color: #292a2a;
+}
+
+.retryBtn a {
+  color: #fff;
+  text-decoration: none;
+}
