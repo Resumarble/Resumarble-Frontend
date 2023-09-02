@@ -26,3 +26,34 @@ select {
 select:focus {
   outline: none;
 }
+
+.btn {
+  width: 350px;
+  padding: 0.5rem;
+
+  color: #fff;
+  border: 1px solid #fff;
+  border-radius: 0.5rem;
+  background: transparent;
+
+  font-size: 1.1rem;
+  cursor: pointer;
+
+  transition: all 0.2s;
+}
+
+.btn:hover {
+  background: #ffffff20;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 0px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #f1f1f1;
+}
