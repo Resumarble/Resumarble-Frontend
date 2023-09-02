@@ -6,7 +6,7 @@ import Link from "next/link";
 import ToggleBox from "@/components/common/ToggleBox";
 
 type Props = {
-  children: React.ReactNode;
+  children?: React.ReactNode;
 };
 
 export default function ResultContainer({ children }: Props) {
