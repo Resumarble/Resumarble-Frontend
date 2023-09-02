@@ -1,0 +1,34 @@
+.container {
+  width: 500px;
+  min-width: 500px;
+  height: 800px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  color: #363636;
+
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.box {
+  height: 100vh;
+  padding: 40px;
+
+  background-color: #fff;
+  box-shadow: 10px 10px 25px #3157371d;
+
+  overflow: hidden;
+  overflow-y: scroll;
+}
+
+.header {
+  margin-bottom: 2rem;
+}
+
+.content {
+  margin-bottom: 10px;
+}

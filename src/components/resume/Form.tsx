@@ -9,12 +9,20 @@ import { Career } from "@/service/getCareer";
 import { Question } from "@/service/getQuestion";
 import { useMutation } from "@tanstack/react-query";
 import { PostResume, postResume } from "@/service/postResume";
+import { useRouter } from "next/navigation";
 
 type FormProps = {
   options: [jobs: Job[], careers: Career[], questions: Question[]];
 };
 
+export type Result = {
+  question: string;
+  bestAnswer: string;
+};
+
 export const Form = ({ options }: FormProps) => {
+  const router = useRouter();
+
   const [jobs, careers, questions] = [...options];
 
   const [inputForm, setInputForm] = useState({
@@ -60,8 +68,12 @@ export const Form = ({ options }: FormProps) => {
     onMutate: () => {
       setShowLoading(true);
     },
-    onSuccess: () => {
+    onSuccess: (res) => {
       setShowLoading(false);
+
+      localStorage.setItem("result", JSON.stringify(res.data.interviews));
+
+      router.push("/result");
     },
     onError: () => {
       //  TODO 에러 페이지로 라우트
