@@ -36,12 +36,9 @@
   transition: all 0.3s;
 }
 
-.btn a {
+.retryBtn {
   color: #fff;
   text-decoration: none;
-}
-
-.retryBtn {
   background: #313131;
 }
 
@@ -50,13 +47,10 @@
 }
 
 .saveBtn {
+  color: #313131;
   background: #ffffff80;
 }
 
 .saveBtn:hover {
   background: #ffffff94;
-}
-
-.saveBtn a {
-  color: #313131;
 }
