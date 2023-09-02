@@ -34,14 +34,17 @@ export default async function RootLayout({
     queryClient.prefetchQuery({
       queryKey: ["getJobs"],
       queryFn: getJobs,
+      staleTime: 1000 * 3600 * 24,
     }),
     queryClient.prefetchQuery({
       queryKey: ["getCareers"],
       queryFn: getCareers,
+      staleTime: 1000 * 3600 * 24,
     }),
     queryClient.prefetchQuery({
       queryKey: ["getQuestions"],
       queryFn: getQuestion,
+      staleTime: 1000 * 3600 * 24,
     }),
   ]);
 
