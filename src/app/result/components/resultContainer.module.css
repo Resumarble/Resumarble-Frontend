@@ -1,7 +1,7 @@
 .container {
   width: 500px;
   min-width: 500px;
-  height: 800px;
+  height: 700px;
 
   display: flex;
   flex-direction: column;
@@ -32,4 +32,54 @@
 
 .content {
   margin-bottom: 10px;
+}
+
+.btns {
+  height: auto;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+
+  position: absolute;
+  bottom: 2rem;
+
+  z-index: 5;
+}
+
+.btn {
+  width: 500px;
+
+  padding: 15px 10px;
+
+  border: none;
+  border-radius: 7px;
+
+  font-size: 1.05rem;
+
+  background: #313131;
+  box-shadow: 5px 5px 8px #6868684f;
+
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.retryBtn {
+  color: #fff;
+  text-decoration: none;
+  background: #313131;
+}
+
+.retryBtn:hover {
+  background-color: #292a2a;
+}
+
+.saveBtn {
+  color: #313131;
+  background: #ffffffdc;
+}
+
+.saveBtn:hover {
+  background: #ffffff;
 }

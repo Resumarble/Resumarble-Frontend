@@ -4,6 +4,7 @@ import styles from "./resultContainer.module.css";
 import { Result } from "@/components/resume/Form";
 import Link from "next/link";
 import ToggleBox from "@/components/common/ToggleBox";
+import SaveButton from "./SaveButton";
 
 type Props = {
   children?: React.ReactNode;
@@ -11,12 +12,28 @@ type Props = {
 
 export default function ResultContainer({ children }: Props) {
   const [results, setResults] = useState<Result[]>();
-  const hasResult = localStorage.getItem("result")?.length;
+  const [hasResult, setHasResult] = useState(false);
+
+  const [resultsForDownload, setResultForDownload] = useState<string>("");
 
   useEffect(() => {
-    if (!hasResult) return;
-
+    const result = localStorage.getItem("result");
+    setHasResult(!!result?.length);
     setResults(JSON.parse(localStorage.getItem("result")!) ?? []);
+
+    if (result) {
+      const parseResult = JSON.parse(result);
+      const resultList = parseResult.map(
+        (res: { question: string; bestAnswer: string }, idx: number) =>
+          `0${idx + 1} Q. : ${res.question}\n0${idx + 1} A. ${
+            res.bestAnswer
+          } \n\n`
+      );
+
+      const resultTxt = resultList.join("");
+
+      setResultForDownload(resultTxt);
+    }
   }, []);
 
   if (!hasResult) {
@@ -33,6 +50,7 @@ export default function ResultContainer({ children }: Props) {
 
   return (
     <>
+      <SaveButton txt={resultsForDownload} />
       <section className={styles.container}>
         <div className={styles.box}>
           <div className={styles.header}>
@@ -58,14 +76,9 @@ export default function ResultContainer({ children }: Props) {
 
       <div className={`${styles.btns}`}>
         <Link href={"/resume"}>
+          {/* TODO: 정말 다시 생성할 건지 물어보기 */}
           <button className={`${styles.btn} ${styles.retryBtn}`}>
             다시 생성하기
-          </button>
-        </Link>
-
-        <Link href={"/resume"}>
-          <button className={`${styles.btn} ${styles.saveBtn}`}>
-            저장하기
           </button>
         </Link>
       </div>
