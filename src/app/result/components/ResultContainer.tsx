@@ -32,24 +32,43 @@ export default function ResultContainer({ children }: Props) {
   }
 
   return (
-    <section className={styles.container}>
-      <div className={styles.box}>
-        <div className={styles.header}>
-          <h2>생성된 질문/답변을 확인해보세요.</h2>
-          <p>자세히 작성할수록 예상 질문과 답변의 퀄리티가 높아집니다.</p>
-          <hr />
+    <>
+      <section className={styles.container}>
+        <div className={styles.box}>
+          <div className={styles.header}>
+            <h2>생성된 질문/답변을 확인해보세요.</h2>
+            <p>자세히 작성할수록 예상 질문과 답변의 퀄리티가 높아집니다.</p>
+            <hr />
+          </div>
+
+          {results?.map((result, idx) => {
+            return (
+              <div key={`${result} ${idx}`}>
+                <ToggleBox
+                  title={result.question}
+                  contents={result.bestAnswer}
+                />
+              </div>
+            );
+          })}
+
+          {children}
         </div>
+      </section>
 
-        {results?.map((result, idx) => {
-          return (
-            <div key={`${result} ${idx}`}>
-              <ToggleBox title={result.question} contents={result.bestAnswer} />
-            </div>
-          );
-        })}
+      <div className={`${styles.btns}`}>
+        <Link href={"/resume"}>
+          <button className={`${styles.btn} ${styles.retryBtn}`}>
+            다시 생성하기
+          </button>
+        </Link>
 
-        {children}
+        <Link href={"/resume"}>
+          <button className={`${styles.btn} ${styles.saveBtn}`}>
+            저장하기
+          </button>
+        </Link>
       </div>
-    </section>
+    </>
   );
 }
