@@ -1,7 +1,7 @@
 import { getQuestion } from "@/service/getQuestion";
 import { NextResponse } from "next/server";
 
-export default async function GET() {
+export async function GET(req: Request) {
   try {
     const career = await getQuestion();
     return NextResponse.json(career);
