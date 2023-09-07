@@ -9,19 +9,6 @@ export default function ResultPage() {
       <Background />
       <div className={styles.container}>
         <ResultContainer />
-        <div className={`${styles.btns}`}>
-          <Link href={"/resume"}>
-            <button className={`${styles.btn} ${styles.retryBtn}`}>
-              다시 생성하기
-            </button>
-          </Link>
-
-          <Link href={"/resume"}>
-            <button className={`${styles.btn} ${styles.saveBtn}`}>
-              저장하기
-            </button>
-          </Link>
-        </div>
       </div>
     </>
   );
