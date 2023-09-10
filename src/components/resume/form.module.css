@@ -91,6 +91,7 @@
   height: 100vh;
   position: fixed;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 
@@ -102,9 +103,17 @@
 /* 임시 로딩 스타일 */
 .loading h3 {
   color: #fff;
-  font-size: 1.4rem;
+  font-size: 1.3rem;
   animation: loading 2s infinite linear;
   text-align: center;
+
+  position: absolute;
+  margin-top: 50px;
+}
+
+.spinnerContainer {
+  position: absolute;
+  top: 33%;
 }
 
 @keyframes loading {
@@ -112,7 +121,7 @@
     transform: translateY(0);
   }
   50% {
-    transform: translateY(10px);
+    transform: translateY(5px);
   }
 
   100% {

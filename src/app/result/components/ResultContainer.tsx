@@ -81,6 +81,11 @@ export default function ResultContainer({ children }: Props) {
             다시 생성하기
           </button>
         </Link>
+        <Link href={"/"}>
+          <button className={`${styles.btn} ${styles.retryBtn}`}>
+            메인으로
+          </button>
+        </Link>
       </div>
     </>
   );

@@ -10,6 +10,7 @@ import { Question } from "@/service/getQuestion";
 import { useMutation } from "@tanstack/react-query";
 import { PostResume, postResume } from "@/service/postResume";
 import { useRouter } from "next/navigation";
+import Spinner from "../common/Spinner";
 
 type FormProps = {
   options: [jobs: Job[], careers: Career[], questions: Question[]];
@@ -114,8 +115,11 @@ export const Form = ({ options }: FormProps) => {
       {showLoading && (
         // TODO 임시 로딩 (컴포넌트로 변경하기)
         <div className={styles.loading}>
+          <div className={styles.spinnerContainer}>
+            <Spinner />
+          </div>
           <h3>
-            질문을 생성하고 있어요.
+            결과를 생성하고 있어요.
             <br />
             잠시만 기다려주세요.
           </h3>
