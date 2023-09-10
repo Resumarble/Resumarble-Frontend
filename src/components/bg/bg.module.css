@@ -1,0 +1,10 @@
+.bg {
+  display: block;
+  width: 2560px;
+  height: 100vh;
+  position: absolute;
+  left: 0;
+  top: 0;
+
+  z-index: -99;
+}

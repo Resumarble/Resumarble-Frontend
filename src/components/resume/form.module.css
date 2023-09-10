@@ -1,0 +1,130 @@
+.box {
+  padding: 40px;
+
+  background-color: #fff;
+  box-shadow: 10px 10px 25px #3157371d;
+
+  border: 1px solid #eee;
+  border-radius: 8px;
+
+  overflow: hidden;
+}
+
+.title {
+  font-size: 1.5rem;
+  margin-bottom: 3px;
+}
+
+.box hr {
+  width: 100%;
+  height: 1px;
+  padding-bottom: 10px;
+  border: none;
+  border-top: 1px solid #ddd;
+
+  margin-bottom: 1rem;
+}
+
+.formContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  gap: 20px;
+}
+
+.jobContainer,
+.careerContainer,
+.questionContainer,
+.textBoxContainer {
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+}
+
+.textBoxContainer textarea {
+  min-width: 400px;
+  max-width: 400px;
+  height: 200px;
+  max-height: 500px;
+
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+
+  margin: 8px 0 16px 0;
+
+  resize: none;
+
+  font-family: "ibm-plex-sans-kr";
+  font-size: 1rem;
+}
+
+.textBoxContainer textarea:focus {
+  outline: none;
+}
+
+.btn {
+  width: 100%;
+  padding: 5px 15px;
+  background: #313131;
+  border: none;
+  border-radius: 8px;
+
+  cursor: pointer;
+
+  font-size: 1.1rem;
+  font-weight: 400;
+
+  color: #fff;
+
+  transition: all 0.3s;
+}
+
+.btn:disabled {
+  background: #dcdcdc;
+}
+
+.loading {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  background-color: #00000085;
+
+  z-index: 999;
+}
+
+/* 임시 로딩 스타일 */
+.loading h3 {
+  color: #fff;
+  font-size: 1.3rem;
+  animation: loading 2s infinite linear;
+  text-align: center;
+
+  position: absolute;
+  margin-top: 50px;
+}
+
+.spinnerContainer {
+  position: absolute;
+  top: 33%;
+}
+
+@keyframes loading {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(5px);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
+}

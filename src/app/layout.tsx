@@ -1,22 +1,62 @@
+import ClientProvider from "@/components/client/ClientProvider";
 import "./globals.css";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { IBM_Plex_Sans_KR } from "next/font/google";
+import { getJobs } from "@/service/getJobs";
+import { dehydrate } from "@tanstack/react-query";
+import HydrateOnClient from "@/store/hydrateOnClient";
+import getQueryClient from "@/store";
+import { getCareers } from "@/service/getCareer";
+import { getQuestion } from "@/service/getQuestion";
 
-const inter = Inter({ subsets: ["latin"] });
+const ibmKr = IBM_Plex_Sans_KR({
+  subsets: ["latin"],
+  weight: ["300", "400", "600"],
+});
 
 export const metadata: Metadata = {
   title: "Resumarble",
   description: "Resumarble",
+  icons: {
+    icon: "./favicon.ico",
+  },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  // TODO: 코드 이동시키기
+  const queryClient = getQueryClient();
+
+  await Promise.all([
+    queryClient.prefetchQuery({
+      queryKey: ["getJobs"],
+      queryFn: getJobs,
+      staleTime: 1000 * 3600 * 24,
+    }),
+    queryClient.prefetchQuery({
+      queryKey: ["getCareers"],
+      queryFn: getCareers,
+      staleTime: 1000 * 3600 * 24,
+    }),
+    queryClient.prefetchQuery({
+      queryKey: ["getQuestions"],
+      queryFn: getQuestion,
+      staleTime: 1000 * 3600 * 24,
+    }),
+  ]);
+
+  const dehydratedState = dehydrate(queryClient);
+
   return (
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
+    <html lang="ko">
+      <body className={ibmKr.className}>
+        <ClientProvider>
+          <HydrateOnClient state={dehydratedState}>{children}</HydrateOnClient>
+        </ClientProvider>
+      </body>
     </html>
   );
 }
