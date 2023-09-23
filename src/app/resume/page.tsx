@@ -1,14 +1,13 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
 import styles from "./resume.module.css";
-import Background from "@/components/bg/Background";
-import { Form } from "@/components/resume/Form";
 import { useQueries, useQuery } from "@tanstack/react-query";
 import { Job, getJobs } from "@/service/getJobs";
 import { fetchCareers } from "./api/fetchCareers";
 import { Career } from "@/service/getCareer";
 import { fetchQuestions } from "./api/fetchQuestions";
 import { Question } from "@/service/getQuestion";
+import { Form } from "./components/Form";
 
 export default function ResumePage() {
   const ref = useRef<HTMLDivElement>(null);
@@ -50,7 +49,6 @@ export default function ResumePage() {
 
   return (
     <>
-      <Background />
       <div ref={ref} className={styles.container}>
         <Form options={options} />
       </div>
