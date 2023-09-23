@@ -14,7 +14,6 @@
   cursor: pointer;
 
   transition: all 0.2s;
-  box-shadow: 2px 2px 20px var(--light-green-shadow);
 }
 
 .button:hover {
