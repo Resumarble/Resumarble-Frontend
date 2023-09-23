@@ -4,6 +4,11 @@
   --font-mono: ui-monospace, Menlo, Monaco, "Cascadia Mono", "Segoe UI Mono",
     "Roboto Mono", "Oxygen Mono", "Ubuntu Monospace", "Source Code Pro",
     "Fira Mono", "Droid Sans Mono", "Courier New", monospace;
+
+  --light-green: #5aac8c;
+  --light-green-shadow: #5aac8c30;
+  --dark-green: #5c796e;
+  --dark-green-shadow: #5c796e30;
 }
 
 * {
@@ -17,6 +22,14 @@ body {
   overflow: hidden;
 }
 
+a {
+  text-decoration: none;
+}
+
+li {
+  list-style: none;
+}
+
 select {
   padding: 10px;
   border: 1px solid #ddd;
@@ -27,23 +40,32 @@ select:focus {
   outline: none;
 }
 
-.btn {
-  width: 350px;
-  padding: 0.5rem;
+.section {
+  position: relative;
+  height: calc(100vh - 52px);
+  background: url("/bg.png") no-repeat;
+  background-size: cover;
+  overflow: hidden;
 
-  color: #fff;
-  border: 1px solid #fff;
-  border-radius: 0.5rem;
-  background: transparent;
-
-  font-size: 1.1rem;
-  cursor: pointer;
-
-  transition: all 0.2s;
+  max-height: 1440px;
 }
 
-.btn:hover {
-  background: #ffffff20;
+.marble-bg {
+  width: 864px;
+  height: 874px;
+  background: url("/marble.png") no-repeat;
+
+  filter: blur(0px);
+
+  opacity: 0.3;
+
+  position: absolute;
+  right: -100px;
+  bottom: -100px;
+
+  z-index: -1;
+
+  scale: 0.8;
 }
 
 ::-webkit-scrollbar {
@@ -56,4 +78,14 @@ select:focus {
 
 ::-webkit-scrollbar-track {
   background-color: #f1f1f1;
+}
+
+@keyframes show {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
 }

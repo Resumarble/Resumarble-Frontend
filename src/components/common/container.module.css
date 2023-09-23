@@ -1,0 +1,24 @@
+.container {
+  width: 80vw;
+  max-width: 1280px;
+  height: calc(100% - 40px);
+  max-height: 1280px;
+
+  margin: 0 auto;
+  margin-top: 20px;
+  background: #ffffff45;
+
+  border: 1px solid #ffffff20;
+  border-top: 1px solid #ffffff80;
+  border-bottom: 1px solid #ffffff80;
+  border-radius: 10px;
+
+  padding: 100px;
+  padding-left: 120px;
+
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
+
+  box-shadow: 4px 4px 50px var(--dark-green-shadow);
+}

@@ -1,13 +1,16 @@
-import ClientProvider from "@/components/client/ClientProvider";
-import "./globals.css";
-import type { Metadata } from "next";
-import { IBM_Plex_Sans_KR } from "next/font/google";
-import { getJobs } from "@/service/getJobs";
 import { dehydrate } from "@tanstack/react-query";
+import { IBM_Plex_Sans_KR } from "next/font/google";
+
+import type { Metadata } from "next";
+import "./globals.css";
+
+import ClientProvider from "@/components/client/ClientProvider";
 import HydrateOnClient from "@/store/hydrateOnClient";
 import getQueryClient from "@/store";
+import { getJobs } from "@/service/getJobs";
 import { getCareers } from "@/service/getCareer";
 import { getQuestion } from "@/service/getQuestion";
+import Nav from "@/components/layout/Nav";
 
 const ibmKr = IBM_Plex_Sans_KR({
   subsets: ["latin"],
@@ -53,9 +56,16 @@ export default async function RootLayout({
   return (
     <html lang="ko">
       <body className={ibmKr.className}>
-        <ClientProvider>
-          <HydrateOnClient state={dehydratedState}>{children}</HydrateOnClient>
-        </ClientProvider>
+        <header>
+          <Nav />
+        </header>
+        <section className="section">
+          <ClientProvider>
+            <HydrateOnClient state={dehydratedState}>
+              {children}
+            </HydrateOnClient>
+          </ClientProvider>
+        </section>
       </body>
     </html>
   );
