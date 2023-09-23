@@ -1,11 +1,15 @@
+import path from "path";
+import { promises } from "fs";
+
 export type Job = {
+  id: number;
   jobTitleKr: string;
   jobTitleEn: string;
 };
 
 export async function getJobs() {
-  const jobs = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/jobs`);
-  const res = await jobs.json();
+  const filePath = path.join(process.cwd(), "data", "jobs.json");
+  const data = await promises.readFile(filePath, "utf-8");
 
-  return res.data.jobs;
+  return JSON.parse(data);
 }

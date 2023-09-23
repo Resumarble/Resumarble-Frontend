@@ -1,0 +1,22 @@
+[
+  {
+    "id": "0",
+    "jobTitleKr": "백엔드 개발자",
+    "jobTitleEn": "Backend developer"
+  },
+  {
+    "id": "1",
+    "jobTitleKr": "프론트 개발자",
+    "jobTitleEn": "Frontend developer"
+  },
+  {
+    "id": "2",
+    "jobTitleKr": "풀스택 개발자",
+    "jobTitleEn": "Fullstack developer"
+  },
+  {
+    "id": "3",
+    "jobTitleKr": "데이터 엔지니어",
+    "jobTitleEn": "data engineer"
+  }
+]
