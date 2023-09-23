@@ -40,11 +40,14 @@ export default function ResumePage() {
     ref.current?.classList.add("move-to-left-and-show");
   }, []);
 
-  if (datas.every((data) => data.isLoading)) {
+  const isLoading = datas.some((data) => data.isLoading);
+  const isError = datas.some((data) => data.isError);
+
+  if (isLoading) {
     return <div>데이터를 불러오고 있어요.</div>;
   }
 
-  if (datas.every((data) => data.isError)) {
+  if (isError) {
     return <div>잠시 후 다시 시도해주세요.</div>;
   }
 
