@@ -3,12 +3,12 @@ import React, { useEffect, useRef, useState } from "react";
 import styles from "./resume.module.css";
 import Background from "@/components/bg/Background";
 import { Form } from "@/components/resume/Form";
-import { useQueries, useQuery } from "@tanstack/react-query";
-import { Job, getJobs } from "@/service/getJobs";
+import { useQueries } from "@tanstack/react-query";
 import { fetchCareers } from "./api/fetchCareers";
-import { Career } from "@/service/getCareer";
+import type { Career } from "@/service/getCareer";
 import { fetchQuestions } from "./api/fetchQuestions";
-import { Question } from "@/service/getQuestion";
+import type { Question } from "@/service/getQuestion";
+import { fetchJobs } from "./api/fetchJobs";
 
 export default function ResumePage() {
   const ref = useRef<HTMLDivElement>(null);
@@ -17,7 +17,7 @@ export default function ResumePage() {
     queries: [
       {
         queryKey: ["getJobs"],
-        queryFn: getJobs,
+        queryFn: fetchJobs,
       },
       {
         queryKey: ["getCareers"],
