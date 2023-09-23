@@ -9,6 +9,7 @@ import type { Career } from "@/service/getCareer";
 import { fetchQuestions } from "./api/fetchQuestions";
 import type { Question } from "@/service/getQuestion";
 import { fetchJobs } from "./api/fetchJobs";
+import type { Job } from "@/service/getJobs";
 
 export default function ResumePage() {
   const ref = useRef<HTMLDivElement>(null);
