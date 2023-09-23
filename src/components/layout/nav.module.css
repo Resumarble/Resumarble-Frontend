@@ -9,7 +9,7 @@
   background: #fff;
 }
 
-.nav h1 {
+.nav h1 a {
   color: var(--light-green);
   letter-spacing: -1px;
   font-size: 1.2rem;

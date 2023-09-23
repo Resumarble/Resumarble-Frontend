@@ -9,15 +9,14 @@ import Link from "next/link";
 type TitleRefType = {
   title: null | undefined | HTMLElement;
   subTitle: null | undefined | HTMLElement;
-  desc: null | undefined | HTMLElement;
 };
 
 export default function Home() {
   const titleRef = useRef<TitleRefType>({
     subTitle: null,
     title: null,
-    desc: null,
   });
+  const descRef = useRef<HTMLParagraphElement>(null);
   const btnsRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -33,6 +32,10 @@ export default function Home() {
 
       timers.push(timer);
     });
+
+    setTimeout(() => {
+      descRef.current?.classList.add("lazy-show");
+    }, DELAY);
 
     setTimeout(() => {
       btnsRef.current?.classList.add("lazy-show");
@@ -61,7 +64,7 @@ export default function Home() {
           >
             Resumarble
           </h2>
-          <p className={styles.desc} ref={(el) => (titleRef.current.desc = el)}>
+          <p className={styles.desc} ref={descRef}>
             레주마블은 사용자가 작성한 내용을 기반으로
             <strong>AI가 생성한 면접 질문/답변 목록을 제공</strong>합니다.
             <br />
