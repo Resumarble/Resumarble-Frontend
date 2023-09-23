@@ -1,16 +1,15 @@
 "use client";
 import { useEffect, useState } from "react";
+import { useMutation } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 import styles from "./form.module.css";
 
-import type { SelectKey } from "./types/selectKey";
-
+import type { SelectKey } from "../types/selectKey";
 import { Job } from "@/service/getJobs";
 import { Career } from "@/service/getCareer";
 import { Question } from "@/service/getQuestion";
-import { useMutation } from "@tanstack/react-query";
 import { PostResume, postResume } from "@/service/postResume";
-import { useRouter } from "next/navigation";
-import Spinner from "../common/Spinner";
+import Spinner from "@/components/common/Spinner";
 
 type FormProps = {
   options: [jobs: Job[], careers: Career[], questions: Question[]];
