@@ -43,10 +43,6 @@ export default function ResumePage() {
   const isLoading = datas.some((data) => data.isLoading);
   const isError = datas.some((data) => data.isError);
 
-  if (isLoading) {
-    return <div>데이터를 불러오고 있어요.</div>;
-  }
-
   if (isError) {
     return <div>잠시 후 다시 시도해주세요.</div>;
   }
@@ -54,6 +50,7 @@ export default function ResumePage() {
   return (
     <>
       <div ref={ref} className={styles.container}>
+        {isLoading && <div>데이터를 불러오고 있어요.</div>}
         <Form options={options} />
       </div>
     </>
