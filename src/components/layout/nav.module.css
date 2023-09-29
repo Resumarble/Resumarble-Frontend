@@ -25,6 +25,6 @@
   color: var(--dark-green);
 }
 
-.nav li:nth-child(2) {
+.nav .bold {
   font-weight: 700;
 }
