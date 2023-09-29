@@ -20,15 +20,6 @@ export default function Home() {
   const descRef = useRef<HTMLParagraphElement>(null);
   const btnsRef = useRef<HTMLDivElement>(null);
   const isLoggedIn = useStore((state) => state.isLoggedIn);
-  const setLogin = useStore((state) => state.login);
-
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    // TODO 토큰 유효한지 체크하는 API 요청하기
-    if (token) {
-      setLogin();
-    }
-  }, [isLoggedIn]);
 
   useEffect(() => {
     const timers: NodeJS.Timeout[] = [];

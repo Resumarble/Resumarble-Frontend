@@ -3,7 +3,7 @@
 import Container from "@/components/common/Container";
 import styles from "./login.module.css";
 import Input from "@/components/common/Input";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "@/components/common/Button";
 import customFetch from "@/utils/customFetch";
 import { useRouter } from "next/navigation";
@@ -16,9 +16,13 @@ export default function LoginPage() {
   const [id, setId] = useState("");
   const [pw, setPw] = useState("");
 
-  console.log(isLoggedIn);
-
   const router = useRouter();
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      return router.push("/");
+    }
+  }, [isLoggedIn]);
 
   const onChangeId = (e: React.ChangeEvent<HTMLInputElement>) => {
     setId(e.target.value);
@@ -62,37 +66,41 @@ export default function LoginPage() {
   };
 
   return (
-    <div className={styles.container}>
-      <Container showTopWhite>
-        <h3>LOGIN</h3>
-        <form action="post">
-          <Input
-            onChange={onChangeId}
-            required
-            placeholder="아이디를 입력해주세요."
-            htmlFor="id"
-            id="id"
-            type="text"
-            labelChild="아이디"
-          />
+    <>
+      {!isLoggedIn && (
+        <div className={styles.container}>
+          <Container showTopWhite>
+            <h3>LOGIN</h3>
+            <form action="post">
+              <Input
+                onChange={onChangeId}
+                required
+                placeholder="아이디를 입력해주세요."
+                htmlFor="id"
+                id="id"
+                type="text"
+                labelChild="아이디"
+              />
 
-          <Input
-            onChange={onChangePw}
-            required
-            placeholder="비밀번호를 입력해주세요."
-            htmlFor="pw"
-            id="pw"
-            type="password"
-            labelChild="비밀번호"
-          />
+              <Input
+                onChange={onChangePw}
+                required
+                placeholder="비밀번호를 입력해주세요."
+                htmlFor="pw"
+                id="pw"
+                type="password"
+                labelChild="비밀번호"
+              />
 
-          <Button type="submit" onClick={submitLoginForm} isDark>
-            로그인
-          </Button>
+              <Button type="submit" onClick={submitLoginForm} isDark>
+                로그인
+              </Button>
 
-          {/* // TODO 회원가입 버튼  */}
-        </form>
-      </Container>
-    </div>
+              {/* // TODO 회원가입 버튼  */}
+            </form>
+          </Container>
+        </div>
+      )}
+    </>
   );
 }

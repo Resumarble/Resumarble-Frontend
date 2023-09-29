@@ -4,11 +4,21 @@ import styles from "./nav.module.css";
 import useStore from "@/store/zustand/login";
 import { useRouter } from "next/navigation";
 import customFetch from "@/utils/customFetch";
+import { useEffect } from "react";
 
 export default function Nav() {
   const isLoggedIn = useStore((state) => state.isLoggedIn);
+  const login = useStore((state) => state.login);
   const logout = useStore((state) => state.logout);
   const router = useRouter();
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    // TODO 토큰 유효한지 체크하는 API 요청하기
+    if (token) {
+      login();
+    }
+  }, []);
 
   const onClickLogout = async () => {
     try {
