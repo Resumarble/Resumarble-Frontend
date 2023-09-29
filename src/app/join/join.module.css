@@ -21,9 +21,11 @@
   position: absolute;
 
   opacity: 0.5;
-  font-weight: 500;
-  top: 0px;
+  font-weight: 300;
+  top: 15px;
   left: 30px;
+
+  font-family: "noto-sans";
 }
 
 .container form {
@@ -83,7 +85,7 @@
 }
 
 .warning {
-  background-color: red;
+  color: rgb(160, 1, 1) !important;
 }
 
 .joinBtn {
