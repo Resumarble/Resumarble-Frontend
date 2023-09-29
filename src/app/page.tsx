@@ -5,6 +5,7 @@ import styles from "./page.module.css";
 import Container from "@/components/common/Container";
 import Button from "@/components/common/Button";
 import Link from "next/link";
+import useStore from "@/store/zustand/login";
 
 type TitleRefType = {
   title: null | undefined | HTMLElement;
@@ -18,6 +19,7 @@ export default function Home() {
   });
   const descRef = useRef<HTMLParagraphElement>(null);
   const btnsRef = useRef<HTMLDivElement>(null);
+  const isLoggedIn = useStore((state) => state.isLoggedIn);
 
   useEffect(() => {
     const timers: NodeJS.Timeout[] = [];
@@ -78,9 +80,11 @@ export default function Home() {
             <Link href={"/resume"}>
               <Button>생성하기</Button>
             </Link>
-            <Link href={"/login"}>
-              <Button isDark>로그인</Button>
-            </Link>
+            {!isLoggedIn && (
+              <Link href={"/login"}>
+                <Button isDark>로그인</Button>
+              </Link>
+            )}
           </div>
         </div>
       </Container>

@@ -8,6 +8,7 @@ import Button from "@/components/common/Button";
 import Input from "@/components/common/Input";
 
 import customFetch from "@/utils/customFetch";
+import useStore from "@/store/zustand/login";
 
 export default function JoinPage() {
   const [id, setId] = useState("");
@@ -21,6 +22,13 @@ export default function JoinPage() {
   const [isSamePw, setIsSamePw] = useState(false);
 
   const router = useRouter();
+  const isLoggedIn = useStore((state) => state.isLoggedIn);
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      return router.push("/");
+    }
+  }, [isLoggedIn]);
 
   useEffect(() => {
     if (pw.pw && pw.rePw) {

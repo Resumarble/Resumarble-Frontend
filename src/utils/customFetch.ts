@@ -1,6 +1,6 @@
 interface CustomFetchType {
   url: string;
-  headers?: [string: string];
+  header?: { [key: string]: string };
   body?: any;
   method: "GET" | "POST";
 }
@@ -14,10 +14,12 @@ type ConfigType = {
 export default async function customFetch({
   url,
   body,
+  header,
   method = "GET",
 }: CustomFetchType) {
   const headers = {
     "Content-Type": "application/json",
+    ...header,
   };
 
   const config: ConfigType = {

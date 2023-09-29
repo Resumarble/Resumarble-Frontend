@@ -5,8 +5,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 import ClientProvider from "@/components/client/ClientProvider";
-import HydrateOnClient from "@/store/hydrateOnClient";
-import getQueryClient from "@/store";
+import HydrateOnClient from "@/store/react-query/hydrateOnClient";
+import getQueryClient from "@/store/react-query";
 import { getJobs } from "@/service/getJobs";
 import { getCareers } from "@/service/getCareer";
 import { getQuestion } from "@/service/getQuestion";
