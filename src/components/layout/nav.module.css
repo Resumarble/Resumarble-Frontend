@@ -28,3 +28,7 @@
 .nav .bold {
   font-weight: 700;
 }
+
+.nav li.logout a {
+  color: #c2c2c2;
+}

@@ -53,9 +53,12 @@ export default function Nav() {
         {isLoggedIn ? (
           <>
             <li className={styles.bold}>
+              <Link href="/resume">질문생성</Link>
+            </li>
+            <li className={styles.bold}>
               <Link href="/mypage">마이페이지</Link>
             </li>
-            <li onClick={onClickLogout}>
+            <li className={styles.logout} onClick={onClickLogout}>
               <Link href="/">로그아웃</Link>
             </li>
           </>
