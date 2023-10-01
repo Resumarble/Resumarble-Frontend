@@ -41,7 +41,11 @@ export default function MyPage() {
     getDecodedToken();
   }, []);
 
-  const { data: predictions, isLoading } = useQuery({
+  const {
+    data: predictions,
+    isLoading,
+    isError,
+  } = useQuery({
     queryKey: ["getMyPage", userId],
     queryFn: async () => {
       const data = await customFetch({
@@ -62,7 +66,7 @@ export default function MyPage() {
     enabled: !!userId,
   });
 
-  console.log(predictions);
+  console.log(isError);
 
   return (
     <div className={styles.container}>
@@ -72,7 +76,7 @@ export default function MyPage() {
           페이지입니다.
         </p>
         <br />
-        {isLoading ? (
+        {isLoading || !userId ? (
           <div>데이터를 불러오고 있어요.</div>
         ) : (
           <div>
