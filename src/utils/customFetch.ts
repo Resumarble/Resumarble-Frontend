@@ -17,9 +17,14 @@ export default async function customFetch({
   header,
   method = "GET",
 }: CustomFetchType) {
+  let token = localStorage.getItem("token") || null;
+  if (token) {
+    // TODO 토큰 유효 확인
+  }
+
   const headers = {
     "Content-Type": "application/json",
-    Authorization: localStorage.getItem("token") || null,
+    Authorization: token,
     ...header,
   };
 

@@ -33,14 +33,14 @@ export default function Nav() {
       if (res.code !== 200) {
         return window.alert(res.message);
       }
-
+    } catch (err) {
+      console.error("Logout Error");
+    } finally {
       localStorage.removeItem("token");
       localStorage.removeItem("refreshToken");
 
       logout();
       router.push("/");
-    } catch (err) {
-      console.error("Logout Error");
     }
   };
 
