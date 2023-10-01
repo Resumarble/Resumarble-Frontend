@@ -33,7 +33,7 @@ export default async function RootLayout({
   // TODO: 코드 이동시키기
   const queryClient = getQueryClient();
 
-  await Promise.all([
+  const formQueries = [
     queryClient.prefetchQuery({
       queryKey: ["getJobs"],
       queryFn: getJobs,
@@ -49,7 +49,9 @@ export default async function RootLayout({
       queryFn: getQuestion,
       staleTime: 1000 * 3600 * 24,
     }),
-  ]);
+  ];
+
+  await Promise.all(formQueries);
 
   const dehydratedState = dehydrate(queryClient);
 
