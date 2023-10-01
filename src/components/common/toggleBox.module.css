@@ -6,7 +6,12 @@
 .title {
   padding: 10px 15px;
   font-size: 1rem;
-  background-color: #f8f8f8;
+
+  color: var(--dark-green);
+  background-color: #f8f8f850;
+  border-radius: 10px;
+  border: 1px solid #ffffff50;
+
   cursor: pointer;
   position: relative;
 }
@@ -15,6 +20,8 @@
   padding: 0 10px;
 
   overflow: hidden;
+
+  color: var(--dark-green);
 
   animation: scaleY 0.4s alternate;
   animation-fill-mode: both;
@@ -46,8 +53,8 @@
   content: "";
   width: 5px;
   height: 5px;
-  border-top: 2px solid #000;
-  border-right: 2px solid #000;
+  border-top: 2px solid #ffffff;
+  border-right: 2px solid #ffffff;
 }
 
 .up:before {

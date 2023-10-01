@@ -33,14 +33,14 @@ export default function Nav() {
       if (res.code !== 200) {
         return window.alert(res.message);
       }
-
+    } catch (err) {
+      console.error("Logout Error");
+    } finally {
       localStorage.removeItem("token");
       localStorage.removeItem("refreshToken");
 
       logout();
       router.push("/");
-    } catch (err) {
-      console.error("Logout Error");
     }
   };
 
@@ -53,19 +53,22 @@ export default function Nav() {
         {isLoggedIn ? (
           <>
             <li className={styles.bold}>
+              <Link href="/resume">질문생성</Link>
+            </li>
+            <li className={styles.bold}>
               <Link href="/mypage">마이페이지</Link>
             </li>
-            <li onClick={onClickLogout}>
+            <li className={styles.logout} onClick={onClickLogout}>
               <Link href="/">로그아웃</Link>
             </li>
           </>
         ) : (
           <>
             <li>
-              <Link href="/login">로그인</Link>
+              <Link href="/login">로그인 (beta)</Link>
             </li>
             <li className={styles.bold}>
-              <Link href="/join">회원가입</Link>
+              <Link href="/join">회원가입 (beta)</Link>
             </li>
           </>
         )}

@@ -1,6 +1,5 @@
 "use client";
 import { useEffect, useState } from "react";
-import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import styles from "./form.module.css";
 
@@ -10,6 +9,7 @@ import { Career } from "@/service/getCareer";
 import { Question } from "@/service/getQuestion";
 import { PostResume, postResume } from "@/service/postResume";
 import Spinner from "@/components/common/Spinner";
+import customFetch from "@/utils/customFetch";
 
 type FormProps = {
   options: [jobs: Job[], careers: Career[], questions: Question[]];
@@ -64,23 +64,7 @@ export const Form = ({ options }: FormProps) => {
     setInputForm((prev) => ({ ...prev, [selectedType]: selectedQuestion }));
   };
 
-  const mutation = useMutation(postResume, {
-    onMutate: () => {
-      setShowLoading(true);
-    },
-    onSuccess: (res) => {
-      setShowLoading(false);
-
-      localStorage.setItem("result", JSON.stringify(res.data.interviews));
-
-      router.push("/result");
-    },
-    onError: () => {
-      //  TODO 에러 페이지로 라우트
-    },
-  });
-
-  const handleSubmit = (e: React.FormEvent<HTMLButtonElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
     const postResum: PostResume = {
@@ -91,8 +75,24 @@ export const Form = ({ options }: FormProps) => {
         content: inputForm.contents,
       },
     };
+    try {
+      setShowLoading(true);
 
-    mutation.mutate(postResum);
+      const res = await customFetch({
+        url: "/resumes/interview-questions",
+        method: "POST",
+        body: postResum,
+      });
+
+      localStorage.setItem("result", JSON.stringify(res.data.interviews));
+      router.push("/result");
+    } catch (error) {
+      console.error("Fetch Error:", error);
+      window.alert("네트워크 오류가 발생했습니다. 다시 시도해주세요.");
+      router.push("/resume");
+    } finally {
+      setShowLoading(false);
+    }
   };
 
   useEffect(() => {
