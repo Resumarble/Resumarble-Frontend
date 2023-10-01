@@ -1,0 +1,93 @@
+.container {
+  height: inherit;
+
+  padding-top: 50px;
+  padding-bottom: 50px;
+
+  position: relative;
+
+  animation: show 1s alternate;
+  animation-fill-mode: both;
+}
+
+.container h3 {
+  color: #fff;
+  text-align: center;
+  font-size: 4.5rem;
+  font-weight: 600;
+  text-shadow: 0 0 20px var(--dark-green-shadow);
+
+  z-index: 10;
+  position: absolute;
+
+  opacity: 0.5;
+  font-weight: 300;
+  top: 15px;
+  left: 30px;
+
+  font-family: "noto-sans";
+}
+
+.container form {
+  max-width: 500px;
+  margin: 0 auto;
+
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  margin-top: 70px;
+  position: relative;
+
+  padding: 50px 0;
+}
+
+.duplication {
+  color: #fff;
+  background: var(--light-green);
+
+  padding: 7px 15px;
+  border: none;
+  border-radius: 20px;
+
+  position: absolute;
+  right: 15px;
+  top: 60px;
+
+  cursor: pointer;
+}
+
+.msg {
+  position: absolute;
+  top: 65px;
+  right: 120px;
+  font-size: 0.8rem;
+}
+
+.msg p {
+  color: #fff;
+}
+
+.msg p::after {
+  content: "";
+  width: 100%;
+  height: 100%;
+  background: var(--dark-green-shadow);
+  position: absolute;
+  top: 0;
+  left: -5px;
+  padding: 0 5px;
+  z-index: -1;
+}
+
+.ok {
+  color: var(--dark-green);
+}
+
+.warning {
+  color: rgb(160, 1, 1) !important;
+}
+
+.joinBtn {
+  margin-top: 40px;
+}

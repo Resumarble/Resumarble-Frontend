@@ -1,0 +1,44 @@
+.container {
+  width: 80vw;
+  max-width: 1280px;
+  height: calc(100% - 40px);
+  max-height: calc(100vh - 200px);
+
+  margin: 0 auto;
+  margin-top: 20px;
+  background: #ffffff45;
+
+  border: 1px solid #ffffff20;
+  border-top: 1px solid #ffffff80;
+  border-bottom: 1px solid #ffffff80;
+  border-radius: 10px;
+
+  padding: 100px;
+  padding-left: 120px;
+
+  overflow: hidden;
+  z-index: 1;
+
+  box-shadow: 4px 4px 50px var(--dark-green-shadow);
+
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+
+  position: relative;
+}
+
+.topWhite::after {
+  content: "";
+  width: 100%;
+  height: 80px;
+
+  top: 0;
+  left: 0;
+  position: absolute;
+
+  background: #ffffff70;
+}
+
+.yScroll {
+  overflow-y: scroll;
+}

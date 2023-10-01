@@ -4,6 +4,11 @@
   --font-mono: ui-monospace, Menlo, Monaco, "Cascadia Mono", "Segoe UI Mono",
     "Roboto Mono", "Oxygen Mono", "Ubuntu Monospace", "Source Code Pro",
     "Fira Mono", "Droid Sans Mono", "Courier New", monospace;
+
+  --light-green: #5aac8c;
+  --light-green-shadow: #5aac8c30;
+  --dark-green: #5c796e;
+  --dark-green-shadow: #5c796e30;
 }
 
 * {
@@ -17,6 +22,33 @@ body {
   overflow: hidden;
 }
 
+a {
+  text-decoration: none;
+}
+
+li {
+  list-style: none;
+}
+
+input {
+  border: none;
+}
+
+input:focus {
+  outline: none;
+}
+
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 30px transparent inset;
+  -webkit-text-fill-color: var(--dark-green);
+}
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  transition: background-color 5000s ease-in-out 0s;
+}
+
 select {
   padding: 10px;
   border: 1px solid #ddd;
@@ -27,23 +59,48 @@ select:focus {
   outline: none;
 }
 
-.btn {
-  width: 350px;
-  padding: 0.5rem;
+.section {
+  position: relative;
+  height: calc(100vh - 52px);
+  background: url("/bg.png") no-repeat;
+  background-size: cover;
+  overflow: hidden;
 
-  color: #fff;
-  border: 1px solid #fff;
-  border-radius: 0.5rem;
-  background: transparent;
-
-  font-size: 1.1rem;
-  cursor: pointer;
-
-  transition: all 0.2s;
+  max-height: 1440px;
 }
 
-.btn:hover {
-  background: #ffffff20;
+.marble-bg {
+  width: 864px;
+  height: 874px;
+  background: url("/marble.png") no-repeat;
+
+  filter: blur(0px);
+
+  opacity: 0.3;
+
+  position: absolute;
+  right: -100px;
+  bottom: -100px;
+
+  z-index: -1;
+
+  scale: 0.8;
+}
+
+.deco {
+  width: 100vw;
+  height: 100%;
+  background: url("/deco.png") no-repeat;
+  background-size: cover;
+
+  position: absolute;
+  left: 0;
+  bottom: 0;
+
+  animation: opacityShow 1.5s alternate infinite;
+  animation-fill-mode: both;
+
+  scale: 0.9;
 }
 
 ::-webkit-scrollbar {
@@ -56,4 +113,26 @@ select:focus {
 
 ::-webkit-scrollbar-track {
   background-color: #f1f1f1;
+}
+
+@keyframes show {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes opacityShow {
+  0% {
+    opacity: 0;
+    transform: translateY(0px);
+  }
+
+  100% {
+    opacity: 0.4;
+    transform: translateY(10px);
+  }
 }

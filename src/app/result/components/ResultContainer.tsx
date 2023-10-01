@@ -1,9 +1,10 @@
 "use client";
 import { useEffect, useState } from "react";
-import styles from "./resultContainer.module.css";
-import { Result } from "@/components/resume/Form";
 import Link from "next/link";
+
+import styles from "./resultContainer.module.css";
 import ToggleBox from "@/components/common/ToggleBox";
+import { Result } from "@/app/resume/components/Form";
 import SaveButton from "./SaveButton";
 
 type Props = {

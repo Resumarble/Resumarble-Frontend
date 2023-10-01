@@ -1,0 +1,34 @@
+.nav {
+  width: 100vw;
+  height: 52px;
+
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+
+  background: #fff;
+}
+
+.nav h1 a {
+  color: var(--light-green);
+  letter-spacing: -1px;
+  font-size: 1.2rem;
+}
+
+.nav ul {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.nav li a {
+  color: var(--dark-green);
+}
+
+.nav .bold {
+  font-weight: 700;
+}
+
+.nav li.logout a {
+  color: #c2c2c2;
+}

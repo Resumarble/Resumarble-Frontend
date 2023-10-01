@@ -2,40 +2,46 @@
 
 import React, { useRef, useEffect } from "react";
 import styles from "./page.module.css";
+import Container from "@/components/common/Container";
+import Button from "@/components/common/Button";
 import Link from "next/link";
-import Background from "@/components/bg/Background";
+import useStore from "@/store/zustand/login";
 
 type TitleRefType = {
   title: null | undefined | HTMLElement;
-  desc: null | undefined | HTMLElement;
+  subTitle: null | undefined | HTMLElement;
 };
 
 export default function Home() {
   const titleRef = useRef<TitleRefType>({
+    subTitle: null,
     title: null,
-    desc: null,
   });
+  const descRef = useRef<HTMLParagraphElement>(null);
   const btnsRef = useRef<HTMLDivElement>(null);
+  const isLoggedIn = useStore((state) => state.isLoggedIn);
 
   useEffect(() => {
     const timers: NodeJS.Timeout[] = [];
-    const DELAY = 500;
+    const DELAY = 300;
 
     Object.keys(titleRef.current).forEach((key: string, idx: number) => {
       const currentKey = key as keyof typeof titleRef.current;
 
       const timer = setTimeout(() => {
-        if (currentKey === "title") {
-          titleRef.current[currentKey]?.classList.add("scaleUp");
-        }
-
         titleRef.current[currentKey]?.classList.add("move");
       }, idx * DELAY);
 
       timers.push(timer);
     });
 
-    btnsRef.current?.classList.add("lazy-show");
+    setTimeout(() => {
+      descRef.current?.classList.add("lazy-show");
+    }, DELAY);
+
+    setTimeout(() => {
+      btnsRef.current?.classList.add("lazy-show");
+    }, 2 * DELAY);
 
     return () => {
       timers.forEach((timer) => clearTimeout(timer));
@@ -44,52 +50,44 @@ export default function Home() {
 
   return (
     <div className={`${styles.container}`}>
-      <Background />
-      <div className={styles.content}>
-        <div className={styles.topContent}>
-          <h1
+      <Container showMarbleImg={true}>
+        <div className={styles.textContainer}>
+          <p
+            ref={(el) => {
+              titleRef.current.subTitle = el;
+            }}
+            className={styles.subTitle}
+          >
+            이력서 기반 면접 질문/답변 생성 서비스
+          </p>
+          <h2
             ref={(el) => (titleRef.current.title = el)}
             className={`${styles.title}`}
           >
             Resumarble
-          </h1>
-          <p
-            ref={(el) => {
-              titleRef.current.desc = el;
-            }}
-            className={styles.desc}
-          >
-            이력서 기반 면접 예상 질문 서비스
+          </h2>
+          <p className={styles.desc} ref={descRef}>
+            레주마블은 사용자가 작성한 내용을 기반으로
+            <strong>AI가 생성한 면접 질문/답변 목록을 제공</strong>합니다.
+            <br />
+            비회원으로도 이용할 수 있으나, 재열람 기능은 제공되고 있지 않습니다.
+            <br />
+            회원가입 후 이용 시 생성된 결과가 자동 저장되어 마이페이지에서
+            언제든지 다시 열람할 수 있습니다. (베타버전)
           </p>
-        </div>
 
-        <div
-          ref={btnsRef}
-          className={`${styles.joinWrapper} ${styles.bottomContent}}`}
-        >
-          {/* 회원가입 기능 추가 시 로그인 버튼으로 변경하기 */}
-
-          <Link href={"/resume"}>
-            <button className={`${styles.btn} ${styles.login}`}>
-              시작하기
-            </button>
-          </Link>
-
-          <button
-            onClick={() => {
-              window.alert("준비중");
-            }}
-            className={`${styles.btn} ${styles.join}`}
-          >
-            회원가입
-          </button>
+          <div ref={btnsRef} className={styles.btns}>
+            <Link href={"/resume"}>
+              <Button>생성하기</Button>
+            </Link>
+            {!isLoggedIn && (
+              <Link href={"/login"}>
+                <Button isDark>로그인 (beta)</Button>
+              </Link>
+            )}
+          </div>
         </div>
-        <div className={styles.banner}>
-          <p className="marquee">
-            현재는 로그인, 회원가입 없이 사용해보실 수 있어요.
-          </p>
-        </div>
-      </div>
+      </Container>
     </div>
   );
 }
