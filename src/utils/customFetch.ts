@@ -19,6 +19,7 @@ export default async function customFetch({
 }: CustomFetchType) {
   const headers = {
     "Content-Type": "application/json",
+    Authorization: localStorage.getItem("token") || null,
     ...header,
   };
 
@@ -31,14 +32,13 @@ export default async function customFetch({
     config.body = JSON.stringify(body);
   }
 
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_SERVER_URL}${url}`,
-    config
-  );
-
-  if (!res.ok) {
-    throw new Error(`fetch ERROR, ${res.status}`);
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_SERVER_URL}${url}`,
+      config
+    );
+    return res.json();
+  } catch (err) {
+    console.error(`fetch ERROR`);
   }
-
-  return res.json();
 }
