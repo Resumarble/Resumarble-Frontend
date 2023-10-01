@@ -2,7 +2,7 @@
   width: 80vw;
   max-width: 1280px;
   height: calc(100% - 40px);
-  max-height: 1280px;
+  max-height: calc(100vh - 200px);
 
   margin: 0 auto;
   margin-top: 20px;
@@ -17,7 +17,6 @@
   padding-left: 120px;
 
   overflow: hidden;
-  position: relative;
   z-index: 1;
 
   box-shadow: 4px 4px 50px var(--dark-green-shadow);
@@ -38,4 +37,8 @@
   position: absolute;
 
   background: #ffffff70;
+}
+
+.yScroll {
+  overflow-y: scroll;
 }
