@@ -73,7 +73,7 @@ export default function Home() {
             비회원으로도 이용할 수 있으나, 재열람 기능은 제공되고 있지 않습니다.
             <br />
             회원가입 후 이용 시 생성된 결과가 자동 저장되어 마이페이지에서
-            언제든지 다시 열람할 수 있습니다.
+            언제든지 다시 열람할 수 있습니다. (베타버전)
           </p>
 
           <div ref={btnsRef} className={styles.btns}>
@@ -82,7 +82,7 @@ export default function Home() {
             </Link>
             {!isLoggedIn && (
               <Link href={"/login"}>
-                <Button isDark>로그인</Button>
+                <Button isDark>로그인 (beta)</Button>
               </Link>
             )}
           </div>

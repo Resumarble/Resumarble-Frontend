@@ -51,6 +51,10 @@ export default function ResumePage() {
     <>
       <div ref={ref} className={styles.container}>
         {isLoading && <div>데이터를 불러오고 있어요.</div>}
+        <p>
+          보고 계신 화면은 <strong>구버전</strong>으로 리뉴얼 진행중인
+          페이지입니다.
+        </p>
         <Form options={options} />
       </div>
     </>

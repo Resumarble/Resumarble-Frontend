@@ -9,6 +9,8 @@ import styles from "./mypage.module.css";
 import customFetch from "@/utils/customFetch";
 import useStore from "@/store/zustand/login";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
+import Button from "@/components/common/Button";
 
 export default function MyPage() {
   const [userId, setUserId] = useState<number>(); // token 복호화 후 id 값 추출
@@ -16,7 +18,6 @@ export default function MyPage() {
 
   const isLoggedIn = useStore((state) => state.isLoggedIn);
   useEffect(() => {
-    // TODO 비회원이 접속 시 메인으로 라우트
     if (!isLoggedIn) {
       return route.push("/");
     }
@@ -40,11 +41,7 @@ export default function MyPage() {
     getDecodedToken();
   }, []);
 
-  const {
-    data: predictions,
-    isLoading,
-    isError,
-  } = useQuery({
+  const { data: predictions, isLoading } = useQuery({
     queryKey: ["getMyPage", userId],
     queryFn: async () => {
       const data = await customFetch({
@@ -65,30 +62,47 @@ export default function MyPage() {
     enabled: !!userId,
   });
 
-  console.log(isError);
+  console.log(predictions);
 
   return (
     <div className={styles.container}>
       <Container showTopWhite overflowYScroll>
+        <p>
+          보고 계신 화면은 <strong>개발 진행중</strong>으로 미완성된
+          페이지입니다.
+        </p>
+        <br />
         {isLoading ? (
           <div>데이터를 불러오고 있어요.</div>
         ) : (
           <div>
-            {predictions.map(
-              (
-                // TODO 추후 삭제 요청 하려면 각 post별 id값 있어야 할듯
-                prediction: { question: string; answer: string },
-                idx: number
-              ) => {
-                return (
-                  <div key={`${prediction.question} ${idx}`}>
-                    <ToggleBox
-                      title={prediction.question}
-                      contents={prediction.answer}
-                    ></ToggleBox>
-                  </div>
-                );
-              }
+            {!predictions.length ? (
+              <div>
+                <h2>No data</h2>
+                <p>생성한 질문을 누적해서 볼 수 있는 페이지입니다.</p>
+                <br />
+                <br />
+                <Link href={"/resume"}>
+                  <Button isDark>생성하기</Button>
+                </Link>
+              </div>
+            ) : (
+              predictions.map(
+                (
+                  // TODO 추후 삭제 요청 하려면 각 post별 id값 있어야 할듯
+                  prediction: { question: string; answer: string },
+                  idx: number
+                ) => {
+                  return (
+                    <div key={`${prediction.question} ${idx}`}>
+                      <ToggleBox
+                        title={prediction.question}
+                        contents={prediction.answer}
+                      ></ToggleBox>
+                    </div>
+                  );
+                }
+              )
             )}
           </div>
         )}
