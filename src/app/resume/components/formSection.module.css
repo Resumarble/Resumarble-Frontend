@@ -1,0 +1,180 @@
+.title {
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: #fff;
+
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.titleHighlight {
+  color: #fff;
+  font-weight: 600;
+  padding: 0 3px;
+  background-color: #5aac8c80;
+}
+
+.subTitle {
+  margin-top: -45px;
+  color: #fff;
+}
+
+.radioInputBox {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  gap: 15px;
+}
+
+.radio[type="radio"] {
+  display: none;
+}
+
+.radio[type="radio"]:checked + label {
+  background: #5aac8c80;
+  color: #fff;
+}
+
+.label {
+  width: 230px;
+  height: 38px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  color: #fff;
+  background-color: #ffffff20;
+  border: 1px solid #fff;
+  padding: 10px;
+  border-radius: 100px;
+
+  text-align: center;
+
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.label:hover {
+  background-color: #ffffff50;
+}
+
+.questionBtns {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.questionBtns input[type="radio"] {
+  display: none;
+}
+
+.questionBtns input[type="radio"]:checked + label {
+  background: #ffffff;
+  color: var(--dark-green);
+}
+
+.questionBtns label {
+  width: 20px;
+  height: 20px;
+  border-radius: 100px;
+  padding: 15px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  color: #fff;
+  border: 1px solid #ffffff95;
+  background: #ffffff20;
+
+  cursor: pointer;
+}
+
+.steps {
+  display: flex;
+  gap: 30px;
+
+  position: absolute;
+  bottom: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.step {
+  display: none;
+  z-index: 10;
+}
+
+.step + label {
+  display: block;
+  width: 11px;
+  height: 11px;
+  background: #ffffff70;
+  border-radius: 100px;
+  cursor: pointer;
+}
+
+.step:checked + label {
+  display: block;
+  width: 11px;
+  height: 11px;
+  background: #fff;
+  border-radius: 100px;
+}
+
+.inputsContainer {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  gap: 40px;
+
+  margin-top: 20px;
+  padding-bottom: 1px;
+}
+
+.inputsContainer .textareaBox {
+  width: 100%;
+  height: 198px;
+}
+
+.textarea {
+  width: 100%;
+  max-width: 100%;
+  height: 100%;
+  max-height: 100%;
+
+  background: #ffffff50;
+  border: 1px solid #ffffff95;
+  border-radius: 10px;
+  resize: none;
+  padding: 15px;
+
+  font-family: "nanum-squere";
+  color: var(--dark-green);
+}
+
+.textarea::placeholder {
+  color: var(--dark-green);
+}
+
+.resultBtn {
+  position: absolute;
+  bottom: 100px;
+  right: 100px;
+
+  width: 150px;
+
+  padding: 8px 25px;
+  border-radius: 100px;
+  border: 1px solid #ffffff98;
+
+  background: var(--light-green);
+  color: #fff;
+
+  z-index: 10;
+  cursor: pointer;
+}
