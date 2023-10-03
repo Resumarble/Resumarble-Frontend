@@ -17,6 +17,7 @@ export default function MyPage() {
   const route = useRouter();
 
   const isLoggedIn = useStore((state) => state.isLoggedIn);
+  const logout = useStore((state) => state.logout);
   useEffect(() => {
     if (!isLoggedIn) {
       return route.push("/");
@@ -28,20 +29,36 @@ export default function MyPage() {
         token: localStorage.getItem("token")?.split(" ").pop(),
       };
       if (!data.token) return;
-      const res = await fetch("/api/token", {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        method: "POST",
-        body: JSON.stringify(data),
-      });
-      const { id: userId } = await res.json();
-      setUserId(() => userId);
+
+      try {
+        const res = await fetch("/api/token", {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          method: "POST",
+          body: JSON.stringify(data),
+        });
+        const { id: userId } = await res.json();
+        setUserId(() => userId);
+      } catch (err) {
+        console.error(err, "token error");
+
+        // TODO 리프레시 토큰 로직 추가 전까지 강제 로그아웃
+        window.alert("세션이 만료되었습니다. 다시 로그인해주세요.");
+        route.push("/login");
+        localStorage.removeItem("token");
+        localStorage.removeItem("refreshToken");
+        logout();
+      }
     };
     getDecodedToken();
   }, []);
 
-  const { data: predictions, isLoading } = useQuery({
+  const {
+    data: predictions,
+    isLoading,
+    isError,
+  } = useQuery({
     queryKey: ["getMyPage", userId],
     queryFn: async () => {
       const data = await customFetch({
@@ -62,8 +79,6 @@ export default function MyPage() {
     enabled: !!userId,
   });
 
-  console.log(predictions);
-
   return (
     <div className={styles.container}>
       <Container showTopWhite overflowYScroll>
@@ -72,7 +87,7 @@ export default function MyPage() {
           페이지입니다.
         </p>
         <br />
-        {isLoading ? (
+        {isLoading || !userId ? (
           <div>데이터를 불러오고 있어요.</div>
         ) : (
           <div>
