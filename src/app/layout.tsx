@@ -30,30 +30,29 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  // TODO: 코드 이동시키기
-  const queryClient = getQueryClient();
+  // const queryClient = getQueryClient();
 
-  const formQueries = [
-    queryClient.prefetchQuery({
-      queryKey: ["getJobs"],
-      queryFn: getJobs,
-      staleTime: 1000 * 3600 * 24,
-    }),
-    queryClient.prefetchQuery({
-      queryKey: ["getCareers"],
-      queryFn: getCareers,
-      staleTime: 1000 * 3600 * 24,
-    }),
-    queryClient.prefetchQuery({
-      queryKey: ["getQuestions"],
-      queryFn: getQuestion,
-      staleTime: 1000 * 3600 * 24,
-    }),
-  ];
+  // const formQueries = [
+  //   queryClient.prefetchQuery({
+  //     queryKey: ["getJobs"],
+  //     queryFn: getJobs,
+  //     staleTime: 1000 * 3600 * 24,
+  //   }),
+  //   queryClient.prefetchQuery({
+  //     queryKey: ["getCareers"],
+  //     queryFn: getCareers,
+  //     staleTime: 1000 * 3600 * 24,
+  //   }),
+  //   queryClient.prefetchQuery({
+  //     queryKey: ["getQuestions"],
+  //     queryFn: getQuestion,
+  //     staleTime: 1000 * 3600 * 24,
+  //   }),
+  // ];
 
-  await Promise.all(formQueries);
+  // await Promise.all(formQueries);
 
-  const dehydratedState = dehydrate(queryClient);
+  // const dehydratedState = dehydrate(queryClient);
 
   return (
     <html lang="ko">
@@ -63,9 +62,9 @@ export default async function RootLayout({
         </header>
         <section className="section">
           <ClientProvider>
-            <HydrateOnClient state={dehydratedState}>
-              {children}
-            </HydrateOnClient>
+            {/* <HydrateOnClient state={dehydratedState}> */}
+            {children}
+            {/* </HydrateOnClient> */}
           </ClientProvider>
         </section>
       </body>
