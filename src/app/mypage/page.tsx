@@ -67,17 +67,12 @@ export default function MyPage() {
         method: "GET",
       });
 
-      return data.data.predictions
-        .map(
-          (prediction: {
-            userId: number;
-            questionAndAnswer: { question: string; answer: string };
-          }) => prediction.questionAndAnswer
-        )
-        .flat();
+      return data.data.predictions;
     },
     enabled: !!userId,
   });
+
+  if (!predictions) return;
 
   return (
     <div className={styles.container}>
@@ -103,17 +98,33 @@ export default function MyPage() {
               </div>
             ) : (
               predictions.map(
-                (
-                  // TODO 추후 삭제 요청 하려면 각 post별 id값 있어야 할듯
-                  prediction: { question: string; answer: string },
-                  idx: number
-                ) => {
+                ({
+                  category,
+                  created_date,
+                  job,
+                  prediction_id,
+                  question_and_answer,
+                }: {
+                  category: string;
+                  created_date: string;
+                  job: string;
+                  prediction_id: number;
+                  question_and_answer: {
+                    answer: string;
+                    question: string;
+                  }[];
+                }) => {
                   return (
-                    <div key={`${prediction.question} ${idx}`}>
-                      <ToggleBox
-                        title={prediction.question}
-                        contents={prediction.answer}
-                      ></ToggleBox>
+                    <div key={`${question_and_answer} ${created_date}`}>
+                      {question_and_answer?.map((qna, i) => {
+                        return (
+                          <ToggleBox
+                            key={`${qna} ${i}`}
+                            title={qna.question}
+                            contents={qna.answer}
+                          ></ToggleBox>
+                        );
+                      })}
                     </div>
                   );
                 }
