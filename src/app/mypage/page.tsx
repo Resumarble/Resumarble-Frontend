@@ -17,6 +17,7 @@ export default function MyPage() {
   const route = useRouter();
 
   const isLoggedIn = useStore((state) => state.isLoggedIn);
+  const logout = useStore((state) => state.logout);
   useEffect(() => {
     if (!isLoggedIn) {
       return route.push("/");
@@ -28,15 +29,27 @@ export default function MyPage() {
         token: localStorage.getItem("token")?.split(" ").pop(),
       };
       if (!data.token) return;
-      const res = await fetch("/api/token", {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        method: "POST",
-        body: JSON.stringify(data),
-      });
-      const { id: userId } = await res.json();
-      setUserId(() => userId);
+
+      try {
+        const res = await fetch("/api/token", {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          method: "POST",
+          body: JSON.stringify(data),
+        });
+        const { id: userId } = await res.json();
+        setUserId(() => userId);
+      } catch (err) {
+        console.error(err, "token error");
+
+        // TODO 리프레시 토큰 로직 추가 전까지 강제 로그아웃
+        window.alert("세션이 만료되었습니다. 다시 로그인해주세요.");
+        route.push("/login");
+        localStorage.removeItem("token");
+        localStorage.removeItem("refreshToken");
+        logout();
+      }
     };
     getDecodedToken();
   }, []);
@@ -54,19 +67,12 @@ export default function MyPage() {
         method: "GET",
       });
 
-      return data.data.predictions
-        .map(
-          (prediction: {
-            userId: number;
-            questionAndAnswer: { question: string; answer: string };
-          }) => prediction.questionAndAnswer
-        )
-        .flat();
+      return data.data.predictions;
     },
     enabled: !!userId,
   });
 
-  console.log(isError);
+  if (!predictions) return;
 
   return (
     <div className={styles.container}>
@@ -92,17 +98,33 @@ export default function MyPage() {
               </div>
             ) : (
               predictions.map(
-                (
-                  // TODO 추후 삭제 요청 하려면 각 post별 id값 있어야 할듯
-                  prediction: { question: string; answer: string },
-                  idx: number
-                ) => {
+                ({
+                  category,
+                  created_date,
+                  job,
+                  prediction_id,
+                  question_and_answer,
+                }: {
+                  category: string;
+                  created_date: string;
+                  job: string;
+                  prediction_id: number;
+                  question_and_answer: {
+                    answer: string;
+                    question: string;
+                  }[];
+                }) => {
                   return (
-                    <div key={`${prediction.question} ${idx}`}>
-                      <ToggleBox
-                        title={prediction.question}
-                        contents={prediction.answer}
-                      ></ToggleBox>
+                    <div key={`${question_and_answer} ${created_date}`}>
+                      {question_and_answer?.map((qna, i) => {
+                        return (
+                          <ToggleBox
+                            key={`${qna} ${i}`}
+                            title={qna.question}
+                            contents={qna.answer}
+                          ></ToggleBox>
+                        );
+                      })}
                     </div>
                   );
                 }
