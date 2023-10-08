@@ -43,7 +43,7 @@ export default function Nav() {
         const res = await isTokenExpired();
 
         // 서버 응답 코드 401번 가지고 만료를 체크하는 방법도 있을듯함
-        if (res.isExpired) {
+        if (res?.isExpired) {
           try {
             const reissueRes = await customFetch({
               url: "/users/reissue",

@@ -4,6 +4,7 @@ import { Dispatch, SetStateAction, useState } from "react";
 import styles from "./formSection.module.css";
 import { RadioInput } from "./RadioInput";
 import { careersMapping, jobsMapping } from "../constants/mapping";
+import { SectionForm } from "./SectionForm";
 
 export type QuestionType = {
   question: number;
@@ -29,8 +30,6 @@ export const careers = [
   "4~7년 차 (미들)",
   "7년 차 이상 (시니어)",
 ];
-
-const labels = ["자기소개", "기술스택", "경력사항", "프로젝트 경험"];
 
 export default function FormSection({
   step,
@@ -72,7 +71,7 @@ export default function FormSection({
   switch (step) {
     case 0: {
       return (
-        <div key={0}>
+        <div key={`step ${step}`}>
           <h5 className={styles.title}>
             1. <strong className={styles.titleHighlight}>직업</strong>을
             선택하세요.
@@ -96,7 +95,7 @@ export default function FormSection({
     }
     case 1:
       return (
-        <div key={1}>
+        <div key={`step ${step}`}>
           <h5 className={styles.title}>
             2. <strong className={styles.titleHighlight}>경력</strong>을
             선택하세요.
@@ -119,7 +118,7 @@ export default function FormSection({
       );
     case 2:
       return (
-        <div key={2} style={{ width: "100%" }}>
+        <div key={`step ${step}`} style={{ width: "100%" }}>
           <h5 className={styles.title} style={{ textAlign: "left" }}>
             3.예상 질문으로 받고 싶은
             <strong className={styles.titleHighlight}>
@@ -136,9 +135,8 @@ export default function FormSection({
             {Array(3)
               .fill(0)
               .map((numberBtn, i) => (
-                <>
+                <div key={`${numberBtn} ${i}`}>
                   <input
-                    key={`${numberBtn} ${i}`}
                     readOnly
                     checked={partSectionNumber === i}
                     id={`qs${i}`}
@@ -149,7 +147,7 @@ export default function FormSection({
                     }}
                   />
                   <label htmlFor={`qs${i}`}>{i + 1}</label>
-                </>
+                </div>
               ))}
           </div>
 
@@ -168,73 +166,4 @@ export default function FormSection({
     default:
       <></>;
   }
-}
-
-interface SectionFormProps {
-  partSectionNumber: number;
-  selectedInputs: SelectedInputsType;
-  setSelectedInputs: Dispatch<SetStateAction<SelectedInputsType>>;
-  onChangeRadio: ({
-    key,
-    sectionNumber,
-  }: {
-    key: "job" | "career" | "question";
-    sectionNumber?: number;
-  }) => (e: React.ChangeEvent<HTMLInputElement>) => void;
-}
-
-export function SectionForm({
-  partSectionNumber,
-  selectedInputs,
-  setSelectedInputs,
-  onChangeRadio,
-}: SectionFormProps) {
-  const onChangeText =
-    (partSectionNumber: number) =>
-    (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-      setSelectedInputs((prev) => {
-        const sectionText = e.target.value;
-        const questionsText = [...prev.questions];
-        questionsText[partSectionNumber].questionTextArea = sectionText;
-
-        return {
-          ...prev,
-          questions: questionsText,
-        };
-      });
-    };
-
-  return (
-    <>
-      <div className={styles.radioInputBox}>
-        {labels.map((question, i) => {
-          return (
-            <RadioInput
-              key={`${question} ${i}`}
-              onChange={onChangeRadio({
-                key: "question",
-                sectionNumber: partSectionNumber,
-              })}
-              checked={
-                selectedInputs.questions[partSectionNumber]?.question === i
-              }
-              name="question"
-              id={i.toString()}
-              value="introduction"
-              label={labels[i]}
-              htmlFor={i.toString()}
-            />
-          );
-        })}
-      </div>
-      <div className={styles.textareaBox}>
-        <textarea
-          value={selectedInputs.questions[partSectionNumber]?.questionTextArea}
-          onChange={onChangeText(partSectionNumber)}
-          className={styles.textarea}
-          placeholder="선택한 항목과 관련된 내용을 입력해주세요."
-        />
-      </div>
-    </>
-  );
 }
