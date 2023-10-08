@@ -7,27 +7,11 @@ import customFetch from "@/utils/customFetch";
 import Spinner from "@/components/common/Spinner";
 import { useRouter } from "next/navigation";
 import FormSection from "./components/FormSection";
-
-const jobsMapping = {
-  0: "Backend Engineer",
-  1: "Frontend Engineer",
-  2: "Fullstack Engineer",
-  3: "Data Engineer",
-};
-
-const careersMapping = {
-  0: "Newcomer",
-  1: "1~3 years (Junior)",
-  2: "4~7 years (middle)",
-  3: "7 years and up (senior)",
-};
-
-const questionMapping = {
-  0: "introduction",
-  1: "technology stack",
-  2: "career history",
-  3: "project experience",
-};
+import {
+  careersMapping,
+  jobsMapping,
+  questionMapping,
+} from "./constants/mapping";
 
 const MIN_STEP = 0;
 const MAX_STEP = 2;
@@ -40,6 +24,14 @@ export default function ResumePage() {
     job: 0,
     career: 0,
     questions: [
+      {
+        question: 0,
+        questionTextArea: "",
+      },
+      {
+        question: 0,
+        questionTextArea: "",
+      },
       {
         question: 0,
         questionTextArea: "",
@@ -69,6 +61,13 @@ export default function ResumePage() {
   const onSubmit = async () => {
     const jobIndex = selectedInputs.job as keyof typeof jobsMapping;
     const careerIndex = selectedInputs.career as keyof typeof careersMapping;
+
+    const filteredEmptyQuestions = selectedInputs.questions.filter(
+      (question) => {
+        return !!question.questionTextArea;
+      }
+    );
+
     const categoryIndex = selectedInputs.questions[0]
       .question as keyof typeof questionMapping;
     const body = {
@@ -79,7 +78,9 @@ export default function ResumePage() {
         content: selectedInputs.questions[0].questionTextArea,
       },
     };
-    //  TODO 여러개 항목 요청 시 로직 재 검토 필요
+
+    // TODO 여러개 요청 어떻게 할지 고민해봐야 할듯
+    // 비회원은 강제로 1개만? 회원일 때는..
 
     try {
       setIsLoading(true);
@@ -106,9 +107,9 @@ export default function ResumePage() {
             <Spinner />
           </div>
           <h3>
-            결과를 생성하고 있어요.
+            생성 중입니다. 페이지를 이동하지 마세요.
             <br />
-            잠시만 기다려주세요.
+            현재 beta 버전으로 1번 폼에 작성한 항목에 대해서만 생성됩니다.
           </h3>
         </div>
       )}
@@ -126,7 +127,7 @@ export default function ResumePage() {
 
           <div className={styles.formContainer}>
             <FormSection
-              section={currentStep}
+              step={currentStep}
               selectedInputs={selectedInputs}
               setSelectedInputs={setSelectedInputs}
             />
