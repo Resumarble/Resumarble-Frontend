@@ -11,6 +11,7 @@ import useStore from "@/store/zustand/login";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Button from "@/components/common/Button";
+import Badge from "@/components/common/Badge";
 
 export default function MyPage() {
   const [userId, setUserId] = useState<number>(); // token 복호화 후 id 값 추출
@@ -76,16 +77,23 @@ export default function MyPage() {
 
   return (
     <div className={styles.container}>
-      <Container showTopWhite overflowYScroll>
-        <p>
-          보고 계신 화면은 <strong>개발 진행중</strong>으로 미완성된
-          페이지입니다.
-        </p>
+      <Container
+        showTopWhite
+        overflowYScroll
+        style={{ padding: "10px", overflowY: "scroll", marginTop: "30px" }}
+      >
+        <div className={styles.headerTitle}>
+          <h5>MyPage</h5>
+          <p>
+            <strong>생성한 모든 질문과 답변을 확인하실 수 있어요.</strong>
+          </p>
+          <p>비로그인일 때 생성한 결과는 저장되지 않습니다.</p>
+        </div>
         <br />
         {isLoading || !userId ? (
           <div>데이터를 불러오고 있어요.</div>
         ) : (
-          <div>
+          <div className={styles.contentsContainer}>
             {!predictions.length ? (
               <div>
                 <h2>No data</h2>
@@ -115,14 +123,22 @@ export default function MyPage() {
                   }[];
                 }) => {
                   return (
-                    <div key={`${question_and_answer} ${created_date}`}>
+                    <div
+                      className={styles.content}
+                      key={`${question_and_answer} ${created_date}`}
+                    >
                       {question_and_answer?.map((qna, i) => {
                         return (
                           <ToggleBox
                             key={`${qna} ${i}`}
                             title={qna.question}
                             contents={qna.answer}
-                          ></ToggleBox>
+                          >
+                            <div className={styles.badgeContainer}>
+                              <Badge text={job} />
+                              <Badge text={category} />
+                            </div>
+                          </ToggleBox>
                         );
                       })}
                     </div>
