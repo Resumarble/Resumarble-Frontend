@@ -1,0 +1,21 @@
+.container {
+  width: fit-content;
+  height: 100%;
+
+  padding: 3px 10px;
+  border-radius: 100px;
+  background-color: #5f946c50;
+  border: 1px solid #ffffff32;
+
+  margin-left: -5px;
+  margin-bottom: 5px;
+}
+
+.text {
+  width: auto;
+  color: #fff;
+  font-weight: 500;
+  font-size: 0.7rem;
+}
+
+/* TODO 뱃지 색상 여러개 */
