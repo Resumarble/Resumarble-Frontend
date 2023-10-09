@@ -1,5 +1,5 @@
 .container {
-  margin-bottom: 1rem;
+  margin-bottom: 10px;
   position: relative;
 }
 
@@ -11,6 +11,8 @@
   background-color: #f8f8f850;
   border-radius: 10px;
   border: 1px solid #ffffff50;
+
+  font-weight: 600;
 
   cursor: pointer;
   position: relative;
