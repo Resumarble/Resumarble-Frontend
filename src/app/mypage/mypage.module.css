@@ -1,17 +1,51 @@
 .container {
-  margin-top: 30px;
-  padding: 20px;
-  height: 100vh;
-
-  position: relative;
+  margin-top: 70px;
 }
 
-.container div {
-  overflow: hidden;
-  width: 100%;
+.headerTitle {
+  position: absolute;
+  top: 5px;
+  left: 20px;
+
+  z-index: 10;
+
+  padding-left: 1.2rem;
+  padding-top: 0.3rem;
 }
 
-.container ul {
-  height: 50%;
+.headerTitle::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 8px;
+  width: 4px;
+  height: 55px;
+  background: var(--dark-green);
+}
+
+.headerTitle h5 {
   font-size: 1rem;
+  color: var(--dark-green);
+}
+
+.headerTitle strong {
+  color: var(--dark-green);
+}
+
+.headerTitle p {
+  font-size: 0.88rem;
+  margin-top: -3px;
+  color: var(--dark-green);
+}
+
+.contentsContainer {
+  display: flex;
+  flex-direction: column;
+
+  margin-top: 55px;
+}
+
+.badgeContainer {
+  display: flex;
+  gap: 10px;
 }

@@ -35,24 +35,19 @@ export default function ResultContainer() {
     }
   }, []);
 
-  if (!hasResult) {
-    return (
-      <div className={styles.container}>
-        <div className={styles.box}></div>
-      </div>
-    );
-  }
-
   return (
     <>
-      <Container showTopWhite style={{ padding: "10px", overflowY: "scroll" }}>
-        {!hasResult ? (
-          <>
-            <h3>ERROR!</h3>
-            <h4>올바르지 않은 요청입니다.</h4>
-            <Link href={"/resume"}>다시 작성하기</Link>
-          </>
-        ) : (
+      {!hasResult ? (
+        <div style={{ textAlign: "center" }}>
+          <h3>ERROR!</h3>
+          <h4>올바르지 않은 요청입니다.</h4>
+          <Link href={"/resume"}>다시 작성하기</Link>
+        </div>
+      ) : (
+        <Container
+          showTopWhite
+          style={{ padding: "10px", overflowY: "scroll" }}
+        >
           <>
             <div className={styles.options}>
               <SaveButton txt={resultsForDownload} />
@@ -92,8 +87,8 @@ export default function ResultContainer() {
               </div>
             </div>
           </>
-        )}
-      </Container>
+        </Container>
+      )}
     </>
   );
 }

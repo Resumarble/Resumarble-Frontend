@@ -27,6 +27,7 @@ export default function ToggleBox({
   return (
     <div className={styles.container}>
       <h2 onClick={handleTitleClick} className={styles.title}>
+        {children}
         {title}
         <i
           className={`${styles.arrow} ${styles[arrowDirection]}`}
