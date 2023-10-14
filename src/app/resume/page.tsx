@@ -74,29 +74,28 @@ export default function ResumePage() {
 
     try {
       setIsLoading(true);
-      const promises = filteredEmptyQuestions.map(async (_, i) => {
-        const categoryIndex = selectedInputs.questions[i]
-          .question as keyof typeof questionMapping;
-        const body = {
-          job: jobsMapping[jobIndex],
-          career: careersMapping[careerIndex],
-          resumeInfo: {
-            category: questionMapping[categoryIndex],
-            content: selectedInputs.questions[i].questionTextArea,
-          },
+
+      const infoList = filteredEmptyQuestions.map((question) => {
+        return {
+          category:
+            questionMapping[question.question as keyof typeof questionMapping],
+          content: question.questionTextArea,
         };
-
-        const res = await customFetch({
-          url: "/resumes/interview-questions",
-          method: "POST",
-          body,
-        });
-
-        return res.data.interviews;
       });
 
-      const results = await Promise.all(promises);
-      localStorage.setItem("result", JSON.stringify(results.flat()));
+      const body = {
+        job: jobsMapping[jobIndex],
+        career: careersMapping[careerIndex],
+        resumeInfoList: infoList,
+      };
+
+      const res = await customFetch({
+        url: "/resumes/interview-questions",
+        method: "POST",
+        body,
+      });
+
+      localStorage.setItem("result", JSON.stringify(res.data));
       route.push("/result");
     } catch (err) {
       console.error(err);
