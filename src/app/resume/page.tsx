@@ -77,7 +77,8 @@ export default function ResumePage() {
 
       const infoList = filteredEmptyQuestions.map((question) => {
         return {
-          category: question.question,
+          category:
+            questionMapping[question.question as keyof typeof questionMapping],
           content: question.questionTextArea,
         };
       });
@@ -89,14 +90,13 @@ export default function ResumePage() {
       };
 
       const res = await customFetch({
-        url: "/resumes/multiple-interview-questions",
-        // TODO 백엔드 url /interview-questions 로 변경될 예정
+        url: "/resumes/interview-questions",
         method: "POST",
         body,
       });
 
-      // localStorage.setItem("result", JSON.stringify(results.flat()));
-      // route.push("/result");
+      localStorage.setItem("result", JSON.stringify(res.data));
+      route.push("/result");
     } catch (err) {
       console.error(err);
       window.alert("네트워크 에러가 발생했어요. 잠시 후 다시 시도해주세요.");
