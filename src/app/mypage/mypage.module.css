@@ -45,6 +45,11 @@
   margin-top: 55px;
 }
 
+.noData {
+  margin-top: 30px;
+  text-align: center;
+}
+
 .badgeContainer {
   display: flex;
   gap: 10px;

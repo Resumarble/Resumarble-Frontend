@@ -73,8 +73,6 @@ export default function MyPage() {
     enabled: !!userId,
   });
 
-  if (!predictions) return;
-
   return (
     <div className={styles.container}>
       <Container
@@ -95,7 +93,7 @@ export default function MyPage() {
         ) : (
           <div className={styles.contentsContainer}>
             {!predictions.length ? (
-              <div>
+              <div className={styles.noData}>
                 <h2>No data</h2>
                 <p>생성한 질문을 누적해서 볼 수 있는 페이지입니다.</p>
                 <br />
@@ -108,16 +106,17 @@ export default function MyPage() {
               predictions.map(
                 ({
                   category,
-                  created_date,
+                  createdDate,
                   job,
-                  prediction_id,
-                  question_and_answer,
+                  predictionId,
+                  questionAndAnswer,
                 }: {
                   category: string;
-                  created_date: string;
+                  createdDate: string;
                   job: string;
-                  prediction_id: number;
-                  question_and_answer: {
+                  predictionId: number;
+                  questionAndAnswer: {
+                    qaId: number;
                     answer: string;
                     question: string;
                   }[];
@@ -125,9 +124,9 @@ export default function MyPage() {
                   return (
                     <div
                       className={styles.content}
-                      key={`${question_and_answer} ${created_date}`}
+                      key={`${questionAndAnswer} ${createdDate}`}
                     >
-                      {question_and_answer?.map((qna, i) => {
+                      {questionAndAnswer?.map((qna, i) => {
                         return (
                           <ToggleBox
                             key={`${qna} ${i}`}
