@@ -68,28 +68,34 @@ export default function ResumePage() {
       }
     );
 
-    const categoryIndex = selectedInputs.questions[0]
-      .question as keyof typeof questionMapping;
-    const body = {
-      job: jobsMapping[jobIndex],
-      career: careersMapping[careerIndex],
-      resumeInfo: {
-        category: questionMapping[categoryIndex],
-        content: selectedInputs.questions[0].questionTextArea,
-      },
-    };
-
-    // TODO 여러개 요청 어떻게 할지 고민해봐야 할듯
-    // 비회원은 강제로 1개만? 회원일 때는..
+    if (!filteredEmptyQuestions.length) {
+      return window.alert("내용을 입력해주세요.");
+    }
 
     try {
       setIsLoading(true);
+
+      const infoList = filteredEmptyQuestions.map((question) => {
+        return {
+          category:
+            questionMapping[question.question as keyof typeof questionMapping],
+          content: question.questionTextArea,
+        };
+      });
+
+      const body = {
+        job: jobsMapping[jobIndex],
+        career: careersMapping[careerIndex],
+        resumeInfoList: infoList,
+      };
+
       const res = await customFetch({
         url: "/resumes/interview-questions",
         method: "POST",
         body,
       });
-      localStorage.setItem("result", JSON.stringify(res.data.interviews));
+
+      localStorage.setItem("result", JSON.stringify(res.data));
       route.push("/result");
     } catch (err) {
       console.error(err);
@@ -107,9 +113,9 @@ export default function ResumePage() {
             <Spinner />
           </div>
           <h3>
-            생성 중입니다. 페이지를 이동하지 마세요.
+            생성 중입니다.
             <br />
-            현재 beta 버전으로 1번 폼에 작성한 항목에 대해서만 생성됩니다.
+            페이지를 이동하지 마세요.
           </h3>
         </div>
       )}
