@@ -73,6 +73,12 @@ export default function MyPage() {
     enabled: !!userId,
   });
 
+  const deleteQnA =
+    (qna: { qaId: number; answer: string; question: string }) => () => {
+      console.log(qna);
+      // TODO  id값이 이상함 백엔드에 체크 요청
+    };
+
   return (
     <div className={styles.container}>
       <Container
@@ -89,7 +95,9 @@ export default function MyPage() {
         </div>
         <br />
         {isLoading || !userId ? (
-          <div>데이터를 불러오고 있어요.</div>
+          <div className={styles.contentsContainer}>
+            데이터를 불러오고 있어요.
+          </div>
         ) : (
           <div className={styles.contentsContainer}>
             {!predictions.length ? (
@@ -128,16 +136,24 @@ export default function MyPage() {
                     >
                       {questionAndAnswer?.map((qna, i) => {
                         return (
-                          <ToggleBox
-                            key={`${qna} ${i}`}
-                            title={qna.question}
-                            contents={qna.answer}
-                          >
-                            <div className={styles.badgeContainer}>
-                              <Badge text={job} />
-                              <Badge text={category} />
-                            </div>
-                          </ToggleBox>
+                          <>
+                            <ToggleBox
+                              key={`${qna} ${i}`}
+                              title={qna.question}
+                              contents={qna.answer}
+                            >
+                              <div className={styles.badgeContainer}>
+                                <Badge text={job} />
+                                <Badge text={category} />
+                                <button
+                                  className={styles.delete}
+                                  onClick={deleteQnA(predictions)}
+                                >
+                                  삭제
+                                </button>
+                              </div>
+                            </ToggleBox>
+                          </>
                         );
                       })}
                     </div>
