@@ -1,17 +1,17 @@
-"use client";
+'use client';
 
-import { useEffect, useState } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useEffect, useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
 
-import Container from "@/components/common/Container";
-import ToggleBox from "@/components/common/ToggleBox";
-import styles from "./mypage.module.css";
-import customFetch from "@/utils/customFetch";
-import useStore from "@/store/zustand/login";
-import { useRouter } from "next/navigation";
-import Link from "next/link";
-import Button from "@/components/common/Button";
-import Badge from "@/components/common/Badge";
+import Container from '@/components/common/Container';
+import ToggleBox from '@/components/common/ToggleBox';
+import styles from './mypage.module.css';
+import customFetch from '@/utils/customFetch';
+import useStore from '@/store/zustand/login';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
+import Button from '@/components/common/Button';
+import Badge from '@/components/common/Badge';
 
 export default function MyPage() {
   const [userId, setUserId] = useState<number>(); // token 복호화 후 id 값 추출
@@ -21,34 +21,34 @@ export default function MyPage() {
   const logout = useStore((state) => state.logout);
   useEffect(() => {
     if (!isLoggedIn) {
-      return route.push("/");
+      return route.push('/');
     }
 
     // TODO token 유효 확인
     const getDecodedToken = async () => {
       const data = {
-        token: localStorage.getItem("token")?.split(" ").pop(),
+        token: localStorage.getItem('token')?.split(' ').pop(),
       };
       if (!data.token) return;
 
       try {
-        const res = await fetch("/api/token", {
+        const res = await fetch('/api/token', {
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
-          method: "POST",
+          method: 'POST',
           body: JSON.stringify(data),
         });
         const { id: userId } = await res.json();
         setUserId(() => userId);
       } catch (err) {
-        console.error(err, "token error");
+        console.error(err, 'token error');
 
         // TODO 리프레시 토큰 로직 추가 전까지 강제 로그아웃
-        window.alert("세션이 만료되었습니다. 다시 로그인해주세요.");
-        route.push("/login");
-        localStorage.removeItem("token");
-        localStorage.removeItem("refreshToken");
+        window.alert('세션이 만료되었습니다. 다시 로그인해주세요.');
+        route.push('/login');
+        localStorage.removeItem('token');
+        localStorage.removeItem('refreshToken');
         logout();
       }
     };
@@ -60,12 +60,13 @@ export default function MyPage() {
     isLoading,
     isError,
   } = useQuery({
-    queryKey: ["getMyPage", userId],
+    queryKey: ['getMyPage', userId],
     queryFn: async () => {
       const data = await customFetch({
         // url: `/predictions/${userId}`,
-        url: "/users/me",
-        method: "GET",
+        url: '/users/me',
+        method: 'GET',
+        params: '0',
       });
 
       return data.data.predictions;
@@ -73,6 +74,7 @@ export default function MyPage() {
     enabled: !!userId,
   });
 
+  console.log(predictions);
   if (!predictions) return;
 
   return (
@@ -80,7 +82,7 @@ export default function MyPage() {
       <Container
         showTopWhite
         overflowYScroll
-        style={{ padding: "10px", overflowY: "scroll", marginTop: "30px" }}
+        style={{ padding: '10px', overflowY: 'scroll', marginTop: '30px' }}
       >
         <div className={styles.headerTitle}>
           <h5>MyPage</h5>
@@ -100,7 +102,7 @@ export default function MyPage() {
                 <p>생성한 질문을 누적해서 볼 수 있는 페이지입니다.</p>
                 <br />
                 <br />
-                <Link href={"/resume"}>
+                <Link href={'/resume'}>
                   <Button isDark>생성하기</Button>
                 </Link>
               </div>
@@ -111,13 +113,13 @@ export default function MyPage() {
                   created_date,
                   job,
                   prediction_id,
-                  question_and_answer,
+                  questionAndAnswer,
                 }: {
                   category: string;
                   created_date: string;
                   job: string;
                   prediction_id: number;
-                  question_and_answer: {
+                  questionAndAnswer: {
                     answer: string;
                     question: string;
                   }[];
@@ -125,9 +127,9 @@ export default function MyPage() {
                   return (
                     <div
                       className={styles.content}
-                      key={`${question_and_answer} ${created_date}`}
+                      key={`${questionAndAnswer} ${created_date}`}
                     >
-                      {question_and_answer?.map((qna, i) => {
+                      {questionAndAnswer?.map((qna, i) => {
                         return (
                           <ToggleBox
                             key={`${qna} ${i}`}
