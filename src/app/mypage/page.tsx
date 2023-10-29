@@ -74,7 +74,8 @@ export default function MyPage() {
     enabled: !!userId,
   });
 
-  console.log(predictions);
+  const deleteQnA = () => {};
+
   if (!predictions) return;
 
   return (
@@ -93,11 +94,13 @@ export default function MyPage() {
         </div>
         <br />
         {isLoading || !userId ? (
-          <div>데이터를 불러오고 있어요.</div>
+          <div className={styles.contentsContainer}>
+            데이터를 불러오고 있어요.
+          </div>
         ) : (
           <div className={styles.contentsContainer}>
             {!predictions.length ? (
-              <div>
+              <div className={styles.noData}>
                 <h2>No data</h2>
                 <p>생성한 질문을 누적해서 볼 수 있는 페이지입니다.</p>
                 <br />
@@ -110,13 +113,13 @@ export default function MyPage() {
               predictions.map(
                 ({
                   category,
-                  created_date,
+                  createdDate,
                   job,
                   prediction_id,
                   questionAndAnswer,
                 }: {
                   category: string;
-                  created_date: string;
+                  createdDate: string;
                   job: string;
                   prediction_id: number;
                   questionAndAnswer: {
@@ -127,20 +130,28 @@ export default function MyPage() {
                   return (
                     <div
                       className={styles.content}
-                      key={`${questionAndAnswer} ${created_date}`}
+                      key={`${questionAndAnswer} ${createdDate}`}
                     >
                       {questionAndAnswer?.map((qna, i) => {
                         return (
-                          <ToggleBox
-                            key={`${qna} ${i}`}
-                            title={qna.question}
-                            contents={qna.answer}
-                          >
-                            <div className={styles.badgeContainer}>
-                              <Badge text={job} />
-                              <Badge text={category} />
-                            </div>
-                          </ToggleBox>
+                          <>
+                            <ToggleBox
+                              key={`${qna} ${i}`}
+                              title={qna.question}
+                              contents={qna.answer}
+                            >
+                              <div className={styles.badgeContainer}>
+                                <Badge text={job} />
+                                <Badge text={category} />
+                                <button
+                                  className={styles.delete}
+                                  // onClick={deleteQnA(predictions)}
+                                >
+                                  삭제
+                                </button>
+                              </div>
+                            </ToggleBox>
+                          </>
                         );
                       })}
                     </div>

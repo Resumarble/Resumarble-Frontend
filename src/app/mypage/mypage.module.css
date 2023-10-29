@@ -45,7 +45,25 @@
   margin-top: 55px;
 }
 
+.noData {
+  margin-top: 30px;
+  text-align: center;
+}
+
 .badgeContainer {
   display: flex;
+  justify-content: flex-start;
   gap: 10px;
+}
+
+.delete {
+  border: none;
+  padding: 0 10px;
+  border: 1px solid #ffffff67;
+  border-radius: 100px;
+  color: #fff;
+  background-color: rgba(216, 85, 107, 0.574);
+
+  margin-left: auto;
+  cursor: pointer;
 }
