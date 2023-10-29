@@ -76,6 +76,7 @@ export default function MyPage() {
 
   const deleteQnA = () => {};
 
+  console.log(predictions);
   if (!predictions) return;
 
   return (
@@ -115,13 +116,13 @@ export default function MyPage() {
                   category,
                   createdDate,
                   job,
-                  prediction_id,
+                  predictionId,
                   questionAndAnswer,
                 }: {
                   category: string;
                   createdDate: string;
                   job: string;
-                  prediction_id: number;
+                  predictionId: number;
                   questionAndAnswer: {
                     answer: string;
                     question: string;
@@ -144,6 +145,9 @@ export default function MyPage() {
                                 <Badge text={job} />
                                 <Badge text={category} />
                                 <button
+                                  onClick={(e) => {
+                                    console.log(e);
+                                  }}
                                   className={styles.delete}
                                   // onClick={deleteQnA(predictions)}
                                 >
