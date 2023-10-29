@@ -1,8 +1,9 @@
 interface CustomFetchType {
   url: string;
+  params?: string;
   header?: { [key: string]: string };
   body?: any;
-  method: "GET" | "POST";
+  method: 'GET' | 'POST';
 }
 
 type ConfigType = {
@@ -15,15 +16,16 @@ export default async function customFetch({
   url,
   body,
   header,
-  method = "GET",
+  params = '',
+  method = 'GET',
 }: CustomFetchType) {
-  let token = localStorage.getItem("token") || null;
+  let token = localStorage.getItem('token') || null;
   if (token) {
     // TODO 토큰 유효 확인
   }
 
   const headers = {
-    "Content-Type": "application/json",
+    'Content-Type': 'application/json',
     Authorization: token,
     ...header,
   };
@@ -39,7 +41,9 @@ export default async function customFetch({
 
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_SERVER_URL}${url}`,
+      `${process.env.NEXT_PUBLIC_SERVER_URL}${url}${
+        !!params ? `?page=${params}` : ''
+      }`,
       config
     );
     return res.json();
