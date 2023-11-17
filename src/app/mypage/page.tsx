@@ -14,6 +14,7 @@ import Badge from '@/components/common/Badge';
 import customFetch from '@/utils/customFetch';
 import useStore from '@/store/zustand/login';
 import NoDatas from './components/Nodatas';
+import ToggleItem from './components/ToggleItem';
 
 export default function MyPage() {
   const [userId, setUserId] = useState<number>(); // token 복호화 후 id 값 추출
@@ -79,8 +80,6 @@ export default function MyPage() {
     enabled: !!userId,
   });
 
-  const deleteQnA = () => {};
-
   console.log(predictions);
   if (!predictions) return <></>;
 
@@ -109,57 +108,7 @@ export default function MyPage() {
             {!predictions.length ? (
               <NoDatas />
             ) : (
-              predictions.map(
-                ({
-                  category,
-                  createdDate,
-                  job,
-                  predictionId,
-                  questionAndAnswer,
-                }: {
-                  category: string;
-                  createdDate: string;
-                  job: string;
-                  predictionId: number;
-                  questionAndAnswer: {
-                    answer: string;
-                    question: string;
-                  }[];
-                }) => {
-                  return (
-                    <div
-                      className={styles.content}
-                      key={`${questionAndAnswer} ${createdDate}`}
-                    >
-                      {questionAndAnswer?.map((qna, i) => {
-                        return (
-                          <>
-                            <ToggleBox
-                              key={`${qna} ${i}`}
-                              title={qna.question}
-                              contents={qna.answer}
-                            >
-                              <div className={styles.badgeContainer}>
-                                <Badge text={job} />
-                                <Badge text={category} />
-                                <button
-                                  onClick={(e) => {
-                                    console.log(e);
-                                  }}
-                                  className={styles.delete}
-                                  // onClick={deleteQnA(predictions)}
-                                >
-                                  삭제
-                                </button>
-                              </div>
-                            </ToggleBox>
-                          </>
-                        );
-                      })}
-                    </div>
-                  );
-                }
-              )
+              <ToggleItem predictions={predictions} />
             )}
           </div>
         )}
