@@ -1,17 +1,19 @@
 'use client';
 
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
+import styles from './mypage.module.css';
 
 import Container from '@/components/common/Container';
 import ToggleBox from '@/components/common/ToggleBox';
-import styles from './mypage.module.css';
-import customFetch from '@/utils/customFetch';
-import useStore from '@/store/zustand/login';
-import { useRouter } from 'next/navigation';
-import Link from 'next/link';
 import Button from '@/components/common/Button';
 import Badge from '@/components/common/Badge';
+
+import customFetch from '@/utils/customFetch';
+import useStore from '@/store/zustand/login';
+import NoDatas from './components/Nodatas';
 
 export default function MyPage() {
   const [userId, setUserId] = useState<number>(); // token 복호화 후 id 값 추출
@@ -19,6 +21,7 @@ export default function MyPage() {
 
   const isLoggedIn = useStore((state) => state.isLoggedIn);
   const logout = useStore((state) => state.logout);
+
   useEffect(() => {
     if (!isLoggedIn) {
       return route.push('/');
@@ -29,6 +32,7 @@ export default function MyPage() {
       const data = {
         token: localStorage.getItem('token')?.split(' ').pop(),
       };
+
       if (!data.token) return;
 
       try {
@@ -52,6 +56,7 @@ export default function MyPage() {
         logout();
       }
     };
+
     getDecodedToken();
   }, []);
 
@@ -77,7 +82,7 @@ export default function MyPage() {
   const deleteQnA = () => {};
 
   console.log(predictions);
-  if (!predictions) return;
+  if (!predictions) return <></>;
 
   return (
     <div className={styles.container}>
@@ -94,6 +99,7 @@ export default function MyPage() {
           <p>비로그인일 때 생성한 결과는 저장되지 않습니다.</p>
         </div>
         <br />
+
         {isLoading || !userId ? (
           <div className={styles.contentsContainer}>
             데이터를 불러오고 있어요.
@@ -101,15 +107,7 @@ export default function MyPage() {
         ) : (
           <div className={styles.contentsContainer}>
             {!predictions.length ? (
-              <div className={styles.noData}>
-                <h2>No data</h2>
-                <p>생성한 질문을 누적해서 볼 수 있는 페이지입니다.</p>
-                <br />
-                <br />
-                <Link href={'/resume'}>
-                  <Button isDark>생성하기</Button>
-                </Link>
-              </div>
+              <NoDatas />
             ) : (
               predictions.map(
                 ({
