@@ -1,24 +1,25 @@
-"use client";
-import { useEffect, useState } from "react";
-import Link from "next/link";
+'use client';
+import { useEffect, useState } from 'react';
+import Link from 'next/link';
 
-import styles from "./resultContainer.module.css";
-import ToggleBox from "@/components/common/ToggleBox";
-import { Result } from "@/app/resume/components/Form";
-import SaveButton from "./SaveButton";
-import Container from "@/components/common/Container";
-import Button from "@/components/common/Button";
+import styles from './resultContainer.module.css';
+import ToggleBox from '@/components/common/ToggleBox';
+import { Result } from '@/app/resume/components/Form';
+import SaveButton from './SaveButton';
+import Container from '@/components/common/Container';
+import Button from '@/components/common/Button';
 
 export default function ResultContainer() {
   const [results, setResults] = useState<Result[]>();
   const [hasResult, setHasResult] = useState(false);
 
-  const [resultsForDownload, setResultForDownload] = useState<string>("");
+  const [resultsForDownload, setResultForDownload] = useState<string>('');
 
   useEffect(() => {
-    const result = localStorage.getItem("result");
+    const result = localStorage.getItem('result');
     setHasResult(!!result?.length);
-    setResults(JSON.parse(localStorage.getItem("result")!) ?? []);
+
+    setResults(JSON.parse(result!) || []);
 
     if (result) {
       const parseResult = JSON.parse(result);
@@ -29,7 +30,7 @@ export default function ResultContainer() {
           } \n\n`
       );
 
-      const resultTxt = resultList.join("");
+      const resultTxt = resultList.join('');
 
       setResultForDownload(resultTxt);
     }
@@ -38,15 +39,15 @@ export default function ResultContainer() {
   return (
     <>
       {!hasResult ? (
-        <div style={{ textAlign: "center" }}>
+        <div style={{ textAlign: 'center' }}>
           <h3>ERROR!</h3>
           <h4>올바르지 않은 요청입니다.</h4>
-          <Link href={"/resume"}>다시 작성하기</Link>
+          <Link href={'/resume'}>다시 작성하기</Link>
         </div>
       ) : (
         <Container
           showTopWhite
-          style={{ padding: "10px", overflowY: "scroll" }}
+          style={{ padding: '10px', overflowY: 'scroll' }}
         >
           <>
             <div className={styles.options}>
@@ -78,10 +79,10 @@ export default function ResultContainer() {
               </div>
 
               <div className={`${styles.btns}`}>
-                <Link href={"/resume"}>
+                <Link href={'/resume'}>
                   <Button isDark>다시 생성하기</Button>
                 </Link>
-                <Link href={"/"}>
+                <Link href={'/'}>
                   <Button isDark>홈으로</Button>
                 </Link>
               </div>
