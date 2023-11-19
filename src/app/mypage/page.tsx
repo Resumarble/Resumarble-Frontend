@@ -1,20 +1,16 @@
 'use client';
 
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import styles from './mypage.module.css';
 
 import Container from '@/components/common/Container';
-import ToggleBox from '@/components/common/ToggleBox';
-import Button from '@/components/common/Button';
-import Badge from '@/components/common/Badge';
 
 import customFetch from '@/utils/customFetch';
 import useStore from '@/store/zustand/login';
-import NoDatas from './components/Nodatas';
 import ToggleItem from './components/ToggleItem';
+import NoDatas from './components/NoDatas';
 
 export default function MyPage() {
   const [userId, setUserId] = useState<number>(); // token 복호화 후 id 값 추출
@@ -24,6 +20,7 @@ export default function MyPage() {
   const logout = useStore((state) => state.logout);
 
   useEffect(() => {
+    console.log({ isLoggedIn });
     if (!isLoggedIn) {
       return route.push('/');
     }
