@@ -1,6 +1,6 @@
-import { NextResponse } from "next/server";
-import { headers } from "next/headers";
-import jwt from "jsonwebtoken";
+import { NextResponse } from 'next/server';
+import { headers } from 'next/headers';
+import jwt from 'jsonwebtoken';
 
 type DecodedToken = {
   sub: string;
@@ -12,8 +12,8 @@ type DecodedToken = {
 
 export async function GET(req: Request) {
   const headerList = headers();
-  const authorization = headerList.get("authorization");
-  const token = authorization?.split(" ").pop()!;
+  const authorization = headerList.get('authorization');
+  const token = authorization?.split(' ').pop()!;
 
   const decodedToken = jwt.verify(
     token,
