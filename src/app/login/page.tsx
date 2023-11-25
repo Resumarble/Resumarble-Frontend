@@ -1,32 +1,20 @@
 'use client';
 
-import Container from '@/components/common/Container';
-import styles from './login.module.css';
-import Input from '@/components/common/Input';
-import { useEffect, useState } from 'react';
-import Button from '@/components/common/Button';
-import customFetch from '@/utils/customFetch';
-import { useRouter } from 'next/navigation';
-import useStore from '@/store/zustand/login';
+import { useState } from 'react';
 import Image from 'next/image';
-import { signIn, useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
+import { getSession, signIn } from 'next-auth/react';
+
+import Container from '@/components/common/Container';
+import Input from '@/components/common/Input';
+import styles from './login.module.css';
+import Button from '@/components/common/Button';
 
 export default function LoginPage() {
-  const isLoggedIn = useStore((state) => state.isLoggedIn);
-  const setLogin = useStore((state) => state.login);
-
-  const { data: session } = useSession();
-
   const [id, setId] = useState('');
   const [pw, setPw] = useState('');
 
   const router = useRouter();
-
-  useEffect(() => {
-    if (isLoggedIn) {
-      return router.push('/');
-    }
-  }, [isLoggedIn]);
 
   const onChangeId = (e: React.ChangeEvent<HTMLInputElement>) => {
     setId(e.target.value);
@@ -53,64 +41,55 @@ export default function LoginPage() {
       return window.alert('아이디 또는 비밀번호가 일치하지 않습니다.');
     }
 
-    if (result?.ok && session?.user?.data) {
-      const accessToken = session.user.data?.accessToken;
-      const refreshtoken = session.user.data?.refreshToken;
-      localStorage.setItem('token', accessToken!);
-      localStorage.setItem('refreshToken', refreshtoken!);
+    if (result?.ok) {
+      const session = await getSession();
+      localStorage.setItem('token', session?.accessToken!);
+      localStorage.setItem('refreshToken', session?.refreshToken!);
       router.push('/');
-      setLogin();
     }
   };
 
   return (
     <>
-      {!isLoggedIn && (
-        <div className={styles.container}>
-          <Container showTopWhite>
-            <h3>LOGIN</h3>
-            <form action='post'>
-              <Input
-                onChange={onChangeId}
-                required
-                placeholder='아이디를 입력해주세요.'
-                htmlFor='id'
-                id='id'
-                type='text'
-                labelChild='아이디'
-              />
+      <div className={styles.container}>
+        <Container showTopWhite>
+          <h3>LOGIN</h3>
+          <form action='post'>
+            <Input
+              onChange={onChangeId}
+              required
+              placeholder='아이디를 입력해주세요.'
+              htmlFor='id'
+              id='id'
+              type='text'
+              labelChild='아이디'
+            />
 
-              <Input
-                onChange={onChangePw}
-                required
-                placeholder='비밀번호를 입력해주세요.'
-                htmlFor='pw'
-                id='pw'
-                type='password'
-                labelChild='비밀번호'
-              />
+            <Input
+              onChange={onChangePw}
+              required
+              placeholder='비밀번호를 입력해주세요.'
+              htmlFor='pw'
+              id='pw'
+              type='password'
+              labelChild='비밀번호'
+            />
 
-              <Button type='submit' onClick={submitLoginForm} isDark>
-                로그인
-              </Button>
+            <Button type='submit' onClick={submitLoginForm} isDark>
+              로그인
+            </Button>
 
-              {/* // TODO 회원가입 버튼  */}
-            </form>
+            {/* // TODO 회원가입 버튼  */}
+          </form>
 
-            <div className={styles.snsContainer}>
-              <button className={styles.kakao}>
-                <Image
-                  src='/kakao.svg'
-                  width='12'
-                  height='12'
-                  alt='kakao icon'
-                />
-                <p>카카오톡 로그인</p>
-              </button>
-            </div>
-          </Container>
-        </div>
-      )}
+          <div className={styles.snsContainer}>
+            <button className={styles.kakao}>
+              <Image src='/kakao.svg' width='12' height='12' alt='kakao icon' />
+              <p>카카오톡 로그인</p>
+            </button>
+          </div>
+        </Container>
+      </div>
     </>
   );
 }
