@@ -5,7 +5,7 @@ import './globals.css';
 
 import ClientProvider from '@/components/client/ClientProvider';
 import Nav from '@/components/layout/Nav';
-import Providers from '@/components/Provider';
+import Providers from '@/components/session/Provider';
 
 const ibmKr = IBM_Plex_Sans_KR({
   subsets: ['latin'],
@@ -33,11 +33,7 @@ export default async function RootLayout({
             <Nav />
           </header>
           <section className='section'>
-            <ClientProvider>
-              {/* <HydrateOnClient state={dehydratedState}> */}
-              {children}
-              {/* </HydrateOnClient> */}
-            </ClientProvider>
+            <ClientProvider>{children}</ClientProvider>
           </section>
         </Providers>
       </body>
