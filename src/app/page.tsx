@@ -1,18 +1,18 @@
-"use client";
+'use client';
 
-import React, { useRef, useEffect } from "react";
-import styles from "./page.module.css";
-import Container from "@/components/common/Container";
-import Button from "@/components/common/Button";
-import Link from "next/link";
-import useStore from "@/store/zustand/login";
+import React, { useRef, useEffect } from 'react';
+import styles from './page.module.css';
+import Container from '@/components/common/Container';
+import Button from '@/components/common/Button';
+import Link from 'next/link';
+import useStore from '@/store/zustand/login';
 
 type TitleRefType = {
   title: null | undefined | HTMLElement;
   subTitle: null | undefined | HTMLElement;
 };
 
-export default function Home() {
+export default function Home({ pageProps }: { pageProps: any }) {
   const titleRef = useRef<TitleRefType>({
     subTitle: null,
     title: null,
@@ -29,18 +29,18 @@ export default function Home() {
       const currentKey = key as keyof typeof titleRef.current;
 
       const timer = setTimeout(() => {
-        titleRef.current[currentKey]?.classList.add("move");
+        titleRef.current[currentKey]?.classList.add('move');
       }, idx * DELAY);
 
       timers.push(timer);
     });
 
     setTimeout(() => {
-      descRef.current?.classList.add("lazy-show");
+      descRef.current?.classList.add('lazy-show');
     }, DELAY);
 
     setTimeout(() => {
-      btnsRef.current?.classList.add("lazy-show");
+      btnsRef.current?.classList.add('lazy-show');
     }, 2 * DELAY);
 
     return () => {
@@ -77,11 +77,11 @@ export default function Home() {
           </p>
 
           <div ref={btnsRef} className={styles.btns}>
-            <Link href={"/resume"}>
+            <Link href={'/resume'}>
               <Button>생성하기</Button>
             </Link>
             {!isLoggedIn && (
-              <Link href={"/login"}>
+              <Link href={'/login'}>
                 <Button isDark>로그인 (beta)</Button>
               </Link>
             )}
