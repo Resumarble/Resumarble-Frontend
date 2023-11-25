@@ -1,3 +1,4 @@
+import createDecodedToken from '@/utils/createDecodedToken';
 import NextAuth from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
 import Kakao from 'next-auth/providers/kakao';
@@ -60,10 +61,14 @@ const handler = NextAuth({
     },
 
     async session({ session, token }) {
+      const accessToken = (token.accessToken as string).split(' ').pop();
+      const { id } = createDecodedToken(accessToken!);
       return {
         ...session,
         accessToken: token.accessToken,
         refreshToken: token.refreshToken,
+        exp: token.exp,
+        id,
       };
     },
   },
