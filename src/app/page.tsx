@@ -12,7 +12,7 @@ type TitleRefType = {
   subTitle: null | undefined | HTMLElement;
 };
 
-export default function Home({ pageProps }: { pageProps: any }) {
+export default function Home() {
   const titleRef = useRef<TitleRefType>({
     subTitle: null,
     title: null,
