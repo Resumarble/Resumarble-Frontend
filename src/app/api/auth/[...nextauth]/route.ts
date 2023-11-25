@@ -37,7 +37,11 @@ const handler = NextAuth({
           const user = await res.json();
 
           if (user.code === 200 && user) {
-            return user;
+            return {
+              ...user.data,
+              accessToken: user.data.accessToken,
+              refreshToken: user.data.refreshToken,
+            };
           }
           return null;
         } catch (err) {
@@ -56,8 +60,11 @@ const handler = NextAuth({
     },
 
     async session({ session, token }) {
-      session.user = token as any;
-      return session;
+      return {
+        ...session,
+        accessToken: token.accessToken,
+        refreshToken: token.refreshToken,
+      };
     },
   },
 });
