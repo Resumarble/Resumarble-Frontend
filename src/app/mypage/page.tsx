@@ -7,60 +7,29 @@ import Container from '@/components/common/Container';
 import ToggleBox from '@/components/common/ToggleBox';
 import styles from './mypage.module.css';
 import customFetch from '@/utils/customFetch';
-import useStore from '@/store/zustand/login';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Button from '@/components/common/Button';
 import Badge from '@/components/common/Badge';
+import { useSession } from 'next-auth/react';
 
 export default function MyPage() {
-  const [userId, setUserId] = useState<number>(); // token 복호화 후 id 값 추출
+  // const [userId, setUserId] = useState<number>(); // token 복호화 후 id 값 추출
   const route = useRouter();
+  const { data: session } = useSession();
 
-  const isLoggedIn = useStore((state) => state.isLoggedIn);
-  const logout = useStore((state) => state.logout);
   useEffect(() => {
-    if (!isLoggedIn) {
-      return route.push('/');
+    if (!session) {
+      route.push('/');
     }
-
-    // TODO token 유효 확인
-    const getDecodedToken = async () => {
-      const data = {
-        token: localStorage.getItem('token')?.split(' ').pop(),
-      };
-      if (!data.token) return;
-
-      try {
-        const res = await fetch('/api/token', {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          method: 'POST',
-          body: JSON.stringify(data),
-        });
-        const { id: userId } = await res.json();
-        setUserId(() => userId);
-      } catch (err) {
-        console.error(err, 'token error');
-
-        // TODO 리프레시 토큰 로직 추가 전까지 강제 로그아웃
-        window.alert('세션이 만료되었습니다. 다시 로그인해주세요.');
-        route.push('/login');
-        localStorage.removeItem('token');
-        localStorage.removeItem('refreshToken');
-        logout();
-      }
-    };
-    getDecodedToken();
-  }, []);
+  }, [session]);
 
   const {
     data: predictions,
     isLoading,
     isError,
   } = useQuery({
-    queryKey: ['getMyPage', userId],
+    queryKey: ['getMyPage', session?.id],
     queryFn: async () => {
       const data = await customFetch({
         // url: `/predictions/${userId}`,
@@ -71,12 +40,11 @@ export default function MyPage() {
 
       return data.data.predictions;
     },
-    enabled: !!userId,
+    enabled: !!(session?.id! >= 0),
   });
 
   const deleteQnA = () => {};
 
-  console.log(predictions);
   if (!predictions) return;
 
   return (
@@ -94,7 +62,7 @@ export default function MyPage() {
           <p>비로그인일 때 생성한 결과는 저장되지 않습니다.</p>
         </div>
         <br />
-        {isLoading || !userId ? (
+        {isLoading || !(session?.id! >= 0) ? (
           <div className={styles.contentsContainer}>
             데이터를 불러오고 있어요.
           </div>
@@ -124,6 +92,7 @@ export default function MyPage() {
                   job: string;
                   predictionId: number;
                   questionAndAnswer: {
+                    qaId: number;
                     answer: string;
                     question: string;
                   }[];
@@ -137,7 +106,7 @@ export default function MyPage() {
                         return (
                           <>
                             <ToggleBox
-                              key={`${qna} ${i}`}
+                              key={`${qna} ${qna.qaId}`}
                               title={qna.question}
                               contents={qna.answer}
                             >
@@ -146,7 +115,19 @@ export default function MyPage() {
                                 <Badge text={category} />
                                 <button
                                   onClick={(e) => {
-                                    console.log(e);
+                                    // TODO mutation 사용 ?
+
+                                    e.stopPropagation();
+                                    const confirm = window.confirm(
+                                      `'${qna.question}'\n이 질문을 삭제할까요?`
+                                    );
+
+                                    if (confirm) {
+                                      customFetch({
+                                        url: `/question-answers/${qna.qaId}`,
+                                        method: 'DELETE',
+                                      });
+                                    }
                                   }}
                                   className={styles.delete}
                                   // onClick={deleteQnA(predictions)}

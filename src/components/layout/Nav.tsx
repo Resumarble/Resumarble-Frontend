@@ -50,12 +50,12 @@ export default function Nav() {
             <li className={styles.logout} onClick={onClickLogout}>
               <Link href='/'>로그아웃</Link>
             </li>
-            <li>
+            {/* <li>
               <Link href='/login'>로그인 (beta)</Link>
             </li>
             <li className={styles.bold}>
               <Link href='/join'>회원가입 (beta)</Link>
-            </li>
+            </li> */}
           </>
         ) : (
           <>
