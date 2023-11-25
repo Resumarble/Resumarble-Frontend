@@ -3,7 +3,7 @@ interface CustomFetchType {
   params?: string;
   header?: { [key: string]: string };
   body?: any;
-  method: 'GET' | 'POST';
+  method: 'GET' | 'POST' | 'DELETE';
 }
 
 type ConfigType = {
@@ -40,6 +40,20 @@ export default async function customFetch({
   }
 
   try {
+    if (method === 'DELETE') {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_SERVER_URL}${url}${
+          !!params ? `?page=${params}` : ''
+        }`,
+        config
+      );
+
+      // TODO mutation 사용 ?
+      if (res.status !== 204) throw new Error('삭제 실패');
+
+      return;
+    }
+
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_SERVER_URL}${url}${
         !!params ? `?page=${params}` : ''
