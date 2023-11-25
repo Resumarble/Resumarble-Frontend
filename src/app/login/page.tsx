@@ -9,10 +9,13 @@ import customFetch from '@/utils/customFetch';
 import { useRouter } from 'next/navigation';
 import useStore from '@/store/zustand/login';
 import Image from 'next/image';
+import { signIn, useSession } from 'next-auth/react';
 
 export default function LoginPage() {
   const isLoggedIn = useStore((state) => state.isLoggedIn);
   const setLogin = useStore((state) => state.login);
+
+  const { data: session } = useSession();
 
   const [id, setId] = useState('');
   const [pw, setPw] = useState('');
@@ -40,29 +43,23 @@ export default function LoginPage() {
       return window.alert('아이디 또는 비밀번호를 입력해주세요.');
     }
 
-    try {
-      const res = await customFetch({
-        url: '/users/login',
-        method: 'POST',
-        body: {
-          account: id,
-          password: pw,
-        },
-      });
+    const result = await signIn('credentials', {
+      redirect: false,
+      account: id,
+      password: pw,
+    });
 
-      if (res.code !== 200) {
-        return window.alert(res.message);
-      }
+    if (result?.error) {
+      return window.alert('아이디 또는 비밀번호가 일치하지 않습니다.');
+    }
 
-      const accessToken = res.data.accessToken;
-      const refreshtoken = res.data.refreshToken;
-      localStorage.setItem('token', accessToken);
-      localStorage.setItem('refreshToken', refreshtoken);
-
+    if (result?.ok && session?.user?.data) {
+      const accessToken = session.user.data?.accessToken;
+      const refreshtoken = session.user.data?.refreshToken;
+      localStorage.setItem('token', accessToken!);
+      localStorage.setItem('refreshToken', refreshtoken!);
       router.push('/');
       setLogin();
-    } catch (err) {
-      console.error(`Login Error`, err);
     }
   };
 
