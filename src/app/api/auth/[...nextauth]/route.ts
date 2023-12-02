@@ -1,4 +1,3 @@
-import createDecodedToken from '@/utils/createDecodedToken';
 import NextAuth from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
 import Kakao from 'next-auth/providers/kakao';
@@ -36,14 +35,12 @@ const handler = NextAuth({
           );
 
           const user = await res.json();
-
           if (user.code === 200 && user) {
             return {
               ...user.data,
-              accessToken: user.data.accessToken,
-              refreshToken: user.data.refreshToken,
             };
           }
+
           return null;
         } catch (err) {
           throw err;
@@ -61,14 +58,9 @@ const handler = NextAuth({
     },
 
     async session({ session, token }) {
-      const accessToken = (token.accessToken as string).split(' ').pop();
-      const { id } = createDecodedToken(accessToken!);
       return {
         ...session,
-        accessToken: token.accessToken,
-        refreshToken: token.refreshToken,
-        exp: token.exp,
-        id,
+        ...token,
       };
     },
   },
