@@ -3,11 +3,9 @@
   position: relative;
 }
 
-.title {
+.toggleBox {
   padding: 10px 15px;
-  font-size: 1rem;
 
-  color: var(--dark-green);
   background-color: #f8f8f850;
   border-radius: 10px;
   border: 1px solid #ffffff50;
@@ -16,6 +14,11 @@
 
   cursor: pointer;
   position: relative;
+}
+
+.toggleBox h2 {
+  font-size: 1rem;
+  color: var(--dark-green);
 }
 
 .contents {
@@ -52,7 +55,7 @@
   position: absolute;
   left: 0;
   top: 0;
-  content: "";
+  content: '';
   width: 5px;
   height: 5px;
   border-top: 2px solid #ffffff;

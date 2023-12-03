@@ -1,17 +1,16 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
+import styles from './mypage.module.css';
 
 import Container from '@/components/common/Container';
-import ToggleBox from '@/components/common/ToggleBox';
-import styles from './mypage.module.css';
+
 import customFetch from '@/utils/customFetch';
 import useStore from '@/store/zustand/login';
-import { useRouter } from 'next/navigation';
-import Link from 'next/link';
-import Button from '@/components/common/Button';
-import Badge from '@/components/common/Badge';
+import ToggleItem from './components/ToggleItem';
+import NoDatas from './components/NoDatas';
 
 export default function MyPage() {
   const [userId, setUserId] = useState<number>(); // token 복호화 후 id 값 추출
@@ -19,7 +18,9 @@ export default function MyPage() {
 
   const isLoggedIn = useStore((state) => state.isLoggedIn);
   const logout = useStore((state) => state.logout);
+
   useEffect(() => {
+    console.log({ isLoggedIn });
     if (!isLoggedIn) {
       return route.push('/');
     }
@@ -29,6 +30,7 @@ export default function MyPage() {
       const data = {
         token: localStorage.getItem('token')?.split(' ').pop(),
       };
+
       if (!data.token) return;
 
       try {
@@ -52,6 +54,7 @@ export default function MyPage() {
         logout();
       }
     };
+
     getDecodedToken();
   }, []);
 
@@ -74,10 +77,8 @@ export default function MyPage() {
     enabled: !!userId,
   });
 
-  const deleteQnA = () => {};
-
   console.log(predictions);
-  if (!predictions) return;
+  if (!predictions) return <></>;
 
   return (
     <div className={styles.container}>
@@ -94,6 +95,7 @@ export default function MyPage() {
           <p>비로그인일 때 생성한 결과는 저장되지 않습니다.</p>
         </div>
         <br />
+
         {isLoading || !userId ? (
           <div className={styles.contentsContainer}>
             데이터를 불러오고 있어요.
@@ -101,67 +103,9 @@ export default function MyPage() {
         ) : (
           <div className={styles.contentsContainer}>
             {!predictions.length ? (
-              <div className={styles.noData}>
-                <h2>No data</h2>
-                <p>생성한 질문을 누적해서 볼 수 있는 페이지입니다.</p>
-                <br />
-                <br />
-                <Link href={'/resume'}>
-                  <Button isDark>생성하기</Button>
-                </Link>
-              </div>
+              <NoDatas />
             ) : (
-              predictions.map(
-                ({
-                  category,
-                  createdDate,
-                  job,
-                  predictionId,
-                  questionAndAnswer,
-                }: {
-                  category: string;
-                  createdDate: string;
-                  job: string;
-                  predictionId: number;
-                  questionAndAnswer: {
-                    answer: string;
-                    question: string;
-                  }[];
-                }) => {
-                  return (
-                    <div
-                      className={styles.content}
-                      key={`${questionAndAnswer} ${createdDate}`}
-                    >
-                      {questionAndAnswer?.map((qna, i) => {
-                        return (
-                          <>
-                            <ToggleBox
-                              key={`${qna} ${i}`}
-                              title={qna.question}
-                              contents={qna.answer}
-                            >
-                              <div className={styles.badgeContainer}>
-                                <Badge text={job} />
-                                <Badge text={category} />
-                                <button
-                                  onClick={(e) => {
-                                    console.log(e);
-                                  }}
-                                  className={styles.delete}
-                                  // onClick={deleteQnA(predictions)}
-                                >
-                                  삭제
-                                </button>
-                              </div>
-                            </ToggleBox>
-                          </>
-                        );
-                      })}
-                    </div>
-                  );
-                }
-              )
+              <ToggleItem predictions={predictions} />
             )}
           </div>
         )}
