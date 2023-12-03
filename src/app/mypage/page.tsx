@@ -1,22 +1,60 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
+import styles from './mypage.module.css';
 
 import Container from '@/components/common/Container';
-import ToggleBox from '@/components/common/ToggleBox';
-import styles from './mypage.module.css';
+
 import customFetch from '@/utils/customFetch';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Button from '@/components/common/Button';
 import Badge from '@/components/common/Badge';
 import { useSession } from 'next-auth/react';
+import ToggleItem from './components/ToggleItem';
+import NoDatas from './components/NoDatas';
 
 export default function MyPage() {
   // const [userId, setUserId] = useState<number>(); // token 복호화 후 id 값 추출
   const route = useRouter();
+
   const { data: session } = useSession();
+
+  useEffect(() => {
+    // TODO token 유효 확인
+//     const getDecodedToken = async () => {
+//       const data = {
+//         token: localStorage.getItem('token')?.split(' ').pop(),
+//       };
+
+//       if (!data.token) return;
+
+//       try {
+//         const res = await fetch('/api/token', {
+//           headers: {
+//             'Content-Type': 'application/json',
+//           },
+//           method: 'POST',
+//           body: JSON.stringify(data),
+//         });
+//         const { id: userId } = await res.json();
+//         setUserId(() => userId);
+//       } catch (err) {
+//         console.error(err, 'token error');
+
+//         // TODO 리프레시 토큰 로직 추가 전까지 강제 로그아웃
+//         window.alert('세션이 만료되었습니다. 다시 로그인해주세요.');
+//         route.push('/login');
+//         localStorage.removeItem('token');
+//         localStorage.removeItem('refreshToken');
+//         logout();
+//       }
+//     };
+
+//     getDecodedToken();
+  }, []);
 
   const {
     data: predictions,
@@ -38,8 +76,8 @@ export default function MyPage() {
   });
 
   const deleteQnA = () => {};
-
-  if (!predictions) return;
+  
+  if (!predictions) return <></>;
 
   return (
     <div className={styles.container}>
@@ -56,6 +94,7 @@ export default function MyPage() {
           <p>비로그인일 때 생성한 결과는 저장되지 않습니다.</p>
         </div>
         <br />
+
         {isLoading || !(session?.user.id! >= 0) ? (
           <div className={styles.contentsContainer}>
             데이터를 불러오고 있어요.
@@ -63,15 +102,7 @@ export default function MyPage() {
         ) : (
           <div className={styles.contentsContainer}>
             {!predictions.length ? (
-              <div className={styles.noData}>
-                <h2>No data</h2>
-                <p>생성한 질문을 누적해서 볼 수 있는 페이지입니다.</p>
-                <br />
-                <br />
-                <Link href={'/resume'}>
-                  <Button isDark>생성하기</Button>
-                </Link>
-              </div>
+              <NoDatas />
             ) : (
               predictions.map(
                 ({
@@ -137,6 +168,7 @@ export default function MyPage() {
                   );
                 }
               )
+              <ToggleItem predictions={predictions} />
             )}
           </div>
         )}
