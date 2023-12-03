@@ -39,7 +39,7 @@ export default function Nav() {
         <Link href='/'>RESUMARBLE</Link>
       </h1>
       <ul>
-        {session && session.accessToken ? (
+        {session ? (
           <>
             <li className={styles.bold}>
               <Link href='/resume'>질문생성</Link>
@@ -50,12 +50,6 @@ export default function Nav() {
             <li className={styles.logout} onClick={onClickLogout}>
               <Link href='/'>로그아웃</Link>
             </li>
-            {/* <li>
-              <Link href='/login'>로그인 (beta)</Link>
-            </li>
-            <li className={styles.bold}>
-              <Link href='/join'>회원가입 (beta)</Link>
-            </li> */}
           </>
         ) : (
           <>
