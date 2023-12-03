@@ -25,8 +25,8 @@ export default function LoginPage() {
   };
 
   // oauth 로그인
-  const loginKakao = async () => {
-    await signIn('kakao', { callbackUrl: '/' });
+  const loginKakao = () => {
+    signIn('kakao', { callbackUrl: '/' });
   };
 
   // 일반 로그인
