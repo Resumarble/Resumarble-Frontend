@@ -14,7 +14,7 @@
 }
 
 .headerTitle::after {
-  content: "";
+  content: '';
   position: absolute;
   left: 0;
   top: 8px;
@@ -43,9 +43,4 @@
   flex-direction: column;
 
   margin-top: 55px;
-}
-
-.badgeContainer {
-  display: flex;
-  gap: 10px;
 }
