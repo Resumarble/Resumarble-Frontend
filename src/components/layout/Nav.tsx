@@ -11,6 +11,8 @@ export default function Nav() {
   const { data: session } = useSession();
 
   const onClickLogout = async () => {
+    signOut();
+
     try {
       const res = await customFetch({
         url: '/users/logout',
@@ -28,7 +30,6 @@ export default function Nav() {
     } finally {
       localStorage.removeItem('token');
       localStorage.removeItem('refreshToken');
-      signOut();
       router.push('/');
     }
   };
