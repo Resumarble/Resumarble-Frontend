@@ -29,7 +29,7 @@ export default function MyPage() {
     isLoading,
     isError,
   } = useQuery({
-    queryKey: ['getMyPage', session?.id],
+    queryKey: ['getMyPage', session?.user.id],
     queryFn: async () => {
       const data = await customFetch({
         // url: `/predictions/${userId}`,
@@ -40,7 +40,7 @@ export default function MyPage() {
 
       return data.data.predictions;
     },
-    enabled: !!(session?.id! >= 0),
+    enabled: !!(session?.user.id! >= 0),
   });
 
   const deleteQnA = () => {};
@@ -62,7 +62,7 @@ export default function MyPage() {
           <p>비로그인일 때 생성한 결과는 저장되지 않습니다.</p>
         </div>
         <br />
-        {isLoading || !(session?.id! >= 0) ? (
+        {isLoading || !(session?.user.id! >= 0) ? (
           <div className={styles.contentsContainer}>
             데이터를 불러오고 있어요.
           </div>
