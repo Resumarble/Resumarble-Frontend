@@ -26,7 +26,7 @@ export default function LoginPage() {
 
   // oauth 로그인
   const loginKakao = () => {
-    signIn('kakao', { callbackUrl: '/' });
+    signIn('kakao');
   };
 
   // 일반 로그인
