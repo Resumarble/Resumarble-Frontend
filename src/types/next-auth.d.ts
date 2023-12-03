@@ -6,8 +6,14 @@ interface ExtendedJWT extends JWT {
   refreshToken?: string;
   id?: number;
 }
+
 declare module 'next-auth' {
   interface Session {
     user: ExtendedJWT;
+  }
+
+  interface User {
+    accessToken?: string;
+    refreshToken?: string;
   }
 }
