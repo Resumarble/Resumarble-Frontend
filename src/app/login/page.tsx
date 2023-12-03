@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { getSession, signIn } from 'next-auth/react';
+import { getSession, signIn, useSession } from 'next-auth/react';
 
 import Container from '@/components/common/Container';
 import Input from '@/components/common/Input';
@@ -24,6 +24,12 @@ export default function LoginPage() {
     setPw(e.target.value);
   };
 
+  // oauth 로그인
+  const loginKakao = async () => {
+    await signIn('kakao', { callbackUrl: '/' });
+  };
+
+  // 일반 로그인
   const submitLoginForm = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -83,7 +89,7 @@ export default function LoginPage() {
           </form>
 
           <div className={styles.snsContainer}>
-            <button className={styles.kakao}>
+            <button className={styles.kakao} onClick={loginKakao}>
               <Image src='/kakao.svg' width='12' height='12' alt='kakao icon' />
               <p>카카오톡 로그인</p>
             </button>

@@ -51,6 +51,7 @@ export default function KakaoLogin({ searchParams }: Props) {
         window.alert('카카오 로그인 완료, 메인 페이지로 이동합니다.');
         router.push('/');
       } catch (err) {
+        console.log(err);
         window.alert('잘못된 요청입니다. 잠시 후 다시 시도해주세요.');
       }
     };

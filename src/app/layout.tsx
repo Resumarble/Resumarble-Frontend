@@ -6,6 +6,8 @@ import './globals.css';
 import ClientProvider from '@/components/client/ClientProvider';
 import Nav from '@/components/layout/Nav';
 import Providers from '@/components/session/Provider';
+// import { getServerSession } from 'next-auth';
+// import { kakaoAuthOptions } from './api/auth/[...nextauth]/route';
 
 const ibmKr = IBM_Plex_Sans_KR({
   subsets: ['latin'],
@@ -25,6 +27,8 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  // const test = await getServerSession(kakaoAuthOptions);
+  // console.log(test);
   return (
     <html lang='ko'>
       <body className={ibmKr.className}>
