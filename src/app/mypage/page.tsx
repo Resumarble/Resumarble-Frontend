@@ -1,20 +1,18 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
 import { useQuery } from '@tanstack/react-query';
 import styles from './mypage.module.css';
 
-import Container from '@/components/common/Container';
-
-import customFetch from '@/utils/customFetch';
-import { useRouter } from 'next/navigation';
-import Link from 'next/link';
-import Button from '@/components/common/Button';
-import Badge from '@/components/common/Badge';
-import { useSession } from 'next-auth/react';
 import ToggleItem from './components/ToggleItem';
 import NoDatas from './components/NoDatas';
+import ToggleBox from '@/components/common/ToggleBox';
+import Container from '@/components/common/Container';
+import Badge from '@/components/common/Badge';
+
+import customFetch from '@/utils/customFetch';
 
 export default function MyPage() {
   // const [userId, setUserId] = useState<number>(); // token 복호화 후 id 값 추출
@@ -24,36 +22,32 @@ export default function MyPage() {
 
   useEffect(() => {
     // TODO token 유효 확인
-//     const getDecodedToken = async () => {
-//       const data = {
-//         token: localStorage.getItem('token')?.split(' ').pop(),
-//       };
-
-//       if (!data.token) return;
-
-//       try {
-//         const res = await fetch('/api/token', {
-//           headers: {
-//             'Content-Type': 'application/json',
-//           },
-//           method: 'POST',
-//           body: JSON.stringify(data),
-//         });
-//         const { id: userId } = await res.json();
-//         setUserId(() => userId);
-//       } catch (err) {
-//         console.error(err, 'token error');
-
-//         // TODO 리프레시 토큰 로직 추가 전까지 강제 로그아웃
-//         window.alert('세션이 만료되었습니다. 다시 로그인해주세요.');
-//         route.push('/login');
-//         localStorage.removeItem('token');
-//         localStorage.removeItem('refreshToken');
-//         logout();
-//       }
-//     };
-
-//     getDecodedToken();
+    //     const getDecodedToken = async () => {
+    //       const data = {
+    //         token: localStorage.getItem('token')?.split(' ').pop(),
+    //       };
+    //       if (!data.token) return;
+    //       try {
+    //         const res = await fetch('/api/token', {
+    //           headers: {
+    //             'Content-Type': 'application/json',
+    //           },
+    //           method: 'POST',
+    //           body: JSON.stringify(data),
+    //         });
+    //         const { id: userId } = await res.json();
+    //         setUserId(() => userId);
+    //       } catch (err) {
+    //         console.error(err, 'token error');
+    //         // TODO 리프레시 토큰 로직 추가 전까지 강제 로그아웃
+    //         window.alert('세션이 만료되었습니다. 다시 로그인해주세요.');
+    //         route.push('/login');
+    //         localStorage.removeItem('token');
+    //         localStorage.removeItem('refreshToken');
+    //         logout();
+    //       }
+    //     };
+    //     getDecodedToken();
   }, []);
 
   const {
@@ -76,7 +70,7 @@ export default function MyPage() {
   });
 
   const deleteQnA = () => {};
-  
+
   if (!predictions) return <></>;
 
   return (
@@ -104,70 +98,6 @@ export default function MyPage() {
             {!predictions.length ? (
               <NoDatas />
             ) : (
-              predictions.map(
-                ({
-                  category,
-                  createdDate,
-                  job,
-                  predictionId,
-                  questionAndAnswer,
-                }: {
-                  category: string;
-                  createdDate: string;
-                  job: string;
-                  predictionId: number;
-                  questionAndAnswer: {
-                    qaId: number;
-                    answer: string;
-                    question: string;
-                  }[];
-                }) => {
-                  return (
-                    <div
-                      className={styles.content}
-                      key={`${questionAndAnswer} ${createdDate}`}
-                    >
-                      {questionAndAnswer?.map((qna, i) => {
-                        return (
-                          <>
-                            <ToggleBox
-                              key={`${qna} ${qna.qaId}`}
-                              title={qna.question}
-                              contents={qna.answer}
-                            >
-                              <div className={styles.badgeContainer}>
-                                <Badge text={job} />
-                                <Badge text={category} />
-                                <button
-                                  onClick={(e) => {
-                                    // TODO mutation 사용 ?
-
-                                    e.stopPropagation();
-                                    const confirm = window.confirm(
-                                      `'${qna.question}'\n이 질문을 삭제할까요?`
-                                    );
-
-                                    if (confirm) {
-                                      customFetch({
-                                        url: `/question-answers/${qna.qaId}`,
-                                        method: 'DELETE',
-                                      });
-                                    }
-                                  }}
-                                  className={styles.delete}
-                                  // onClick={deleteQnA(predictions)}
-                                >
-                                  삭제
-                                </button>
-                              </div>
-                            </ToggleBox>
-                          </>
-                        );
-                      })}
-                    </div>
-                  );
-                }
-              )
               <ToggleItem predictions={predictions} />
             )}
           </div>

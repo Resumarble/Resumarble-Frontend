@@ -4,15 +4,14 @@ import { AdapterUser } from 'next-auth/adapters';
 import Credentials from 'next-auth/providers/credentials';
 import Kakao from 'next-auth/providers/kakao';
 
-export const kakaoAuthOptions = {
-  providers: [
-    Kakao({
-      clientId: process.env.KAKAO_CLIENT_ID!,
-      clientSecret: process.env.KAKAO_CLIENT_SECRET!,
-    }),
-  ],
-  secret: process.env.NEXTAUTH_SECRET,
-};
+// export const kakaoAuthOptions = {
+//   providers: [
+//     Kakao({
+//       clientId: process.env.KAKAO_CLIENT_ID!,
+//       clientSecret: process.env.KAKAO_CLIENT_SECRET!,
+//     }),
+//   ],
+// };
 
 const handler = NextAuth({
   pages: {
@@ -56,7 +55,10 @@ const handler = NextAuth({
         }
       },
     }),
-    ...kakaoAuthOptions.providers,
+    Kakao({
+      clientId: process.env.KAKAO_CLIENT_ID!,
+      clientSecret: process.env.KAKAO_CLIENT_SECRET!,
+    }),
   ],
   callbacks: {
     async signIn({
