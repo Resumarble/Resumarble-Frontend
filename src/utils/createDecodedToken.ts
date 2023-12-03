@@ -9,7 +9,7 @@ export type Token = {
 };
 
 export default function createDecodedToken(token: string): Token {
-  const secretKey = process.env.NEXT_PUBLIC_SECRET_KEY;
+  const secretKey = process.env.SECRET_KEY;
   const decodedToken = jwt.verify(token, secretKey);
 
   return decodedToken;
