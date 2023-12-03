@@ -24,23 +24,14 @@ const ToggleItem = ({ predictions }: ToggleItemProps) => {
   const deleteQnA = () => {};
 
   return predictions.map(
-    ({
-      category,
-      createdDate,
-      job,
-      predictionId,
-      questionAndAnswer,
-    }: PredictionType) => {
+    ({ category, createdDate, job, predictionId, questionAndAnswer }, idx) => {
       return (
-        <div
-          className={styles.content}
-          key={`${questionAndAnswer} ${createdDate}`}
-        >
+        <div className={styles.content} key={`${predictionId} ${idx}`}>
           {questionAndAnswer?.map((qna, i) => {
             return (
               <>
                 <ToggleBox
-                  key={`${qna} ${i}`}
+                  key={`${qna.question} ${i}`}
                   title={qna.question}
                   contents={qna.answer}
                 >

@@ -1,28 +1,20 @@
-"use client";
+'use client';
 
-import Container from "@/components/common/Container";
-import styles from "./login.module.css";
-import Input from "@/components/common/Input";
-import { useEffect, useState } from "react";
-import Button from "@/components/common/Button";
-import customFetch from "@/utils/customFetch";
-import { useRouter } from "next/navigation";
-import useStore from "@/store/zustand/login";
+import { useState } from 'react';
+import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+import { getSession, signIn, useSession } from 'next-auth/react';
+
+import Container from '@/components/common/Container';
+import Input from '@/components/common/Input';
+import styles from './login.module.css';
+import Button from '@/components/common/Button';
 
 export default function LoginPage() {
-  const isLoggedIn = useStore((state) => state.isLoggedIn);
-  const setLogin = useStore((state) => state.login);
-
-  const [id, setId] = useState("");
-  const [pw, setPw] = useState("");
+  const [id, setId] = useState('');
+  const [pw, setPw] = useState('');
 
   const router = useRouter();
-
-  useEffect(() => {
-    if (isLoggedIn) {
-      return router.push("/");
-    }
-  }, [isLoggedIn]);
 
   const onChangeId = (e: React.ChangeEvent<HTMLInputElement>) => {
     setId(e.target.value);
@@ -32,75 +24,78 @@ export default function LoginPage() {
     setPw(e.target.value);
   };
 
+  // oauth 로그인
+  const loginKakao = async () => {
+    await signIn('kakao', { callbackUrl: '/' });
+  };
+
+  // 일반 로그인
   const submitLoginForm = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!id || !pw) {
-      return window.alert("아이디 또는 비밀번호를 입력해주세요.");
+      return window.alert('아이디 또는 비밀번호를 입력해주세요.');
     }
 
-    try {
-      const res = await customFetch({
-        url: "/users/login",
-        method: "POST",
-        body: {
-          account: id,
-          password: pw,
-        },
-      });
+    const result = await signIn('credentials', {
+      redirect: false,
+      account: id,
+      password: pw,
+    });
 
-      if (res.code !== 200) {
-        return window.alert(res.message);
-      }
+    if (result?.error) {
+      return window.alert('아이디 또는 비밀번호가 일치하지 않습니다.');
+    }
 
-      const accessToken = res.data.accessToken;
-      const refreshtoken = res.data.refreshToken;
-      localStorage.setItem("token", accessToken);
-      localStorage.setItem("refreshToken", refreshtoken);
-
-      router.push("/");
-      setLogin();
-    } catch (err) {
-      console.error(`Login Error`, err);
+    if (result?.ok) {
+      const session = await getSession();
+      localStorage.setItem('token', session?.user.accessToken!);
+      localStorage.setItem('refreshToken', session?.user.refreshToken!);
+      router.push('/');
     }
   };
 
   return (
     <>
-      {!isLoggedIn && (
-        <div className={styles.container}>
-          <Container showTopWhite>
-            <h3>LOGIN</h3>
-            <form action="post">
-              <Input
-                onChange={onChangeId}
-                required
-                placeholder="아이디를 입력해주세요."
-                htmlFor="id"
-                id="id"
-                type="text"
-                labelChild="아이디"
-              />
+      <div className={styles.container}>
+        <Container showTopWhite>
+          <h3>LOGIN</h3>
+          <form action='post'>
+            <Input
+              onChange={onChangeId}
+              required
+              placeholder='아이디를 입력해주세요.'
+              htmlFor='id'
+              id='id'
+              type='text'
+              labelChild='아이디'
+            />
 
-              <Input
-                onChange={onChangePw}
-                required
-                placeholder="비밀번호를 입력해주세요."
-                htmlFor="pw"
-                id="pw"
-                type="password"
-                labelChild="비밀번호"
-              />
+            <Input
+              onChange={onChangePw}
+              required
+              placeholder='비밀번호를 입력해주세요.'
+              htmlFor='pw'
+              id='pw'
+              type='password'
+              labelChild='비밀번호'
+            />
 
-              <Button type="submit" onClick={submitLoginForm} isDark>
-                로그인
-              </Button>
+            <Button type='submit' onClick={submitLoginForm} isDark>
+              로그인
+            </Button>
 
-              {/* // TODO 회원가입 버튼  */}
-            </form>
-          </Container>
-        </div>
-      )}
+            {/* // TODO 회원가입 버튼  */}
+          </form>
+
+          <div className={styles.snsContainer}>
+            <button className={styles.kakao} onClick={loginKakao}>
+              <Image src='/kakao.svg' width='12' height='12' alt='kakao icon' />
+              <p>카카오톡 로그인</p>
+            </button>
+          </div>
+        </Container>
+      </div>
     </>
   );
 }

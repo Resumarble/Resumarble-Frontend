@@ -1,20 +1,24 @@
-"use client";
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+'use client';
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 
-import Container from "@/components/common/Container";
-import styles from "./join.module.css";
-import Button from "@/components/common/Button";
-import Input from "@/components/common/Input";
+import Container from '@/components/common/Container';
+import styles from './join.module.css';
+import Button from '@/components/common/Button';
+import Input from '@/components/common/Input';
 
-import customFetch from "@/utils/customFetch";
-import useStore from "@/store/zustand/login";
+import customFetch from '@/utils/customFetch';
+import useStore from '@/store/zustand/login';
+import Image from 'next/image';
+import Link from 'next/link';
+
+import { KAKAO_JOIN_URL } from './constants/kakao';
 
 export default function JoinPage() {
-  const [id, setId] = useState("");
+  const [id, setId] = useState('');
   const [pw, setPw] = useState({
-    pw: "",
-    rePw: "",
+    pw: '',
+    rePw: '',
   });
   const [$message, $setMessage] = useState<JSX.Element | null>(null);
 
@@ -26,7 +30,7 @@ export default function JoinPage() {
 
   useEffect(() => {
     if (isLoggedIn) {
-      return router.push("/");
+      return router.push('/');
     }
   }, [isLoggedIn]);
 
@@ -44,8 +48,8 @@ export default function JoinPage() {
 
   const clickDuplicateCheck = async () => {
     const isOk = await customFetch({
-      url: "/users/duplicate-account",
-      method: "POST",
+      url: '/users/duplicate-account',
+      method: 'POST',
       body: {
         account: id,
       },
@@ -79,16 +83,16 @@ export default function JoinPage() {
   const onSubmitForm = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!isCheckId) {
-      return window.alert("아이디 중복 확인을 해주세요.");
+      return window.alert('아이디 중복 확인을 해주세요.');
     }
 
     if (!isSamePw) {
-      return window.alert("비밀번호가 일치하지 않습니다. 다시 확인해주세요.");
+      return window.alert('비밀번호가 일치하지 않습니다. 다시 확인해주세요.');
     }
 
     const res = await customFetch({
-      url: "/users/join",
-      method: "POST",
+      url: '/users/join',
+      method: 'POST',
       body: {
         account: id,
         password: pw.pw,
@@ -96,16 +100,16 @@ export default function JoinPage() {
     });
 
     if (res.code === 200) {
-      window.alert("회원이 되신 것을 환영합니다.");
-      return router.push("/login");
+      window.alert('회원이 되신 것을 환영합니다.');
+      return router.push('/login');
     }
 
-    return window.alert("에러가 발생했어요. 새로고침 후 다시 시도해주세요.");
+    return window.alert('에러가 발생했어요. 새로고침 후 다시 시도해주세요.');
   };
 
   const changePw =
-    (target: "pw" | "re") => (e: React.ChangeEvent<HTMLInputElement>) => {
-      if (target === "re") {
+    (target: 'pw' | 're') => (e: React.ChangeEvent<HTMLInputElement>) => {
+      if (target === 're') {
         return setPw((prev) => ({ ...prev, rePw: e.target.value }));
       }
 
@@ -116,55 +120,64 @@ export default function JoinPage() {
     <div className={styles.container}>
       <Container showTopWhite>
         <h3>JOIN</h3>
-        <form action="post">
+
+        <form action='post'>
           <Input
             onChange={onChangeId}
             required
-            placeholder="아이디를 입력해주세요."
-            htmlFor="id"
-            id="id"
-            type="text"
-            labelChild="아이디"
+            placeholder='아이디를 입력해주세요.'
+            htmlFor='id'
+            id='id'
+            type='text'
+            labelChild='아이디'
           />
 
           <div className={styles.msg}>{$message}</div>
 
           <button
             onClick={checkAllowedId}
-            type="button"
+            type='button'
             className={styles.duplication}
           >
             중복 확인
           </button>
 
           <Input
-            onChange={changePw("pw")}
+            onChange={changePw('pw')}
             required
-            placeholder="비밀번호를 입력해주세요."
-            htmlFor="pw"
-            id="pw"
-            type="password"
-            labelChild="비밀번호"
+            placeholder='비밀번호를 입력해주세요.'
+            htmlFor='pw'
+            id='pw'
+            type='password'
+            labelChild='비밀번호'
           />
 
           <Input
-            onChange={changePw("re")}
+            onChange={changePw('re')}
             required
-            placeholder="비밀번호를 다시 입력해주세요."
-            htmlFor="re-pw"
-            id="re-pw"
-            type="password"
-            labelChild="비밀번호 확인"
+            placeholder='비밀번호를 다시 입력해주세요.'
+            htmlFor='re-pw'
+            id='re-pw'
+            type='password'
+            labelChild='비밀번호 확인'
           />
 
           <div className={styles.joinBtn}>
-            <Button onClick={onSubmitForm} type="submit" isDark>
+            <Button onClick={onSubmitForm} type='submit' isDark>
               회원가입
             </Button>
           </div>
         </form>
+
+        <div className={styles.snsContainer}>
+          <Link href={KAKAO_JOIN_URL} className={styles.kakao}>
+            <Image src='/kakao.svg' width='12' height='12' alt='kakao icon' />
+            <p>카카오톡으로 회원가입</p>
+          </Link>
+        </div>
       </Container>
-      <div className="deco"></div>
+
+      <div className='deco'></div>
     </div>
   );
 }
