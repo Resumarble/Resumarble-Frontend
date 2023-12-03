@@ -43,8 +43,8 @@ export default function LoginPage() {
 
     if (result?.ok) {
       const session = await getSession();
-      localStorage.setItem('token', session?.accessToken!);
-      localStorage.setItem('refreshToken', session?.refreshToken!);
+      localStorage.setItem('token', session?.user.accessToken!);
+      localStorage.setItem('refreshToken', session?.user.refreshToken!);
       router.push('/');
     }
   };
