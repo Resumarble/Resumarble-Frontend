@@ -10,9 +10,10 @@ import Input from '@/components/common/Input';
 import customFetch from '@/utils/customFetch';
 import useStore from '@/store/zustand/login';
 import Image from 'next/image';
-import Link from 'next/link';
+// import Link from 'next/link';
 
-import { KAKAO_JOIN_URL } from './constants/kakao';
+// import { KAKAO_JOIN_URL } from './constants/kakao';
+import { signIn } from 'next-auth/react';
 
 export default function JoinPage() {
   const [id, setId] = useState('');
@@ -39,6 +40,11 @@ export default function JoinPage() {
       setIsSamePw(pw.pw === pw.rePw);
     }
   }, [pw.pw, pw.rePw]);
+
+  // oauth 로그인
+  const loginKakao = async () => {
+    await signIn('kakao', { callbackUrl: '/' });
+  };
 
   const onChangeId = (e: React.ChangeEvent<HTMLInputElement>) => {
     setIsCheckId(false);
@@ -170,10 +176,14 @@ export default function JoinPage() {
         </form>
 
         <div className={styles.snsContainer}>
-          <Link href={KAKAO_JOIN_URL} className={styles.kakao}>
+          <div
+            // href={KAKAO_JOIN_URL}
+            onClick={loginKakao}
+            className={styles.kakao}
+          >
             <Image src='/kakao.svg' width='12' height='12' alt='kakao icon' />
             <p>카카오톡으로 회원가입</p>
-          </Link>
+          </div>
         </div>
       </Container>
 
