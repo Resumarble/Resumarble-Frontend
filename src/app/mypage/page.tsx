@@ -18,12 +18,6 @@ export default function MyPage() {
   const route = useRouter();
   const { data: session } = useSession();
 
-  useEffect(() => {
-    if (!session) {
-      route.push('/');
-    }
-  }, [session]);
-
   const {
     data: predictions,
     isLoading,
