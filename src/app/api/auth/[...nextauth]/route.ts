@@ -1,21 +1,21 @@
+import createDecodedToken from '@/utils/createDecodedToken';
 import NextAuth from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
 import Kakao from 'next-auth/providers/kakao';
 
 const handler = NextAuth({
+  pages: {
+    signIn: '/login',
+  },
   providers: [
     Credentials({
       name: 'Credentials',
       credentials: {
         account: {
-          label: 'ID',
           type: 'text',
-          placeholder: '아이디를 입력하세요.',
         },
         password: {
-          label: 'Password',
           type: 'password',
-          placeholder: '비밀번호를 입력하세요.',
         },
       },
       async authorize(credentials, req) {
@@ -36,9 +36,7 @@ const handler = NextAuth({
 
           const user = await res.json();
           if (user.code === 200 && user) {
-            return {
-              ...user.data,
-            };
+            return user.data;
           }
 
           return null;
@@ -58,10 +56,11 @@ const handler = NextAuth({
     },
 
     async session({ session, token }) {
-      return {
-        ...session,
-        ...token,
-      };
+      const accessToken = (token.accessToken as string).split(' ').pop();
+      const { id } = createDecodedToken(accessToken!);
+
+      session.user = { ...token, id };
+      return session;
     },
   },
 });
