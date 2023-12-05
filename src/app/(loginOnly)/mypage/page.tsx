@@ -1,9 +1,9 @@
 'use client';
 
-import { useEffect } from 'react';
+import { MouseEvent, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
-import { useQuery } from '@tanstack/react-query';
+import { QueryClient, useMutation, useQuery } from '@tanstack/react-query';
 import styles from './mypage.module.css';
 
 import ToggleItem from './_components/ToggleItem';
@@ -12,41 +12,33 @@ import Container from '@/components/common/Container';
 
 import customFetch from '@/utils/customFetch';
 
+const deleteQuestionAnswer = async (qaId: number) => {
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/question-answers/${qaId}`,
+    {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: localStorage.getItem('token') ?? '',
+      },
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error('Network response was not ok');
+  }
+};
+
 export default function MyPage() {
   // const [userId, setUserId] = useState<number>(); // token 복호화 후 id 값 추출
   const route = useRouter();
 
   const { data: session } = useSession();
 
-  useEffect(() => {
-    // TODO token 유효 확인
-    //     const getDecodedToken = async () => {
-    //       const data = {
-    //         token: localStorage.getItem('token')?.split(' ').pop(),
-    //       };
-    //       if (!data.token) return;
-    //       try {
-    //         const res = await fetch('/api/token', {
-    //           headers: {
-    //             'Content-Type': 'application/json',
-    //           },
-    //           method: 'POST',
-    //           body: JSON.stringify(data),
-    //         });
-    //         const { id: userId } = await res.json();
-    //         setUserId(() => userId);
-    //       } catch (err) {
-    //         console.error(err, 'token error');
-    //         // TODO 리프레시 토큰 로직 추가 전까지 강제 로그아웃
-    //         window.alert('세션이 만료되었습니다. 다시 로그인해주세요.');
-    //         route.push('/login');
-    //         localStorage.removeItem('token');
-    //         localStorage.removeItem('refreshToken');
-    //         logout();
-    //       }
-    //     };
-    //     getDecodedToken();
-  }, []);
+  const queryClient = new QueryClient();
+  const mutation = useMutation(deleteQuestionAnswer);
+
+  // TODO 토큰 유효기간 확인 로직 추가
 
   const {
     data: predictions,
@@ -67,7 +59,24 @@ export default function MyPage() {
     enabled: !!(session?.user.id! >= 0),
   });
 
-  const deleteQnA = () => {};
+  const deleteQnA = (
+    e: React.MouseEvent<Element, MouseEvent>,
+    qaId: number
+  ) => {
+    e.stopPropagation();
+
+    // TODO 정말 삭제할 것인지 묻기
+    mutation.mutate(qaId, {
+      onSuccess: () => {
+        queryClient.invalidateQueries(['getMyPage']);
+        window.alert('성공적으로 삭제했어요.');
+      },
+      onError: (error) => {
+        console.log(error);
+        window.alert('삭제에 실패했어요. 잠시 후 다시 시도해주세요.');
+      },
+    });
+  };
 
   if (!predictions) return <></>;
 
@@ -96,7 +105,7 @@ export default function MyPage() {
             {!predictions.length ? (
               <NoDatas />
             ) : (
-              <ToggleItem predictions={predictions} />
+              <ToggleItem deleteQnA={deleteQnA} predictions={predictions} />
             )}
           </div>
         )}
