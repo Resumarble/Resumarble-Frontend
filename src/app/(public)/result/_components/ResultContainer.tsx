@@ -4,10 +4,10 @@ import Link from 'next/link';
 
 import styles from './resultContainer.module.css';
 import ToggleBox from '@/components/common/ToggleBox';
-import { Result } from '@/app/resume/components/Form';
 import SaveButton from './SaveButton';
 import Container from '@/components/common/Container';
 import Button from '@/components/common/Button';
+import { Result } from '../../resume/_components/Form';
 
 export default function ResultContainer() {
   const [results, setResults] = useState<Result[]>();

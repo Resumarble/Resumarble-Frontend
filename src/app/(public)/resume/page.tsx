@@ -1,17 +1,17 @@
-"use client";
+'use client';
 
-import React, { useEffect, useRef, useState } from "react";
-import styles from "./resume.module.css";
-import Container from "@/components/common/Container";
-import customFetch from "@/utils/customFetch";
-import Spinner from "@/components/common/Spinner";
-import { useRouter } from "next/navigation";
-import FormSection from "./components/FormSection";
+import React, { useEffect, useRef, useState } from 'react';
+import styles from './resume.module.css';
+import Container from '@/components/common/Container';
+import customFetch from '@/utils/customFetch';
+import Spinner from '@/components/common/Spinner';
+import { useRouter } from 'next/navigation';
+import FormSection from './_components/FormSection';
 import {
   careersMapping,
   jobsMapping,
   questionMapping,
-} from "./constants/mapping";
+} from './constants/mapping';
 
 const MIN_STEP = 0;
 const MAX_STEP = 2;
@@ -26,15 +26,15 @@ export default function ResumePage() {
     questions: [
       {
         question: 0,
-        questionTextArea: "",
+        questionTextArea: '',
       },
       {
         question: 0,
-        questionTextArea: "",
+        questionTextArea: '',
       },
       {
         question: 0,
-        questionTextArea: "",
+        questionTextArea: '',
       },
     ],
   });
@@ -43,7 +43,7 @@ export default function ResumePage() {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    ref.current?.classList.add("move-to-left-and-show");
+    ref.current?.classList.add('move-to-left-and-show');
   }, []);
 
   const onClickPrevStep = () => {
@@ -69,7 +69,7 @@ export default function ResumePage() {
     );
 
     if (!filteredEmptyQuestions.length) {
-      return window.alert("내용을 입력해주세요.");
+      return window.alert('내용을 입력해주세요.');
     }
 
     try {
@@ -90,16 +90,16 @@ export default function ResumePage() {
       };
 
       const res = await customFetch({
-        url: "/resumes/interview-questions",
-        method: "POST",
+        url: '/resumes/interview-questions',
+        method: 'POST',
         body,
       });
 
-      localStorage.setItem("result", JSON.stringify(res.data));
-      route.push("/result");
+      localStorage.setItem('result', JSON.stringify(res.data));
+      route.push('/result');
     } catch (err) {
       console.error(err);
-      window.alert("네트워크 에러가 발생했어요. 잠시 후 다시 시도해주세요.");
+      window.alert('네트워크 에러가 발생했어요. 잠시 후 다시 시도해주세요.');
     } finally {
       setIsLoading(false);
     }
@@ -149,34 +149,34 @@ export default function ResumePage() {
               readOnly
               onClick={() => setCurrentStep(0)}
               checked={currentStep === 0}
-              id="step1"
-              type="radio"
-              name="step"
+              id='step1'
+              type='radio'
+              name='step'
               className={styles.step}
             />
-            <label htmlFor="step1"></label>
+            <label htmlFor='step1'></label>
 
             <input
               readOnly
               onClick={() => setCurrentStep(1)}
               checked={currentStep === 1}
-              id="step2"
-              type="radio"
-              name="step"
+              id='step2'
+              type='radio'
+              name='step'
               className={styles.step}
             />
-            <label htmlFor="step2"></label>
+            <label htmlFor='step2'></label>
 
             <input
               readOnly
               onClick={() => setCurrentStep(2)}
               checked={currentStep === 2}
-              id="step3"
-              type="radio"
-              name="step"
+              id='step3'
+              type='radio'
+              name='step'
               className={styles.step}
             />
-            <label htmlFor="step3"></label>
+            <label htmlFor='step3'></label>
           </div>
 
           {currentStep !== MIN_STEP && (

@@ -1,16 +1,14 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import { useQuery } from '@tanstack/react-query';
 import styles from './mypage.module.css';
 
-import ToggleItem from './components/ToggleItem';
-import NoDatas from './components/NoDatas';
-import ToggleBox from '@/components/common/ToggleBox';
+import ToggleItem from './_components/ToggleItem';
+import NoDatas from './_components/NoDatas';
 import Container from '@/components/common/Container';
-import Badge from '@/components/common/Badge';
 
 import customFetch from '@/utils/customFetch';
 

@@ -1,15 +1,15 @@
-"use client";
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import styles from "./form.module.css";
+'use client';
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import styles from './form.module.css';
 
-import type { SelectKey } from "../types/selectKey";
-import { Job } from "@/service/getJobs";
-import { Career } from "@/service/getCareer";
-import { Question } from "@/service/getQuestion";
-import { PostResume, postResume } from "@/service/postResume";
-import Spinner from "@/components/common/Spinner";
-import customFetch from "@/utils/customFetch";
+import type { SelectKey } from '../types/selectKey';
+import { Job } from '@/service/getJobs';
+import { Career } from '@/service/getCareer';
+import { Question } from '@/service/getQuestion';
+import { PostResume, postResume } from '@/service/postResume';
+import Spinner from '@/components/common/Spinner';
+import customFetch from '@/utils/customFetch';
 
 type FormProps = {
   options: [jobs: Job[], careers: Career[], questions: Question[]];
@@ -29,7 +29,7 @@ export const Form = ({ options }: FormProps) => {
     job: null,
     career: null,
     question: null,
-    contents: "",
+    contents: '',
   });
   const [isDoneForm, setIsDoneForm] = useState(false);
   const [showLoading, setShowLoading] = useState(false);
@@ -79,17 +79,17 @@ export const Form = ({ options }: FormProps) => {
       setShowLoading(true);
 
       const res = await customFetch({
-        url: "/resumes/interview-questions",
-        method: "POST",
+        url: '/resumes/interview-questions',
+        method: 'POST',
         body: postResum,
       });
 
-      localStorage.setItem("result", JSON.stringify(res.data.interviews));
-      router.push("/result");
+      localStorage.setItem('result', JSON.stringify(res.data.interviews));
+      router.push('/result');
     } catch (error) {
-      console.error("Fetch Error:", error);
-      window.alert("네트워크 오류가 발생했습니다. 다시 시도해주세요.");
-      router.push("/resume");
+      console.error('Fetch Error:', error);
+      window.alert('네트워크 오류가 발생했습니다. 다시 시도해주세요.');
+      router.push('/resume');
     } finally {
       setShowLoading(false);
     }
@@ -129,24 +129,24 @@ export const Form = ({ options }: FormProps) => {
         <p>작성한 내용을 기반으로 AI가 면접 예상 질문 목록을 생성해요.</p>
         <hr />
         <div className={styles.formContainer}>
-          <form method="POST">
+          <form method='POST'>
             <div className={styles.jobContainer}>
-              <label htmlFor="select-job">
+              <label htmlFor='select-job'>
                 <b>직업을 선택하세요.</b>
               </label>
               <select
                 onChange={handleSelectJob}
-                defaultValue="default"
+                defaultValue='default'
                 required
-                id="select-job"
+                id='select-job'
               >
-                <option data-job={"null"} value="default" disabled>
+                <option data-job={'null'} value='default' disabled>
                   --- 선택 ---
                 </option>
                 {jobs.map((job, idx) => {
                   return (
                     <option
-                      data-type="job"
+                      data-type='job'
                       data-job={`${job.jobTitleEn}`}
                       key={`${job} ${idx}`}
                     >
@@ -158,22 +158,22 @@ export const Form = ({ options }: FormProps) => {
             </div>
 
             <div className={styles.careerContainer}>
-              <label htmlFor="select-career">
+              <label htmlFor='select-career'>
                 <b>경력을 선택하세요.</b>
               </label>
               <select
                 onChange={handleSelectCareer}
-                defaultValue="default"
+                defaultValue='default'
                 required
-                id="select-career"
+                id='select-career'
               >
-                <option data-job={"null"} value="default" disabled>
+                <option data-job={'null'} value='default' disabled>
                   --- 선택 ---
                 </option>
                 {careers.map((career) => {
                   return (
                     <option
-                      data-type="career"
+                      data-type='career'
                       data-career={`${career.titleEn}`}
                       key={`${career} ${career.id}`}
                     >
@@ -185,22 +185,22 @@ export const Form = ({ options }: FormProps) => {
             </div>
 
             <div className={styles.questionContainer}>
-              <label htmlFor="select-question">
+              <label htmlFor='select-question'>
                 <b>예상 질문으로 받고 싶은 항목을 선택하세요.</b>
               </label>
               <select
                 onChange={handleSelectQuestion}
-                defaultValue="default"
+                defaultValue='default'
                 required
-                id="select-question"
+                id='select-question'
               >
-                <option data-job={"null"} value="default" disabled>
+                <option data-job={'null'} value='default' disabled>
                   --- 선택 ---
                 </option>
                 {questions.map((question) => {
                   return (
                     <option
-                      data-type="question"
+                      data-type='question'
                       data-question={`${question.titleEn}`}
                       key={`${question} ${question.id}`}
                     >
@@ -212,7 +212,7 @@ export const Form = ({ options }: FormProps) => {
             </div>
 
             <div className={styles.textBoxContainer}>
-              <label htmlFor="contents">
+              <label htmlFor='contents'>
                 <b>선택한 항목에 대한 내용을 작성해주세요.</b>
               </label>
               <textarea
@@ -227,7 +227,7 @@ export const Form = ({ options }: FormProps) => {
               />
             </div>
             <button
-              type="submit"
+              type='submit'
               onClick={handleSubmit}
               disabled={!isDoneForm}
               className={styles.btn}
