@@ -11,7 +11,11 @@ import NoDatas from './_components/NoDatas';
 import Container from '@/components/common/Container';
 
 import customFetch from '@/utils/customFetch';
-import { useMypageQuery } from '@/store/react-query/hooks/mypage';
+import {
+  useMypageInfiniteQuery,
+  useMypageQuery,
+} from '@/store/react-query/hooks/mypage';
+import { useInView } from 'react-intersection-observer';
 
 const deleteQuestionAnswer = async (qaId: number) => {
   const response = await fetch(
@@ -43,6 +47,10 @@ export default function MyPage() {
 
   const { data: predictions, isLoading, isError } = useMypageQuery(session!);
 
+  const { data: mockDatas, fetchNextPage } = useMypageInfiniteQuery();
+
+  console.log('mock', mockDatas);
+
   const deleteQnA = (
     e: React.MouseEvent<Element, MouseEvent>,
     qaId: number
@@ -52,7 +60,7 @@ export default function MyPage() {
     // TODO 정말 삭제할 것인지 묻기
     mutation.mutate(qaId, {
       onSuccess: () => {
-        queryClient.invalidateQueries(['getMyPage']);
+        queryClient.invalidateQueries(['mypage']);
         window.alert('성공적으로 삭제했어요.');
       },
       onError: (error) => {
@@ -62,7 +70,15 @@ export default function MyPage() {
     });
   };
 
-  if (!predictions) return <></>;
+  const { ref, inView } = useInView();
+
+  useEffect(() => {
+    if (inView) {
+      fetchNextPage();
+    }
+  }, [inView]);
+
+  if (!predictions && !mockDatas) return <></>;
 
   return (
     <div className={styles.container}>
@@ -89,7 +105,22 @@ export default function MyPage() {
             {!predictions.length ? (
               <NoDatas />
             ) : (
-              <ToggleItem deleteQnA={deleteQnA} predictions={predictions} />
+              <>
+                {mockDatas?.pages.map(({ data }: { data: any[] }) =>
+                  data?.map((d, idx) => (
+                    <div
+                      key={`${d} ${idx}`}
+                      style={{ background: '#eee', marginBottom: '10px' }}
+                    >
+                      <div>{d.qaId}</div>
+                      <div>{d.question}</div>
+                      <div>{d.answer}</div>
+                    </div>
+                  ))
+                )}
+                {/* <ToggleItem deleteQnA={deleteQnA} predictions={predictions} /> */}
+                <div ref={ref} style={{ height: '20px' }}></div>
+              </>
             )}
           </div>
         )}
