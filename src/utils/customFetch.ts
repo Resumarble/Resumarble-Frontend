@@ -56,7 +56,7 @@ export default async function customFetch({
 
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_SERVER_URL}${url}${
-        !!params ? `?page=${params}` : ''
+        !!params ? `${params}` : ''
       }`,
       config
     );
