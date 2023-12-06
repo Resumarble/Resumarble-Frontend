@@ -11,6 +11,7 @@ import NoDatas from './_components/NoDatas';
 import Container from '@/components/common/Container';
 
 import customFetch from '@/utils/customFetch';
+import { useMypageQuery } from '@/store/react-query/hooks/mypage';
 
 const deleteQuestionAnswer = async (qaId: number) => {
   const response = await fetch(
@@ -40,24 +41,7 @@ export default function MyPage() {
 
   // TODO 토큰 유효기간 확인 로직 추가
 
-  const {
-    data: predictions,
-    isLoading,
-    isError,
-  } = useQuery({
-    queryKey: ['getMyPage', session?.user.id],
-    queryFn: async () => {
-      const data = await customFetch({
-        // url: `/predictions/${userId}`,
-        url: '/users/me',
-        method: 'GET',
-        params: '0',
-      });
-
-      return data.data.predictions;
-    },
-    enabled: !!(session?.user.id! >= 0),
-  });
+  const { data: predictions, isLoading, isError } = useMypageQuery(session!);
 
   const deleteQnA = (
     e: React.MouseEvent<Element, MouseEvent>,
