@@ -10,11 +10,7 @@ import ToggleItem from './_components/ToggleItem';
 import NoDatas from './_components/NoDatas';
 import Container from '@/components/common/Container';
 
-import customFetch from '@/utils/customFetch';
-import {
-  useMypageInfiniteQuery,
-  useMypageQuery,
-} from '@/store/react-query/hooks/mypage';
+import { useMypageInfiniteQuery } from '@/store/react-query/hooks/mypage';
 import { useInView } from 'react-intersection-observer';
 
 const deleteQuestionAnswer = async (qaId: number) => {
@@ -45,12 +41,14 @@ export default function MyPage() {
 
   // TODO 토큰 유효기간 확인 로직 추가
 
-  const { data: predictions, isLoading, isError } = useMypageQuery(session!);
+  const {
+    data: predictions,
+    fetchNextPage,
+    isLoading,
+    isError,
+  } = useMypageInfiniteQuery();
 
-  const { data: mockDatas, fetchNextPage } = useMypageInfiniteQuery();
-
-  console.log('mock', mockDatas);
-
+  console.log(predictions);
   const deleteQnA = (
     e: React.MouseEvent<Element, MouseEvent>,
     qaId: number
@@ -78,7 +76,7 @@ export default function MyPage() {
     }
   }, [inView]);
 
-  if (!predictions && !mockDatas) return <></>;
+  if (!predictions) return <></>;
 
   return (
     <div className={styles.container}>
@@ -102,23 +100,14 @@ export default function MyPage() {
           </div>
         ) : (
           <div className={styles.contentsContainer}>
-            {!predictions.length ? (
+            {!predictions.pages.length ? (
               <NoDatas />
             ) : (
               <>
-                {mockDatas?.pages.map(({ data }: { data: any[] }) =>
-                  data?.map((d, idx) => (
-                    <div
-                      key={`${d} ${idx}`}
-                      style={{ background: '#eee', marginBottom: '10px' }}
-                    >
-                      <div>{d.qaId}</div>
-                      <div>{d.question}</div>
-                      <div>{d.answer}</div>
-                    </div>
-                  ))
-                )}
-                {/* <ToggleItem deleteQnA={deleteQnA} predictions={predictions} /> */}
+                <ToggleItem
+                  deleteQnA={deleteQnA}
+                  predictions={predictions.pages}
+                />
                 <div ref={ref} style={{ height: '20px' }}></div>
               </>
             )}
