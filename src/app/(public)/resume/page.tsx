@@ -90,7 +90,7 @@ export default function ResumePage() {
       };
 
       const res = await customFetch({
-        url: '/resumes/interview-questions',
+        url: '/interview-questions',
         method: 'POST',
         body,
       });
