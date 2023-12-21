@@ -13,7 +13,7 @@ const NoDatas = () => {
       <br />
       <br />
       <Link href={RESUME_URL}>
-        <Button isDark>생성하기</Button>
+        <Button label='생성하기' variant='dark' />
       </Link>
     </div>
   );

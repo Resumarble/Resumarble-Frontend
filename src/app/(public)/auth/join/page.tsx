@@ -169,9 +169,12 @@ export default function JoinPage() {
           />
 
           <div className={styles.joinBtn}>
-            <Button onClick={onSubmitForm} type='submit' isDark>
-              회원가입
-            </Button>
+            <Button
+              onClick={onSubmitForm}
+              type='submit'
+              variant='dark'
+              label='회원가입'
+            />
           </div>
         </form>
 

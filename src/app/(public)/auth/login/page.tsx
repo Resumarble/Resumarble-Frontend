@@ -81,9 +81,12 @@ export default function LoginPage() {
               labelChild='비밀번호'
             />
 
-            <Button type='submit' onClick={submitLoginForm} isDark>
-              로그인
-            </Button>
+            <Button
+              type='submit'
+              onClick={submitLoginForm}
+              variant='dark'
+              label='로그인'
+            />
 
             {/* // TODO 회원가입 버튼  */}
           </form>
