@@ -79,7 +79,7 @@ export const Form = ({ options }: FormProps) => {
       setShowLoading(true);
 
       const res = await customFetch({
-        url: '/resumes/interview-questions',
+        path: '/resumes/interview-questions',
         method: 'POST',
         body: postResum,
       });

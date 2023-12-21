@@ -54,7 +54,7 @@ export default function JoinPage() {
 
   const clickDuplicateCheck = async () => {
     const isOk = await customFetch({
-      url: '/users/duplicate-account',
+      path: '/users/duplicate-account',
       method: 'POST',
       body: {
         account: id,
@@ -97,7 +97,7 @@ export default function JoinPage() {
     }
 
     const res = await customFetch({
-      url: '/users/join',
+      path: '/users/join',
       method: 'POST',
       body: {
         account: id,

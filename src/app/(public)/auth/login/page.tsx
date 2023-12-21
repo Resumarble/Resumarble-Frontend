@@ -43,6 +43,8 @@ export default function LoginPage() {
       password: pw,
     });
 
+    console.log(result);
+
     if (result?.error) {
       return window.alert('아이디 또는 비밀번호가 일치하지 않습니다.');
     }

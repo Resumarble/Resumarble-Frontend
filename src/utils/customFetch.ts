@@ -1,5 +1,5 @@
 interface CustomFetchType {
-  url: string;
+  path: string;
   params?: string;
   header?: { [key: string]: string };
   body?: any;
@@ -13,7 +13,7 @@ type ConfigType = {
 };
 
 export default async function customFetch({
-  url,
+  path,
   body,
   header,
   params = '',
@@ -42,7 +42,7 @@ export default async function customFetch({
   try {
     if (method === 'DELETE') {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_SERVER_URL}${url}${
+        `${process.env.NEXT_PUBLIC_SERVER_URL}${path}${
           !!params ? `?page=${params}` : ''
         }`,
         config
@@ -55,7 +55,7 @@ export default async function customFetch({
     }
 
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_SERVER_URL}${url}${
+      `${process.env.NEXT_PUBLIC_SERVER_URL}${path}${
         !!params ? `${params}` : ''
       }`,
       config

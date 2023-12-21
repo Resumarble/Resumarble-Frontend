@@ -15,7 +15,7 @@ export default function Nav() {
 
     try {
       const res = await customFetch({
-        url: '/users/logout',
+        path: '/users/logout',
         header: {
           Authorization: localStorage.getItem('token')!,
         },

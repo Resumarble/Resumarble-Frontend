@@ -9,7 +9,7 @@ export const useMypageInfiniteQuery = () => {
     queryKey: ['mypage'],
     queryFn: async ({ pageParam = 0 }) => {
       const data = await customFetch({
-        url: FETCH_MYPAGE,
+        path: FETCH_MYPAGE,
         method: 'GET',
         params: `?page=${pageParam}`,
       });
