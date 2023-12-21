@@ -26,10 +26,15 @@ export default function ToggleBox({
 
   return (
     <div className={styles.container}>
-      <div onClick={handleTitleClick} className={styles.toggleBox}>
+      <div
+        role='button'
+        onClick={handleTitleClick}
+        className={styles.toggleBox}
+      >
         {children}
         <h2>{title}</h2>
         <i
+          aria-hidden='true'
           className={`${styles.arrow} ${styles[arrowDirection]}`}
           role='img'
         ></i>
