@@ -1,32 +1,35 @@
-import styles from "./button.module.css";
+import styles from './button.module.css';
 
 interface ButtonProps {
-  type?: string;
-  children: React.ReactNode;
+  label: string;
+  variant?: 'default' | 'dark';
+  type?: 'button' | 'submit';
+  children?: React.ReactNode;
   className?: string;
-  props?: any;
-  isDark?: boolean;
   onClick?: (e: React.FormEvent | React.MouseEvent) => void;
 }
 
 export default function Button({
+  label,
   children,
   className,
-  props,
   onClick,
-  type = "button",
-  isDark = false,
+  variant = 'default',
+  type = 'button',
 }: ButtonProps) {
+  const classNames = `${className ? className : ''} ${styles.button} ${
+    variant === 'dark' ? styles.dark : ''
+  }`;
+
   return (
     <>
       <button
+        aria-label={label}
         onClick={onClick}
         type={type}
-        className={`${className ? className : ""} ${styles.button} ${
-          isDark ? styles.dark : ""
-        }`}
-        {...props}
+        className={classNames}
       >
+        {label}
         {children}
       </button>
     </>
