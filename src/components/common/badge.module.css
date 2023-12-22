@@ -1,21 +1,19 @@
+@import url('../../app/globals.css');
+
 .container {
-  width: fit-content;
-  height: 100%;
+  min-width: 40px;
+  max-width: fit-content;
 
-  padding: 3px 10px;
-  border-radius: 100px;
-  background-color: #5f946c50;
+  text-align: center;
+  border-radius: 10px;
   border: 1px solid #ffffff32;
-
-  margin-left: -5px;
-  margin-bottom: 5px;
 }
 
 .text {
   width: auto;
-  color: #fff;
   font-weight: 500;
   font-size: 0.7rem;
+  margin: 0.4px;
+  padding: 2px 8px;
+  color: inherit;
 }
-
-/* TODO 뱃지 색상 여러개 */
