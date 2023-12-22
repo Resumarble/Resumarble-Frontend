@@ -11,7 +11,10 @@ export default function Badge({
   textColor = 'white',
   backgroundColor = '#5f946c50',
 }: Props) {
-  const style = { backgroundColor, color: `var(--${textColor})` };
+  const style = {
+    backgroundColor,
+    color: `${textColor === 'white' ? '#fff' : '#222423'}`,
+  };
 
   return (
     <div className={styles.container} style={style}>
