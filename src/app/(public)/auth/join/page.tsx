@@ -132,10 +132,9 @@ export default function JoinPage() {
             onChange={onChangeId}
             required
             placeholder='아이디를 입력해주세요.'
-            htmlFor='id'
             id='id'
             type='text'
-            labelChild='아이디'
+            label='아이디'
           />
 
           <div className={styles.msg}>{$message}</div>
@@ -152,20 +151,18 @@ export default function JoinPage() {
             onChange={changePw('pw')}
             required
             placeholder='비밀번호를 입력해주세요.'
-            htmlFor='pw'
             id='pw'
             type='password'
-            labelChild='비밀번호'
+            label='비밀번호'
           />
 
           <Input
             onChange={changePw('re')}
             required
             placeholder='비밀번호를 다시 입력해주세요.'
-            htmlFor='re-pw'
             id='re-pw'
             type='password'
-            labelChild='비밀번호 확인'
+            label='비밀번호 확인'
           />
 
           <div className={styles.joinBtn}>

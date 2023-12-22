@@ -43,8 +43,6 @@ export default function LoginPage() {
       password: pw,
     });
 
-    console.log(result);
-
     if (result?.error) {
       return window.alert('아이디 또는 비밀번호가 일치하지 않습니다.');
     }
@@ -67,20 +65,18 @@ export default function LoginPage() {
               onChange={onChangeId}
               required
               placeholder='아이디를 입력해주세요.'
-              htmlFor='id'
               id='id'
               type='text'
-              labelChild='아이디'
+              label='아이디'
             />
 
             <Input
               onChange={onChangePw}
               required
               placeholder='비밀번호를 입력해주세요.'
-              htmlFor='pw'
               id='pw'
               type='password'
-              labelChild='비밀번호'
+              label='비밀번호'
             />
 
             <Button
