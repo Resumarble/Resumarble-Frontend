@@ -1,10 +1,12 @@
-@import url("../styles/animation.css");
+@import url('../styles/animation.css');
 
 :root {
-  --font-mono: ui-monospace, Menlo, Monaco, "Cascadia Mono", "Segoe UI Mono",
-    "Roboto Mono", "Oxygen Mono", "Ubuntu Monospace", "Source Code Pro",
-    "Fira Mono", "Droid Sans Mono", "Courier New", monospace;
+  --font-mono: ui-monospace, Menlo, Monaco, 'Cascadia Mono', 'Segoe UI Mono',
+    'Roboto Mono', 'Oxygen Mono', 'Ubuntu Monospace', 'Source Code Pro',
+    'Fira Mono', 'Droid Sans Mono', 'Courier New', monospace;
 
+  --white: #fff;
+  --black: #222423;
   --light-green: #5aac8c;
   --light-green-shadow: #5aac8c30;
   --dark-green: #5c796e;
@@ -63,7 +65,7 @@ select:focus {
 .section {
   position: relative;
   height: calc(100vh - 52px);
-  background: url("/bg.png") no-repeat;
+  background: url('/bg.png') no-repeat;
   background-size: cover;
   overflow: hidden;
 
@@ -73,7 +75,7 @@ select:focus {
 .marble-bg {
   width: 864px;
   height: 874px;
-  background: url("/marble.png") no-repeat;
+  background: url('/marble.png') no-repeat;
 
   filter: blur(0px);
 
@@ -91,7 +93,7 @@ select:focus {
 .deco {
   width: 100vw;
   height: 100%;
-  background: url("/deco.png") no-repeat;
+  background: url('/deco.png') no-repeat;
   background-size: cover;
 
   position: absolute;
