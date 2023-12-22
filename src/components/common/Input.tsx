@@ -1,34 +1,45 @@
-"use client";
-import styles from "./input.module.css";
+'use client';
+import styles from './input.module.css';
 
 interface InputProps {
-  htmlFor: string;
-  labelChild: React.ReactNode | string;
+  label: string;
   type: string;
   id: string;
   required: boolean;
   placeholder?: string;
+  labelColor?: 'white' | 'black';
+  textColor?: 'white' | 'black';
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
+// TODO required
 export default function Input({
-  htmlFor,
-  labelChild,
+  label,
   type,
   id,
   placeholder,
-  required,
   onChange,
+  required = true,
+  labelColor = 'white',
+  textColor = 'black',
 }: InputProps) {
   return (
     <div className={styles.container}>
-      <label className={styles.label} htmlFor={htmlFor}>
-        {labelChild}
+      <label
+        className={`${styles.label}`}
+        htmlFor={id}
+        style={{ color: labelColor }}
+      >
+        {label}
       </label>
       <input
+        style={{
+          color: `${textColor === 'white' && '#fff'}`,
+        }}
+        aria-required={required}
         required={required}
         placeholder={placeholder}
-        className={`${styles.input} ${required ? styles.required : ""}}`}
+        className={`${styles.input}`}
         onChange={onChange}
         type={type}
         id={id}

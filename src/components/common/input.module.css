@@ -1,8 +1,6 @@
 .container {
   display: flex;
   flex-direction: column;
-
-  padding-top: 10px;
 }
 
 .label {
@@ -17,20 +15,15 @@
   color: var(--dark-green);
 
   background: transparent;
+  border: none;
   border-bottom: 2px solid #fff;
+}
+
+.input:focus {
+  outline: none;
 }
 
 .input::placeholder {
   color: #ffffff90;
   font-weight: 300;
-}
-
-.required::before {
-  content: "*";
-  width: 5px;
-  height: auto;
-
-  position: absolute;
-  left: 0;
-  top: 0;
 }
