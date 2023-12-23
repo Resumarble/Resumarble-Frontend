@@ -13,45 +13,58 @@ type PredictionType = {
   job: string;
 };
 
+type DeleteEventType = (
+  e: React.MouseEvent<Element, MouseEvent>,
+  qaId: number
+) => void;
+
 type ToggleItemProps = {
-  deleteQnA: (e: React.MouseEvent<Element, MouseEvent>, qaId: number) => void;
+  deleteQnA: DeleteEventType;
   predictions: { interviewQuestions: PredictionType[] }[];
 };
 
 const ToggleItem = ({ predictions, deleteQnA }: ToggleItemProps) => {
-  // if (!predictions) return <></>;
+  return predictions.map(({ interviewQuestions }, i) => (
+    <ToggleInner
+      key={predictions[i].interviewQuestions[0].interviewQuestionId}
+      interviewQuestions={interviewQuestions}
+      deleteQnA={deleteQnA}
+    />
+  ));
+};
 
-  return predictions.map(({ interviewQuestions }) =>
-    interviewQuestions.map(
-      ({ question, interviewQuestionId, answer, job, category }) => {
-        return (
-          <ToggleBox
-            title={question}
-            contents={answer}
-            key={interviewQuestionId}
-          >
-            <div className={styles.badgeContainer}>
-              <Badge text={job} />
-              <Badge text={category} />
-              <button
-                className={styles.delete}
-                onClick={(e) =>
-                  deleteQnA(
-                    e as unknown as React.MouseEvent<
-                      HTMLButtonElement,
-                      MouseEvent
-                    >,
-                    interviewQuestionId
-                  )
-                }
-              >
-                삭제
-              </button>
-            </div>
-          </ToggleBox>
-        );
-      }
-    )
+const ToggleInner = ({
+  interviewQuestions,
+  deleteQnA,
+}: {
+  interviewQuestions: PredictionType[];
+  deleteQnA: DeleteEventType;
+}) => {
+  return interviewQuestions.map(
+    ({ question, interviewQuestionId, answer, job, category }) => {
+      return (
+        <ToggleBox title={question} contents={answer} key={interviewQuestionId}>
+          <div className={styles.badgeContainer}>
+            <Badge text={job} />
+            <Badge text={category} />
+            <button
+              className={styles.delete}
+              onClick={(e) =>
+                deleteQnA(
+                  e as unknown as React.MouseEvent<
+                    HTMLButtonElement,
+                    MouseEvent
+                  >,
+                  interviewQuestionId
+                )
+              }
+            >
+              삭제
+            </button>
+          </div>
+        </ToggleBox>
+      );
+    }
   );
 };
 
