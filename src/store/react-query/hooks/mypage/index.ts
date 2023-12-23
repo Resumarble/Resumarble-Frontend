@@ -1,8 +1,7 @@
 import customFetch from '@/utils/customFetch';
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
-import { Session } from 'next-auth';
 
-const FETCH_MYPAGE = '/interview-questions';
+const FETCH_MYPAGE = '/users/me';
 
 export const useMypageInfiniteQuery = () => {
   return useInfiniteQuery({
@@ -13,10 +12,11 @@ export const useMypageInfiniteQuery = () => {
         method: 'GET',
         params: `?page=${pageParam}`,
       });
-      return data.data.predictions;
+
+      return data.data;
     },
     getNextPageParam: (page, allPages) => {
-      return page.hasNextPage ? allPages.length : undefined;
+      return page.hasNext ? allPages.length : undefined;
     },
   });
 };
