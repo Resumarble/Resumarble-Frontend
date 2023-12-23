@@ -48,7 +48,6 @@ export default function MyPage() {
     isError,
   } = useMypageInfiniteQuery();
 
-  console.log(predictions);
   const deleteQnA = (
     e: React.MouseEvent<Element, MouseEvent>,
     qaId: number

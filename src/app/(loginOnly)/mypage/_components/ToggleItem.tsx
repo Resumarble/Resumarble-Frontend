@@ -5,61 +5,53 @@ import styles from './toggleitem.module.css';
 import { MouseEvent } from 'react';
 
 type PredictionType = {
+  question: string;
+  answer: string;
   category: string;
   createdDate: string;
+  interviewQuestionId: number;
   job: string;
-  predictionId: number;
-  questionAndAnswer: {
-    qaId: number;
-    answer: string;
-    question: string;
-  }[];
 };
 
 type ToggleItemProps = {
   deleteQnA: (e: React.MouseEvent<Element, MouseEvent>, qaId: number) => void;
-  predictions: PredictionType[];
+  predictions: { interviewQuestions: PredictionType[] }[];
 };
 
 const ToggleItem = ({ predictions, deleteQnA }: ToggleItemProps) => {
-  if (!predictions) return <></>;
-  return predictions.map(
-    ({ category, createdDate, job, predictionId, questionAndAnswer }, idx) => {
-      return (
-        <div className={styles.content} key={`${predictionId} ${idx}`}>
-          {questionAndAnswer?.map((qna, i) => {
-            return (
-              <>
-                <ToggleBox
-                  key={`${qna.question} ${i}`}
-                  title={qna.question}
-                  contents={qna.answer}
-                >
-                  <div className={styles.badgeContainer}>
-                    <Badge text={job} />
-                    <Badge text={category} />
-                    <button
-                      className={styles.delete}
-                      onClick={(e) =>
-                        deleteQnA(
-                          e as unknown as React.MouseEvent<
-                            HTMLButtonElement,
-                            MouseEvent
-                          >,
-                          qna.qaId
-                        )
-                      }
-                    >
-                      삭제
-                    </button>
-                  </div>
-                </ToggleBox>
-              </>
-            );
-          })}
-        </div>
-      );
-    }
+  // if (!predictions) return <></>;
+
+  return predictions.map(({ interviewQuestions }) =>
+    interviewQuestions.map(
+      ({ question, interviewQuestionId, answer, job, category }) => {
+        return (
+          <ToggleBox
+            title={question}
+            contents={answer}
+            key={interviewQuestionId}
+          >
+            <div className={styles.badgeContainer}>
+              <Badge text={job} />
+              <Badge text={category} />
+              <button
+                className={styles.delete}
+                onClick={(e) =>
+                  deleteQnA(
+                    e as unknown as React.MouseEvent<
+                      HTMLButtonElement,
+                      MouseEvent
+                    >,
+                    interviewQuestionId
+                  )
+                }
+              >
+                삭제
+              </button>
+            </div>
+          </ToggleBox>
+        );
+      }
+    )
   );
 };
 
