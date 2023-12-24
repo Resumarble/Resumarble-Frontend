@@ -33,13 +33,12 @@ const ToggleItem = ({ predictions, deleteQnA }: ToggleItemProps) => {
   ));
 };
 
-const ToggleInner = ({
-  interviewQuestions,
-  deleteQnA,
-}: {
+type ToggleInnerProps = {
   interviewQuestions: PredictionType[];
   deleteQnA: DeleteEventType;
-}) => {
+};
+
+const ToggleInner = ({ interviewQuestions, deleteQnA }: ToggleInnerProps) => {
   return interviewQuestions.map(
     ({ question, interviewQuestionId, answer, job, category }) => {
       return (
