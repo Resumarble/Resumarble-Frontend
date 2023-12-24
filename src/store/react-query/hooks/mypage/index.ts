@@ -1,5 +1,5 @@
 import customFetch from '@/utils/customFetch';
-import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
+import { useInfiniteQuery } from '@tanstack/react-query';
 
 const FETCH_MYPAGE = '/users/me';
 
