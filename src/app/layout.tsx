@@ -15,7 +15,10 @@ const ibmKr = IBM_Plex_Sans_KR({
 });
 
 export const metadata: Metadata = {
-  title: 'Resumarble',
+  title: {
+    default: 'Resumarble',
+    template: 'Resumarble | %s',
+  },
   description: 'Resumarble',
   icons: {
     icon: './favicon.ico',
