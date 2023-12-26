@@ -58,44 +58,57 @@ export default function InterviewPage() {
     }
   };
 
+  const filteredEmptyQuestions = selectedInputs.questions.filter(
+    (question) => !!question.questionTextArea
+  );
+
+  const infoList = filteredEmptyQuestions.map(
+    ({ question, questionTextArea }) => {
+      return {
+        category: questionMapping[question as keyof typeof questionMapping],
+        content: questionTextArea,
+      };
+    }
+  );
+
+  const validateInputs = () => {
+    return filteredEmptyQuestions.length > 0;
+  };
+
+  const fetchQuestion = async (body: {
+    job: string;
+    career: string;
+    resumeInfoList: {
+      category: string;
+      content: string;
+    }[];
+  }) => {
+    return await customFetch({
+      path: '/interview-questions',
+      method: 'POST',
+      body,
+    });
+  };
+
   const onSubmit = async () => {
-    const jobIndex = selectedInputs.job as keyof typeof jobsMapping;
-    const careerIndex = selectedInputs.career as keyof typeof careersMapping;
-
-    const filteredEmptyQuestions = selectedInputs.questions.filter(
-      (question) => {
-        return !!question.questionTextArea;
-      }
-    );
-
-    if (!filteredEmptyQuestions.length) {
+    if (!validateInputs()) {
       return window.alert('내용을 입력해주세요.');
     }
 
     try {
       setIsLoading(true);
 
-      const infoList = filteredEmptyQuestions.map((question) => {
-        return {
-          category:
-            questionMapping[question.question as keyof typeof questionMapping],
-          content: question.questionTextArea,
-        };
-      });
-
+      const jobIndex = selectedInputs.job as keyof typeof jobsMapping;
+      const careerIndex = selectedInputs.career as keyof typeof careersMapping;
       const body = {
         job: jobsMapping[jobIndex],
         career: careersMapping[careerIndex],
         resumeInfoList: infoList,
       };
-
-      const res = await customFetch({
-        path: '/interview-questions',
-        method: 'POST',
-        body,
-      });
+      const res = await fetchQuestion(body);
 
       localStorage.setItem('result', JSON.stringify(res.data));
+
       route.push('/result');
     } catch (err) {
       console.error(err);
