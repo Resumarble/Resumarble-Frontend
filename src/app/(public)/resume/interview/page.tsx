@@ -158,38 +158,21 @@ export default function InterviewPage() {
           </div>
 
           <div className={styles.steps}>
-            <input
-              readOnly
-              onClick={() => setCurrentStep(0)}
+            <Step
               checked={currentStep === 0}
               id='step1'
-              type='radio'
-              name='step'
-              className={styles.step}
+              onClick={() => setCurrentStep(0)}
             />
-            <label htmlFor='step1'></label>
-
-            <input
-              readOnly
-              onClick={() => setCurrentStep(1)}
+            <Step
               checked={currentStep === 1}
               id='step2'
-              type='radio'
-              name='step'
-              className={styles.step}
+              onClick={() => setCurrentStep(1)}
             />
-            <label htmlFor='step2'></label>
-
-            <input
-              readOnly
-              onClick={() => setCurrentStep(2)}
+            <Step
               checked={currentStep === 2}
               id='step3'
-              type='radio'
-              name='step'
-              className={styles.step}
+              onClick={() => setCurrentStep(2)}
             />
-            <label htmlFor='step3'></label>
           </div>
 
           {currentStep !== MIN_STEP && (
@@ -209,3 +192,28 @@ export default function InterviewPage() {
     </>
   );
 }
+
+const Step = ({
+  onClick,
+  checked,
+  id,
+}: {
+  onClick: () => void;
+  checked: boolean;
+  id: string;
+}) => {
+  return (
+    <>
+      <input
+        readOnly
+        onClick={onClick}
+        checked={checked}
+        id={id}
+        type='radio'
+        name='step'
+        className={styles.step}
+      />
+      <label htmlFor={id}></label>
+    </>
+  );
+};
