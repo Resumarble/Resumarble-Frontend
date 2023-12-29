@@ -24,7 +24,6 @@ export default function JoinPage() {
   const [$message, $setMessage] = useState<JSX.Element | null>(null);
 
   const [isCheckId, setIsCheckId] = useState(false);
-  const [isSamePw, setIsSamePw] = useState(false);
 
   const router = useRouter();
   const isLoggedIn = useStore((state) => state.isLoggedIn);
@@ -34,12 +33,6 @@ export default function JoinPage() {
       return router.push('/');
     }
   }, [isLoggedIn]);
-
-  useEffect(() => {
-    if (pw.pw && pw.rePw) {
-      setIsSamePw(pw.pw === pw.rePw);
-    }
-  }, [pw.pw, pw.rePw]);
 
   // oauth 로그인
   const loginKakao = () => {
@@ -92,7 +85,7 @@ export default function JoinPage() {
       return window.alert('아이디 중복 확인을 해주세요.');
     }
 
-    if (!isSamePw) {
+    if (pw.pw !== pw.rePw) {
       return window.alert('비밀번호가 일치하지 않습니다. 다시 확인해주세요.');
     }
 
@@ -107,7 +100,7 @@ export default function JoinPage() {
 
     if (res.code === 200) {
       window.alert('회원이 되신 것을 환영합니다.');
-      return router.push('/login');
+      return router.push('/auth/login');
     }
 
     return window.alert('에러가 발생했어요. 새로고침 후 다시 시도해주세요.');
