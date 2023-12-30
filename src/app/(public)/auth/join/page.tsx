@@ -79,15 +79,26 @@ export default function JoinPage() {
     setIsCheckId(CheckDuplicate);
   };
 
+  const isValidId = () => {
+    if (!isCheckId) {
+      window.alert('아이디 중복 확인을 해주세요.');
+      return false;
+    }
+    return true;
+  };
+
+  const isValidPw = () => {
+    if (pw.pw !== pw.rePw) {
+      window.alert('비밀번호가 일치하지 않습니다. 다시 확인해주세요.');
+      return false;
+    }
+    return true;
+  };
+
   const onSubmitForm = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!isCheckId) {
-      return window.alert('아이디 중복 확인을 해주세요.');
-    }
 
-    if (pw.pw !== pw.rePw) {
-      return window.alert('비밀번호가 일치하지 않습니다. 다시 확인해주세요.');
-    }
+    if (!isValidId() || !isValidPw()) return;
 
     const res = await customFetch({
       path: '/users/join',
