@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import { Dispatch, SetStateAction, useState } from "react";
-import styles from "./formSection.module.css";
-import { RadioInput } from "./RadioInput";
-import { careersMapping, jobsMapping } from "../constants/mapping";
-import { SectionForm } from "./SectionForm";
+import { Dispatch, SetStateAction, useState } from 'react';
+import styles from './formSection.module.css';
+import { RadioInput } from './RadioInput';
+import { careersMapping, jobsMapping } from '../constants/mapping';
+import { SectionForm } from './SectionForm';
 
 export type QuestionType = {
   question: number;
@@ -18,18 +18,23 @@ export type SelectedInputsType = {
 };
 
 export const jobs = [
-  "백엔드 개발자",
-  "프론트 개발자",
-  "풀스택 개발자",
-  "데이터 엔지니어",
+  '백엔드 개발자',
+  '프론트 개발자',
+  '풀스택 개발자',
+  '데이터 엔지니어',
 ];
 
 export const careers = [
-  "신입",
-  "1~3년 차 (주니어)",
-  "4~7년 차 (미들)",
-  "7년 차 이상 (시니어)",
+  '신입',
+  '1~3년 차 (주니어)',
+  '4~7년 차 (미들)',
+  '7년 차 이상 (시니어)',
 ];
+
+type OnChangeRadioType = {
+  key: 'job' | 'career' | 'question';
+  sectionNumber?: number;
+};
 
 export default function FormSection({
   step,
@@ -42,15 +47,9 @@ export default function FormSection({
 }) {
   const [partSectionNumber, setPartSectionNumber] = useState(0);
   const onChangeRadio =
-    ({
-      key,
-      sectionNumber,
-    }: {
-      key: "job" | "career" | "question";
-      sectionNumber?: number;
-    }) =>
+    ({ key, sectionNumber }: OnChangeRadioType) =>
     (e: React.ChangeEvent<HTMLInputElement>) => {
-      if (key === "question") {
+      if (key === 'question') {
         const id = e.target.id;
 
         if (sectionNumber === undefined) return;
@@ -80,9 +79,9 @@ export default function FormSection({
             {jobs.map((job, i) => (
               <RadioInput
                 key={`${job} ${i}`}
-                onChange={onChangeRadio({ key: "job" })}
+                onChange={onChangeRadio({ key: 'job' })}
                 checked={selectedInputs.job === i}
-                name="job"
+                name='job'
                 id={i.toString()}
                 value={jobsMapping[i as keyof typeof jobsMapping]}
                 label={job}
@@ -104,9 +103,9 @@ export default function FormSection({
             {careers.map((career, i) => (
               <RadioInput
                 key={`${career} ${i}`}
-                onChange={onChangeRadio({ key: "career" })}
+                onChange={onChangeRadio({ key: 'career' })}
                 checked={selectedInputs.career === i}
-                name="career"
+                name='career'
                 id={i.toString()}
                 value={careersMapping[i as keyof typeof careersMapping]}
                 label={career}
@@ -118,8 +117,8 @@ export default function FormSection({
       );
     case 2:
       return (
-        <div key={`step ${step}`} style={{ width: "100%" }}>
-          <h5 className={styles.title} style={{ textAlign: "left" }}>
+        <div key={`step ${step}`} style={{ width: '100%' }}>
+          <h5 className={styles.title} style={{ textAlign: 'left' }}>
             3.예상 질문으로 받고 싶은
             <strong className={styles.titleHighlight}>
               항목과 내용을 입력
@@ -140,8 +139,8 @@ export default function FormSection({
                     readOnly
                     checked={partSectionNumber === i}
                     id={`qs${i}`}
-                    name="question-section"
-                    type="radio"
+                    name='question-section'
+                    type='radio'
                     onChange={() => {
                       setPartSectionNumber(i);
                     }}
