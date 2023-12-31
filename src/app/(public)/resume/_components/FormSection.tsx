@@ -46,25 +46,31 @@ export default function FormSection({
   setSelectedInputs: Dispatch<SetStateAction<SelectedInputsType>>;
 }) {
   const [partSectionNumber, setPartSectionNumber] = useState(0);
+
+  const checkQuestion = (key: string) => {
+    return key === 'question';
+  };
+
   const onChangeRadio =
     ({ key, sectionNumber }: OnChangeRadioType) =>
     (e: React.ChangeEvent<HTMLInputElement>) => {
-      if (key === 'question') {
+      if (checkQuestion(key)) {
         const id = e.target.id;
 
-        if (sectionNumber === undefined) return;
+        if (!sectionNumber) return;
+
         return setSelectedInputs((prev) => {
           const newQuestions = prev.questions;
           newQuestions[sectionNumber].question = Number(id);
 
           return { ...prev, questions: newQuestions };
         });
-      } else {
-        setSelectedInputs((prev) => ({
-          ...prev,
-          [key]: parseInt(e.target.id),
-        }));
       }
+
+      setSelectedInputs((prev) => ({
+        ...prev,
+        [key]: parseInt(e.target.id),
+      }));
     };
 
   switch (step) {
