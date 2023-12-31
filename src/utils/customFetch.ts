@@ -63,5 +63,6 @@ export default async function customFetch({
     return res.json();
   } catch (err) {
     console.error(`fetch ERROR`);
+    window.alert('에러가 발생했어요. 새로고침 후 다시 시도해주세요.');
   }
 }

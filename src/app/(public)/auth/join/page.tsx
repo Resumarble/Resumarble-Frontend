@@ -95,11 +95,7 @@ export default function JoinPage() {
     return true;
   };
 
-  const onSubmitForm = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    if (!isValidId() || !isValidPw()) return;
-
+  const fetchJoin = async () => {
     const res = await customFetch({
       path: '/users/join',
       method: 'POST',
@@ -113,8 +109,14 @@ export default function JoinPage() {
       window.alert('회원이 되신 것을 환영합니다.');
       return router.push('/auth/login');
     }
+  };
 
-    return window.alert('에러가 발생했어요. 새로고침 후 다시 시도해주세요.');
+  const onSubmitForm = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!isValidId() || !isValidPw()) return;
+
+    await fetchJoin();
   };
 
   const changePw =
