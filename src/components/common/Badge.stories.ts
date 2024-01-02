@@ -4,6 +4,7 @@ import Badge from './Badge';
 const meta = {
   title: 'Common/Badge',
   component: Badge,
+  tags: ['autodocs'],
   argTypes: {
     text: {
       control: 'text',

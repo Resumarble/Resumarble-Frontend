@@ -4,6 +4,7 @@ import Button from './Button';
 const meta = {
   title: 'Common/Button',
   component: Button,
+  tags: ['autodocs'],
   argTypes: {
     label: {
       control: 'text',

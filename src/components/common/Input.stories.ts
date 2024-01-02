@@ -4,6 +4,7 @@ import Input from './Input';
 const meta = {
   title: 'Common/Input',
   component: Input,
+  tags: ['autodocs'],
   argTypes: {
     label: { control: 'text' },
     type: { control: 'text' },
