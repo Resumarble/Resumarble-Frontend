@@ -8,16 +8,10 @@ import { SectionForm } from './SectionForm';
 
 export type QuestionType = {
   question: number;
-  questionTextArea: string;
+  inputText: string;
 };
 
-export type SelectedInputsType = {
-  job: number;
-  career: number;
-  questions: QuestionType[];
-};
-
-export const jobs = [
+export const jobNames = [
   '백엔드 개발자',
   '프론트 개발자',
   '풀스택 개발자',
@@ -31,19 +25,28 @@ export const careers = [
   '7년 차 이상 (시니어)',
 ];
 
-type OnChangeRadioType = {
+export type OnChangeRadioType = {
   key: 'job' | 'career' | 'question';
   sectionNumber?: number;
+  setState: Dispatch<SetStateAction<any>>;
 };
 
 export default function FormSection({
   step,
-  selectedInputs,
-  setSelectedInputs,
+  setJob,
+  setCareer,
+  currentJobIndex,
+  currentCareerIndex,
+  questions,
+  setQuestions,
 }: {
   step: number;
-  selectedInputs: SelectedInputsType;
-  setSelectedInputs: Dispatch<SetStateAction<SelectedInputsType>>;
+  currentJobIndex: number;
+  currentCareerIndex: number;
+  setJob: Dispatch<SetStateAction<number>>;
+  setCareer: Dispatch<SetStateAction<number>>;
+  questions: QuestionType[];
+  setQuestions: Dispatch<SetStateAction<QuestionType[]>>;
 }) {
   const [partSectionNumber, setPartSectionNumber] = useState(0);
 
@@ -52,25 +55,21 @@ export default function FormSection({
   };
 
   const onChangeRadio =
-    ({ key, sectionNumber }: OnChangeRadioType) =>
+    ({ key, sectionNumber, setState }: OnChangeRadioType) =>
     (e: React.ChangeEvent<HTMLInputElement>) => {
       if (checkQuestion(key)) {
+        if (!sectionNumber) return;
         const id = e.target.id;
 
-        if (!sectionNumber) return;
-
-        return setSelectedInputs((prev) => {
-          const newQuestions = prev.questions;
+        return setState((prev: QuestionType[]) => {
+          const newQuestions = prev;
           newQuestions[sectionNumber].question = Number(id);
 
           return { ...prev, questions: newQuestions };
         });
       }
 
-      setSelectedInputs((prev) => ({
-        ...prev,
-        [key]: parseInt(e.target.id),
-      }));
+      setState(() => parseInt(e.target.id));
     };
 
   switch (step) {
@@ -82,15 +81,15 @@ export default function FormSection({
             선택하세요.
           </h5>
           <div className={styles.radioInputBox}>
-            {jobs.map((job, i) => (
+            {jobNames.map((jobName, i) => (
               <RadioInput
-                key={`${job} ${i}`}
-                onChange={onChangeRadio({ key: 'job' })}
-                checked={selectedInputs.job === i}
-                name='job'
+                key={`${jobName} ${i}`}
+                onChange={onChangeRadio({ key: 'job', setState: setJob })}
+                checked={currentJobIndex === i}
+                name='jobName'
                 id={i.toString()}
                 value={jobsMapping[i as keyof typeof jobsMapping]}
-                label={job}
+                label={jobName}
                 htmlFor={i.toString()}
               />
             ))}
@@ -109,8 +108,8 @@ export default function FormSection({
             {careers.map((career, i) => (
               <RadioInput
                 key={`${career} ${i}`}
-                onChange={onChangeRadio({ key: 'career' })}
-                checked={selectedInputs.career === i}
+                onChange={onChangeRadio({ key: 'career', setState: setCareer })}
+                checked={currentCareerIndex === i}
                 name='career'
                 id={i.toString()}
                 value={careersMapping[i as keyof typeof careersMapping]}
@@ -159,8 +158,8 @@ export default function FormSection({
           <div className={styles.inputsContainer}>
             {
               <SectionForm
-                selectedInputs={selectedInputs}
-                setSelectedInputs={setSelectedInputs}
+                questions={questions}
+                setQuestions={setQuestions}
                 onChangeRadio={onChangeRadio}
                 partSectionNumber={partSectionNumber}
               />

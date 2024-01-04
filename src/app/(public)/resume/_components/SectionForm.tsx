@@ -1,41 +1,36 @@
-import { Dispatch, SetStateAction } from "react";
-import { SelectedInputsType } from "./FormSection";
-import styles from "./sectionForm.module.css";
-import { RadioInput } from "./RadioInput";
+import { Dispatch, SetStateAction } from 'react';
+import { RadioInput } from './RadioInput';
+import styles from './sectionForm.module.css';
+import { OnChangeRadioType, QuestionType } from './FormSection';
 
 interface SectionFormProps {
   partSectionNumber: number;
-  selectedInputs: SelectedInputsType;
-  setSelectedInputs: Dispatch<SetStateAction<SelectedInputsType>>;
+  questions: QuestionType[];
+  setQuestions: Dispatch<SetStateAction<QuestionType[]>>;
   onChangeRadio: ({
     key,
     sectionNumber,
-  }: {
-    key: "job" | "career" | "question";
-    sectionNumber?: number;
-  }) => (e: React.ChangeEvent<HTMLInputElement>) => void;
+    setState,
+  }: OnChangeRadioType) => (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const labels = ["자기소개", "기술스택", "경력사항", "프로젝트 경험"];
+const labels = ['자기소개', '기술스택', '경력사항', '프로젝트 경험'];
 
 export function SectionForm({
   partSectionNumber,
-  selectedInputs,
-  setSelectedInputs,
+  questions,
+  setQuestions,
   onChangeRadio,
 }: SectionFormProps) {
   const onChangeText =
     (partSectionNumber: number) =>
     (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-      setSelectedInputs((prev) => {
+      setQuestions((prev) => {
         const sectionText = e.target.value;
-        const questionsText = [...prev.questions];
-        questionsText[partSectionNumber].questionTextArea = sectionText;
+        const questionsText = [...prev];
+        questionsText[partSectionNumber].inputText = sectionText;
 
-        return {
-          ...prev,
-          questions: questionsText,
-        };
+        return questionsText;
       });
     };
 
@@ -47,15 +42,14 @@ export function SectionForm({
             <RadioInput
               key={`${question} ${i}`}
               onChange={onChangeRadio({
-                key: "question",
+                key: 'question',
                 sectionNumber: partSectionNumber,
+                setState: setQuestions,
               })}
-              checked={
-                selectedInputs.questions[partSectionNumber]?.question === i
-              }
-              name="question"
+              checked={questions[partSectionNumber]?.question === i}
+              name='question'
               id={i.toString()}
-              value="introduction"
+              value='introduction'
               label={labels[i]}
               htmlFor={i.toString()}
             />
@@ -64,10 +58,10 @@ export function SectionForm({
       </div>
       <div className={styles.textareaBox}>
         <textarea
-          value={selectedInputs.questions[partSectionNumber]?.questionTextArea}
+          value={questions[partSectionNumber]?.inputText}
           onChange={onChangeText(partSectionNumber)}
           className={styles.textarea}
-          placeholder="선택한 항목과 관련된 내용을 입력해주세요."
+          placeholder='선택한 항목과 관련된 내용을 입력해주세요.'
         />
       </div>
     </>
