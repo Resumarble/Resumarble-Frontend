@@ -20,24 +20,22 @@ export default function InterviewPage() {
   const ref = useRef<HTMLDivElement>(null);
   const route = useRouter();
 
-  const [selectedInputs, setSelectedInputs] = useState({
-    job: 0,
-    career: 0,
-    questions: [
-      {
-        question: 0,
-        questionTextArea: '',
-      },
-      {
-        question: 0,
-        questionTextArea: '',
-      },
-      {
-        question: 0,
-        questionTextArea: '',
-      },
-    ],
-  });
+  const [job, setJob] = useState(0);
+  const [career, setCareer] = useState(0);
+  const [questions, setQuestions] = useState([
+    {
+      question: 0,
+      inputText: '',
+    },
+    {
+      question: 0,
+      inputText: '',
+    },
+    {
+      question: 0,
+      inputText: '',
+    },
+  ]);
 
   const [currentStep, setCurrentStep] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
@@ -58,18 +56,16 @@ export default function InterviewPage() {
     }
   };
 
-  const filteredEmptyQuestions = selectedInputs.questions.filter(
-    (question) => !!question.questionTextArea
+  const filteredEmptyQuestions = questions?.filter(
+    (question) => !!question.inputText
   );
 
-  const infoList = filteredEmptyQuestions.map(
-    ({ question, questionTextArea }) => {
-      return {
-        category: questionMapping[question as keyof typeof questionMapping],
-        content: questionTextArea,
-      };
-    }
-  );
+  const infoList = filteredEmptyQuestions?.map(({ question, inputText }) => {
+    return {
+      category: questionMapping[question as keyof typeof questionMapping],
+      content: inputText,
+    };
+  });
 
   const validateInputs = () => {
     return filteredEmptyQuestions.length > 0;
@@ -98,11 +94,9 @@ export default function InterviewPage() {
     try {
       setIsLoading(true);
 
-      const jobIndex = selectedInputs.job as keyof typeof jobsMapping;
-      const careerIndex = selectedInputs.career as keyof typeof careersMapping;
       const body = {
-        job: jobsMapping[jobIndex],
-        career: careersMapping[careerIndex],
+        job: String(job),
+        career: String(career),
         resumeInfoList: infoList,
       };
       const res = await fetchQuestion(body);
@@ -146,9 +140,13 @@ export default function InterviewPage() {
 
           <div className={styles.formContainer}>
             <FormSection
+              currentJobIndex={job}
+              currentCareerIndex={career}
               step={currentStep}
-              selectedInputs={selectedInputs}
-              setSelectedInputs={setSelectedInputs}
+              setJob={setJob}
+              setCareer={setCareer}
+              questions={questions}
+              setQuestions={setQuestions}
             />
             {currentStep === MAX_STEP && (
               <button className={styles.resultBtn} onClick={onSubmit}>
