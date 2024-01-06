@@ -87,11 +87,11 @@ export default function Home() {
 
           <div ref={btnsRef} className={styles.btns}>
             <Link href={'/resume'}>
-              <Button label='생성하기' />
+              <Button size='full' label='생성하기' />
             </Link>
             {!session && (
               <Link href={'/login'}>
-                <Button label='로그인(beta)' variant='dark' />
+                <Button size='full' label='로그인(beta)' variant='dark' />
               </Link>
             )}
           </div>
