@@ -2,6 +2,7 @@ import styles from './button.module.css';
 
 interface ButtonProps {
   label: string;
+  size?: 'xs' | 'sm' | 'md' | 'full' | 'auto';
   variant?: 'default' | 'dark';
   type?: 'button' | 'submit';
   children?: React.ReactNode;
@@ -14,12 +15,13 @@ export default function Button({
   children,
   className,
   onClick,
+  size = 'auto',
   variant = 'default',
   type = 'button',
 }: ButtonProps) {
   const classNames = `${className ? className : ''} ${styles.button} ${
     variant === 'dark' ? styles.dark : ''
-  }`;
+  } ${styles[size]}`;
 
   return (
     <>

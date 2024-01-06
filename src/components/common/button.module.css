@@ -1,6 +1,5 @@
 .button {
-  width: 100%;
-  padding: 0.5rem;
+  padding: 0.5rem 1rem;
 
   color: #fff;
   border: 1px solid #ffffff90;
@@ -26,4 +25,28 @@
 
 .dark:hover {
   background: #5aac8c80;
+}
+
+.auto {
+  width: auto;
+}
+
+.xs {
+  width: 100px;
+}
+
+.sm {
+  width: 200px;
+}
+
+.md {
+  width: 400px;
+}
+
+.lg {
+  width: 500px;
+}
+
+.full {
+  width: 100%;
 }
