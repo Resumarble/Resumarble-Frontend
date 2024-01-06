@@ -15,18 +15,47 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Basic: Story = {
+export const Primary: Story = {
   args: {
-    label: 'basic',
-    variant: 'default',
+    size: 'auto',
+    label: 'Button',
+    variant: 'dark',
     type: 'button',
   },
 };
 
-export const Dark: Story = {
+export const Small: Story = {
   args: {
-    label: 'Dark',
+    size: 'sm',
+    label: 'Button',
     variant: 'dark',
+    type: 'button',
+  },
+};
+
+export const Mid: Story = {
+  args: {
+    size: 'md',
+    label: 'Button',
+    variant: 'dark',
+    type: 'button',
+  },
+};
+
+export const Full: Story = {
+  args: {
+    size: 'full',
+    label: 'Button',
+    variant: 'dark',
+    type: 'button',
+  },
+};
+
+export const White: Story = {
+  args: {
+    size: 'auto',
+    label: 'Button',
+    variant: 'default',
     type: 'button',
   },
 };
