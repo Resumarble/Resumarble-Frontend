@@ -90,10 +90,10 @@ export default function ResultContainer() {
 
               <div className={`${styles.btns}`}>
                 <Link href={'/resume'}>
-                  <Button variant='dark' label='다시 생성하기' />
+                  <Button size='full' variant='dark' label='다시 생성하기' />
                 </Link>
                 <Link href={'/'}>
-                  <Button variant='dark' label='홈으로' />
+                  <Button size='full' variant='dark' label='홈으로' />
                 </Link>
               </div>
             </div>

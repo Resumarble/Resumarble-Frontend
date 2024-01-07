@@ -21,8 +21,8 @@ export default function InterviewPage() {
   const ref = useRef<HTMLDivElement>(null);
   const route = useRouter();
 
-  const [job, setJob] = useState(0);
-  const [career, setCareer] = useState(0);
+  const [job, setJob] = useState<keyof typeof jobsMapping>(0);
+  const [career, setCareer] = useState<keyof typeof careersMapping>(0);
   const [questions, setQuestions] = useState([
     {
       question: 0,
@@ -73,17 +73,25 @@ export default function InterviewPage() {
   };
 
   const fetchQuestion = async (body: {
-    job: string;
-    career: string;
+    job: keyof typeof jobsMapping;
+    career: keyof typeof careersMapping;
     resumeInfoList: {
       category: string;
       content: string;
     }[];
   }) => {
+    const convertedBodyData = {
+      career: careersMapping[body.career],
+      job: jobsMapping[body.job],
+    };
+
     return await customFetch({
       path: '/interview-questions',
       method: 'POST',
-      body,
+      body: {
+        ...body,
+        ...convertedBodyData,
+      },
     });
   };
 
@@ -96,10 +104,11 @@ export default function InterviewPage() {
       setIsLoading(true);
 
       const body = {
-        job: String(job),
-        career: String(career),
+        job,
+        career,
         resumeInfoList: infoList,
       };
+
       const res = await fetchQuestion(body);
 
       localStorage.setItem('result', JSON.stringify(res.data));

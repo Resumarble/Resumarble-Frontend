@@ -43,8 +43,8 @@ export default function FormSection({
   step: number;
   currentJobIndex: number;
   currentCareerIndex: number;
-  setJob: Dispatch<SetStateAction<number>>;
-  setCareer: Dispatch<SetStateAction<number>>;
+  setJob: Dispatch<SetStateAction<keyof typeof jobsMapping>>;
+  setCareer: Dispatch<SetStateAction<keyof typeof careersMapping>>;
   questions: QuestionType[];
   setQuestions: Dispatch<SetStateAction<QuestionType[]>>;
 }) {
