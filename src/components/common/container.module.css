@@ -17,6 +17,7 @@
   padding-left: 120px;
 
   overflow: hidden;
+  overflow-y: scroll;
   z-index: 1;
 
   box-shadow: 4px 4px 50px var(--dark-green-shadow);
