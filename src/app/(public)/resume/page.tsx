@@ -2,10 +2,11 @@ import Link from 'next/link';
 import styles from './page.module.css';
 
 import { TbRobot, TbArticle } from 'react-icons/tb';
+import Container from '@/components/common/Container';
 
 export default function ResumePage() {
   return (
-    <div>
+    <Container>
       <div className={styles.section}>
         <div className={styles.contentTitle}>
           <h2>SELECT SERVICE</h2>
@@ -34,7 +35,7 @@ export default function ResumePage() {
           </Link>
         </div>
       </div>
-    </div>
+    </Container>
   );
 }
 

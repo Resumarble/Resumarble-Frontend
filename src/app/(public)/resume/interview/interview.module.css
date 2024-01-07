@@ -30,7 +30,7 @@
 }
 
 .headerTitle::after {
-  content: "";
+  content: '';
   position: absolute;
   left: 0;
   top: 8px;
@@ -84,11 +84,11 @@
   gap: 15px;
 }
 
-.radio[type="radio"] {
+.radio[type='radio'] {
   display: none;
 }
 
-.radio[type="radio"]:checked + label {
+.radio[type='radio']:checked + label {
   background: #5aac8c80;
   color: #fff;
 }
@@ -123,11 +123,11 @@
   margin-top: 20px;
 }
 
-.questionBtns input[type="radio"] {
+.questionBtns input[type='radio'] {
   display: none;
 }
 
-.questionBtns input[type="radio"]:checked + label {
+.questionBtns input[type='radio']:checked + label {
   background: #ffffff;
   color: var(--dark-green);
 }
@@ -209,7 +209,7 @@
   resize: none;
   padding: 15px;
 
-  font-family: "nanum-squere";
+  font-family: 'noto-sans';
   color: var(--dark-green);
 }
 
@@ -223,6 +223,8 @@
   right: 100px;
 
   width: 150px;
+
+  font-size: 1rem;
 
   padding: 8px 25px;
   border-radius: 100px;
@@ -300,7 +302,7 @@
   position: absolute;
   left: 40%;
   top: 33%;
-  content: "";
+  content: '';
   width: 10px;
   height: 10px;
   border-top: 3px solid #fff;

@@ -7,7 +7,7 @@
   border-bottom: 1px solid #ffffff80;
 
   border-radius: 100px;
-  background: #ffffff05;
+  background: #ffffff15;
 
   font-size: 1.1rem;
   cursor: pointer;
@@ -16,7 +16,7 @@
 }
 
 .button:hover {
-  background: #ffffff20;
+  background: #ffffff30;
 }
 
 .dark {

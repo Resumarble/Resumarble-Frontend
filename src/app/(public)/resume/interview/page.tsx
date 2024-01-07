@@ -12,6 +12,7 @@ import {
   jobsMapping,
   questionMapping,
 } from '../constants/mapping';
+import Button from '@/components/common/Button';
 
 const MIN_STEP = 0;
 const MAX_STEP = 2;
@@ -149,9 +150,13 @@ export default function InterviewPage() {
               setQuestions={setQuestions}
             />
             {currentStep === MAX_STEP && (
-              <button className={styles.resultBtn} onClick={onSubmit}>
-                결과 생성
-              </button>
+              <Button
+                variant='dark'
+                label='결과 생성'
+                size='sm'
+                className={styles.resultBtn}
+                onClick={onSubmit}
+              ></Button>
             )}
           </div>
 

@@ -78,41 +78,39 @@ export default function MyPage() {
   if (!predictions) return <></>;
 
   return (
-    <div className={styles.container}>
-      <Container
-        showTopWhite
-        overflowYScroll
-        style={{ padding: '10px', overflowY: 'scroll', marginTop: '30px' }}
-      >
-        <div className={styles.headerTitle}>
-          <h5>MyPage</h5>
-          <p>
-            <strong>생성한 모든 질문과 답변을 확인하실 수 있어요.</strong>
-          </p>
-          <p>비로그인일 때 생성한 결과는 저장되지 않습니다.</p>
-        </div>
-        <br />
+    <Container
+      showTopWhite
+      overflowYScroll
+      style={{ padding: '10px', overflowY: 'scroll' }}
+    >
+      <div className={styles.headerTitle}>
+        <h5>MyPage</h5>
+        <p>
+          <strong>생성한 모든 질문과 답변을 확인하실 수 있어요.</strong>
+        </p>
+        <p>비로그인일 때 생성한 결과는 저장되지 않습니다.</p>
+      </div>
+      <br />
 
-        {isLoading || !(session?.user.id! >= 0) ? (
-          <div className={styles.contentsContainer}>
-            데이터를 불러오고 있어요.
-          </div>
-        ) : (
-          <div className={styles.contentsContainer}>
-            {!predictions.pages.length ? (
-              <NoDatas />
-            ) : (
-              <>
-                <ToggleItem
-                  deleteQnA={deleteQnA}
-                  predictions={predictions.pages}
-                />
-                <div ref={ref} style={{ height: '20px' }}></div>
-              </>
-            )}
-          </div>
-        )}
-      </Container>
-    </div>
+      {isLoading || !(session?.user.id! >= 0) ? (
+        <div className={styles.contentsContainer}>
+          데이터를 불러오고 있어요.
+        </div>
+      ) : (
+        <div className={styles.contentsContainer}>
+          {!predictions.pages.length ? (
+            <NoDatas />
+          ) : (
+            <>
+              <ToggleItem
+                deleteQnA={deleteQnA}
+                predictions={predictions.pages}
+              />
+              <div ref={ref} style={{ height: '20px' }}></div>
+            </>
+          )}
+        </div>
+      )}
+    </Container>
   );
 }

@@ -58,45 +58,43 @@ export default function Home() {
   }, []);
 
   return (
-    <div className={`${styles.container}`}>
-      <Container showMarbleImg={true}>
-        <div className={styles.textContainer}>
-          <p
-            ref={(el) => {
-              titleRef.current.subTitle = el;
-            }}
-            className={styles.subTitle}
-          >
-            이력서 기반 면접 질문/답변 생성 서비스
-          </p>
-          <h2
-            ref={(el) => (titleRef.current.title = el)}
-            className={`${styles.title}`}
-          >
-            Resumarble
-          </h2>
-          <p className={styles.desc} ref={descRef}>
-            레주마블은 사용자가 작성한 내용을 기반으로
-            <strong>AI가 생성한 면접 질문/답변 목록을 제공</strong>합니다.
-            <br />
-            비회원으로도 이용할 수 있으나, 재열람 기능은 제공되고 있지 않습니다.
-            <br />
-            회원가입 후 이용 시 생성된 결과가 자동 저장되어 마이페이지에서
-            언제든지 다시 열람할 수 있습니다. (베타버전)
-          </p>
+    <Container showMarbleImg={true}>
+      <div className={styles.textContainer}>
+        <p
+          ref={(el) => {
+            titleRef.current.subTitle = el;
+          }}
+          className={styles.subTitle}
+        >
+          이력서 기반 면접 질문/답변 생성 서비스
+        </p>
+        <h2
+          ref={(el) => (titleRef.current.title = el)}
+          className={`${styles.title}`}
+        >
+          Resumarble
+        </h2>
+        <p className={styles.desc} ref={descRef}>
+          레주마블은 사용자가 작성한 내용을 기반으로
+          <strong>AI가 생성한 면접 질문/답변 목록을 제공</strong>합니다.
+          <br />
+          비회원으로도 이용할 수 있으나, 재열람 기능은 제공되고 있지 않습니다.
+          <br />
+          회원가입 후 이용 시 생성된 결과가 자동 저장되어 마이페이지에서
+          언제든지 다시 열람할 수 있습니다. (베타버전)
+        </p>
 
-          <div ref={btnsRef} className={styles.btns}>
-            <Link href={'/resume'}>
-              <Button size='full' label='생성하기' />
+        <div ref={btnsRef} className={styles.btns}>
+          <Link href={'/resume'}>
+            <Button size='full' label='생성하기' />
+          </Link>
+          {!session && (
+            <Link href={'/auth/login'}>
+              <Button size='full' label='로그인(beta)' variant='dark' />
             </Link>
-            {!session && (
-              <Link href={'/login'}>
-                <Button size='full' label='로그인(beta)' variant='dark' />
-              </Link>
-            )}
-          </div>
+          )}
         </div>
-      </Container>
-    </div>
+      </div>
+    </Container>
   );
 }
