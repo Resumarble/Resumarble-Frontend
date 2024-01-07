@@ -48,15 +48,15 @@ const ToggleInner = ({ interviewQuestions, deleteQnA }: ToggleInnerProps) => {
             <Badge text={category} />
             <button
               className={styles.delete}
-              onClick={(e) =>
+              onClick={(e) => {
                 deleteQnA(
                   e as unknown as React.MouseEvent<
                     HTMLButtonElement,
                     MouseEvent
                   >,
                   interviewQuestionId
-                )
-              }
+                );
+              }}
             >
               삭제
             </button>

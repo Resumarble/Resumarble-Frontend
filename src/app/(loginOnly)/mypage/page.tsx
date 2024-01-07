@@ -15,7 +15,7 @@ import { useInView } from 'react-intersection-observer';
 
 const deleteQuestionAnswer = async (qaId: number) => {
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_SERVER_URL}/question-answers/${qaId}`,
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/interview-questions/${qaId}`,
     {
       method: 'DELETE',
       headers: {
@@ -54,7 +54,10 @@ export default function MyPage() {
   ) => {
     e.stopPropagation();
 
-    // TODO 정말 삭제할 것인지 묻기
+    // 임시 확인 로직
+    const confirm = window.confirm('정말 삭제할까요?');
+    if (!confirm) return;
+
     mutation.mutate(qaId, {
       onSuccess: () => {
         queryClient.invalidateQueries(['mypage']);
