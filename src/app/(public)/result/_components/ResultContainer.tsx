@@ -7,10 +7,14 @@ import ToggleBox from '@/components/common/ToggleBox';
 import SaveButton from './SaveButton';
 import Container from '@/components/common/Container';
 import Button from '@/components/common/Button';
-import { Result } from '../../resume/_components/Form';
+
+type ResponseResultType = {
+  question: string;
+  bestAnswer: string;
+};
 
 export default function ResultContainer() {
-  const [results, setResults] = useState<Result[]>();
+  const [results, setResults] = useState<ResponseResultType[]>();
   const [hasResult, setHasResult] = useState(false);
 
   const [resultsForDownload, setResultForDownload] = useState<string>('');
@@ -21,6 +25,7 @@ export default function ResultContainer() {
 
     setResults(JSON.parse(result!) || []);
 
+    // TODO 리팩토링
     if (result) {
       const parseResult = JSON.parse(result);
       const resultList = parseResult.map(
@@ -66,16 +71,21 @@ export default function ResultContainer() {
 
             <div className={styles.contentsContainer}>
               <div className={styles.contents}>
-                {results?.map((result, idx) => {
-                  return (
-                    <div key={`${result} ${idx}`}>
-                      <ToggleBox
-                        title={result.question}
-                        contents={result.bestAnswer}
-                      />
-                    </div>
-                  );
-                })}
+                {results?.map(
+                  (
+                    result: { question: string; bestAnswer: string },
+                    idx: number
+                  ) => {
+                    return (
+                      <div key={`${result} ${idx}`}>
+                        <ToggleBox
+                          title={result.question}
+                          contents={result.bestAnswer}
+                        />
+                      </div>
+                    );
+                  }
+                )}
               </div>
 
               <div className={`${styles.btns}`}>
