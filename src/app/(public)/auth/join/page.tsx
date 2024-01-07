@@ -178,6 +178,7 @@ export default function JoinPage() {
 
           <div className={styles.joinBtn}>
             <Button
+              size='full'
               onClick={onSubmitForm}
               type='submit'
               variant='dark'
