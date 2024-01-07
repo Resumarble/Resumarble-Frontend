@@ -1,8 +1,8 @@
-.radio[type="radio"] {
+.radio[type='radio'] {
   display: none;
 }
 
-.radio[type="radio"]:checked + label {
+.radio[type='radio']:checked + label {
   background: #5aac8c80;
   color: #fff;
 }
@@ -15,8 +15,10 @@
   align-items: center;
 
   color: #fff;
-  background-color: #ffffff20;
-  border: 1px solid #fff;
+  background-color: #ffffff15;
+  border: 1px solid #ffffff90;
+  border-top: 1px solid #ffffff80;
+  border-bottom: 1px solid #ffffff80;
   padding: 10px;
   border-radius: 100px;
 
@@ -27,5 +29,5 @@
 }
 
 .label:hover {
-  background-color: #ffffff50;
+  background-color: #ffffff30;
 }
