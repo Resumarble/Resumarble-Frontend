@@ -88,6 +88,11 @@ export default function JoinPage() {
   };
 
   const isValidPw = () => {
+    if (!pw.pw) {
+      window.alert('비밀번호를 입력해주세요.');
+      return false;
+    }
+
     if (pw.pw !== pw.rePw) {
       window.alert('비밀번호가 일치하지 않습니다. 다시 확인해주세요.');
       return false;
