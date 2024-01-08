@@ -42,7 +42,7 @@ export default function MyPage() {
   // TODO 토큰 유효기간 확인 로직 추가
 
   const {
-    data: predictions,
+    data: predictions, // ! TODO 데이터가 없는 경우 문제가 있음
     fetchNextPage,
     isLoading,
     isError,
@@ -78,6 +78,7 @@ export default function MyPage() {
     }
   }, [inView]);
 
+
   if (!predictions) return <></>;
 
   return (
@@ -101,7 +102,7 @@ export default function MyPage() {
         </div>
       ) : (
         <div className={styles.contentsContainer}>
-          {!predictions.pages.length ? (
+          {!predictions.pages[0].interviewQuestions.length ? (
             <NoDatas />
           ) : (
             <>

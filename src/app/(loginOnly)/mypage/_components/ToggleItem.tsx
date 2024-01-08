@@ -26,7 +26,7 @@ type ToggleItemProps = {
 const ToggleItem = ({ predictions, deleteQnA }: ToggleItemProps) => {
   return predictions.map(({ interviewQuestions }, i) => (
     <ToggleInner
-      key={predictions[i].interviewQuestions[0].interviewQuestionId}
+      key={predictions[i].interviewQuestions[0]?.interviewQuestionId}
       interviewQuestions={interviewQuestions}
       deleteQnA={deleteQnA}
     />

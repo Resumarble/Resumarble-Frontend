@@ -10,6 +10,7 @@ import Input from '@/components/common/Input';
 import styles from './login.module.css';
 import Button from '@/components/common/Button';
 
+// ! TODO 카카오 로그인 시 로그인 페이지 접속 막기
 export default function LoginPage() {
   const [id, setId] = useState('');
   const [pw, setPw] = useState('');

@@ -9,11 +9,11 @@ const NoDatas = () => {
   return (
     <div className={styles.noData}>
       <h2>No data</h2>
-      <p>생성한 질문을 누적해서 볼 수 있는 페이지입니다.</p>
+      <p>생성한 질문/답변이 존재하지 않습니다.</p>
       <br />
       <br />
       <Link href={RESUME_URL}>
-        <Button label='생성하기' variant='dark' />
+        <Button size='full' label='생성하기' variant='dark' />
       </Link>
     </div>
   );
