@@ -55,20 +55,8 @@ export default function FormSection({
   };
 
   const onChangeRadio =
-    ({ key, sectionNumber, setState }: OnChangeRadioType) =>
+    ({ setState }: OnChangeRadioType) =>
     (e: React.ChangeEvent<HTMLInputElement>) => {
-      if (checkQuestion(key)) {
-        if (!sectionNumber) return;
-        const id = e.target.id;
-
-        return setState((prev: QuestionType[]) => {
-          const newQuestions = prev;
-          newQuestions[sectionNumber].question = Number(id);
-
-          return { ...prev, questions: newQuestions };
-        });
-      }
-
       setState(() => parseInt(e.target.id));
     };
 
@@ -160,7 +148,6 @@ export default function FormSection({
               <SectionForm
                 questions={questions}
                 setQuestions={setQuestions}
-                onChangeRadio={onChangeRadio}
                 partSectionNumber={partSectionNumber}
               />
             }

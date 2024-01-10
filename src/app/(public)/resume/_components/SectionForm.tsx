@@ -7,11 +7,6 @@ interface SectionFormProps {
   partSectionNumber: number;
   questions: QuestionType[];
   setQuestions: Dispatch<SetStateAction<QuestionType[]>>;
-  onChangeRadio: ({
-    key,
-    sectionNumber,
-    setState,
-  }: OnChangeRadioType) => (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const labels = ['자기소개', '기술스택', '경력사항', '프로젝트 경험'];
@@ -20,8 +15,24 @@ export function SectionForm({
   partSectionNumber,
   questions,
   setQuestions,
-  onChangeRadio,
 }: SectionFormProps) {
+  const onChangeRadio =
+    ({ sectionNumber, setState }: OnChangeRadioType) =>
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const id = e.target.id;
+      if (sectionNumber === undefined) return;
+
+      setState((prev: QuestionType[]) => {
+        const newItems = [...prev];
+        const newItem = { ...newItems[sectionNumber] };
+        const index = Number(id);
+        newItem.question = index;
+        newItems[sectionNumber] = newItem;
+
+        return newItems;
+      });
+    };
+
   const onChangeText =
     (partSectionNumber: number) =>
     (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -46,7 +57,7 @@ export function SectionForm({
                 sectionNumber: partSectionNumber,
                 setState: setQuestions,
               })}
-              checked={questions[partSectionNumber]?.question === i}
+              checked={questions[partSectionNumber].question === i}
               name='question'
               id={i.toString()}
               value='introduction'
