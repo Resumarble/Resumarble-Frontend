@@ -5,25 +5,12 @@ import styles from './formSection.module.css';
 import { RadioInput } from './RadioInput';
 import { careersMapping, jobsMapping } from '../constants/mapping';
 import { SectionForm } from './SectionForm';
+import { careers, jobNames } from '../constants/selectItems';
 
 export type QuestionType = {
   question: number;
   inputText: string;
 };
-
-export const jobNames = [
-  '백엔드 개발자',
-  '프론트 개발자',
-  '풀스택 개발자',
-  '데이터 엔지니어',
-];
-
-export const careers = [
-  '신입',
-  '1~3년 차 (주니어)',
-  '4~7년 차 (미들)',
-  '7년 차 이상 (시니어)',
-];
 
 export type OnChangeRadioType = {
   key: 'job' | 'career' | 'question';
