@@ -4,6 +4,7 @@ import styles from './nav.module.css';
 import { useRouter } from 'next/navigation';
 import customFetch from '@/utils/customFetch';
 import { signOut, useSession } from 'next-auth/react';
+import { PATH } from '@/constants/path';
 
 export default function Nav() {
   const router = useRouter();
@@ -43,22 +44,22 @@ export default function Nav() {
         {session ? (
           <>
             <li className={styles.bold}>
-              <Link href='/resume'>질문생성</Link>
+              <Link href={PATH.RESUME}>질문생성</Link>
             </li>
             <li className={styles.bold}>
-              <Link href='/mypage'>마이페이지</Link>
+              <Link href={PATH.MY_PAGE}>마이페이지</Link>
             </li>
             <li className={styles.logout} onClick={onClickLogout}>
-              <Link href='/'>로그아웃</Link>
+              <Link href={PATH.ROOT}>로그아웃</Link>
             </li>
           </>
         ) : (
           <>
             <li>
-              <Link href='/auth/login'>로그인 (beta)</Link>
+              <Link href={PATH.LOGIN}>로그인 (beta)</Link>
             </li>
             <li className={styles.bold}>
-              <Link href='/auth/join'>회원가입 (beta)</Link>
+              <Link href={PATH.JOIN}>회원가입 (beta)</Link>
             </li>
           </>
         )}
