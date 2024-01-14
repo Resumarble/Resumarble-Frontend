@@ -31,14 +31,14 @@ export default function Nav() {
     } finally {
       localStorage.removeItem('token');
       localStorage.removeItem('refreshToken');
-      router.push('/');
+      router.push(PATH.ROOT);
     }
   };
 
   return (
     <nav className={styles.nav}>
       <h1>
-        <Link href='/'>RESUMARBLE</Link>
+        <Link href={PATH.ROOT}>RESUMARBLE</Link>
       </h1>
       <ul>
         {session ? (
