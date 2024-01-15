@@ -14,6 +14,7 @@ import Image from 'next/image';
 
 // import { KAKAO_JOIN_URL } from './constants/kakao';
 import { signIn } from 'next-auth/react';
+import { PATH } from '@/constants/path';
 
 export default function JoinPage() {
   const [id, setId] = useState('');
@@ -110,10 +111,7 @@ export default function JoinPage() {
       },
     });
 
-    if (res.code === 200) {
-      window.alert('회원이 되신 것을 환영합니다.');
-      return router.push('/auth/login');
-    }
+    return res;
   };
 
   const onSubmitForm = async (e: React.FormEvent) => {
@@ -121,7 +119,12 @@ export default function JoinPage() {
 
     if (!isValidId() || !isValidPw()) return;
 
-    await fetchJoin();
+    const res = await fetchJoin();
+
+    if (res.code === 200) {
+      window.alert('회원이 되신 것을 환영합니다.');
+      return router.push(`${PATH.LOGIN}`);
+    }
   };
 
   const changePw =
