@@ -1,29 +1,23 @@
 'use client';
 
-import { useState } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { getSession, signIn, useSession } from 'next-auth/react';
+import { getSession, signIn } from 'next-auth/react';
 
 import Container from '@/components/common/Container';
 import Input from '@/components/common/Input';
 import styles from './login.module.css';
 import Button from '@/components/common/Button';
+import { useFormInput } from '@/hooks/useFormInput';
 
 // ! TODO 카카오 로그인 시 로그인 페이지 접속 막기
 export default function LoginPage() {
-  const [id, setId] = useState('');
-  const [pw, setPw] = useState('');
+  const [id, setId] = useFormInput();
+  const [pw, setPw] = useFormInput();
+
+  console.log({ id, pw });
 
   const router = useRouter();
-
-  const onChangeId = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setId(e.target.value);
-  };
-
-  const onChangePw = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPw(e.target.value);
-  };
 
   // oauth 로그인
   const loginKakao = () => {
@@ -63,7 +57,7 @@ export default function LoginPage() {
           <h3>LOGIN</h3>
           <form action='post'>
             <Input
-              onChange={onChangeId}
+              onChange={setId}
               required
               placeholder='아이디를 입력해주세요.'
               id='id'
@@ -72,7 +66,7 @@ export default function LoginPage() {
             />
 
             <Input
-              onChange={onChangePw}
+              onChange={setPw}
               required
               placeholder='비밀번호를 입력해주세요.'
               id='pw'
