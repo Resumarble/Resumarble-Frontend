@@ -15,8 +15,6 @@ export default function LoginPage() {
   const [id, setId] = useFormInput();
   const [pw, setPw] = useFormInput();
 
-  console.log({ id, pw });
-
   const router = useRouter();
 
   // oauth 로그인
