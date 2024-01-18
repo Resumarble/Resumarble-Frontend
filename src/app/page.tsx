@@ -8,11 +8,6 @@ import Link from 'next/link';
 import { useSession } from 'next-auth/react';
 import Transition from '@/components/animation/Transition';
 
-type TitleRefType = {
-  title: null | undefined | HTMLElement;
-  subTitle: null | undefined | HTMLElement;
-};
-
 export default function Home() {
   // TODO 카카오 로그인시 next auth 로직으로 인해 임시 추가
   // 아래 로직 개선 필요.
