@@ -2,7 +2,7 @@ import React from 'react';
 
 type Props = {
   className?: string;
-  as?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'span';
+  as?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'span' | 'p';
   children: React.ReactNode;
 };
 
