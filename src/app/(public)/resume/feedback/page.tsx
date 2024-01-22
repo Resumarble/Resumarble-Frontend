@@ -1,13 +1,23 @@
+'use client';
+
 import React from 'react';
-import Link from 'next/link';
 import Container from '@/components/common/Container';
+import { useRouter } from 'next/navigation';
+import Button from '@/components/common/Button';
 
 export default function FeedbackPage() {
+  const router = useRouter();
+
   return (
     <Container>
       <p>준비중입니다. </p>
       <br />
-      <Link href='/'>메인으로</Link>
+      <Button
+        label='이전으로'
+        onClick={() => {
+          router.back();
+        }}
+      ></Button>
     </Container>
   );
 }
