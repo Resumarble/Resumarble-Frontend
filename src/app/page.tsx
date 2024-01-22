@@ -7,7 +7,7 @@ import Button from '@/components/common/Button';
 import Link from 'next/link';
 import { useSession } from 'next-auth/react';
 import Transition from '@/components/animation/Transition';
-import Title from '@/components/common/Title';
+import Text from '@/components/common/Text';
 
 export default function Home() {
   // TODO 카카오 로그인시 next auth 로직으로 인해 임시 추가
@@ -24,15 +24,15 @@ export default function Home() {
     <Container showMarbleImg={true}>
       <div className={styles.textContainer}>
         <Transition animation='move'>
-          <Title as='h4' className={`${styles.subTitle}`}>
+          <Text as='h4' className={`${styles.subTitle}`}>
             이력서 기반 면접 질문/답변 생성 서비스
-          </Title>
+          </Text>
         </Transition>
 
         <Transition animation='move' delay={0.3}>
-          <Title as='h2' className={`${styles.title}`}>
+          <Text as='h2' className={`${styles.title}`}>
             Resumarble
-          </Title>
+          </Text>
         </Transition>
 
         <Transition animation='lazy-show' delay={0.6}>
