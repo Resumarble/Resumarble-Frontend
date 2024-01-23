@@ -37,10 +37,6 @@ export default function FormSection({
 }) {
   const [partSectionNumber, setPartSectionNumber] = useState(0);
 
-  const checkQuestion = (key: string) => {
-    return key === 'question';
-  };
-
   const onChangeRadio =
     ({ setState }: OnChangeRadioType) =>
     (e: React.ChangeEvent<HTMLInputElement>) => {
